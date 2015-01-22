@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<title>$pageTitle</title>
+		#parse( "common/styles.vm" )
+	</head>
+	<body>
+		#parse( $innerTemplate )
+		#parse( "common/scripts.vm" )
+	</body>
+</html>

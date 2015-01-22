@@ -1,0 +1,39 @@
+package org.ohdsi.oae.view.factory;
+
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.ModelAndView;
+
+@Component
+public class CommonTemplateFactory {
+	
+	private static final String COMMON_TEMPLATE = "templates/common/common_template";
+	
+	@Value("${application.name}")
+	private String name;
+	
+	@Value("${html.lang}")
+	private String htmlLang;
+
+	/**
+	 * Creates a common velocity template with the head, body, script and css includes
+	 * 
+	 * @param innerTemplateName The path to the template. The first directory should be parallel to templates/common
+	 * @param pageTitle The title of the page
+	 */
+	public ModelAndView createMasterView (String innerTemplateName, String pageTitle) {
+		
+		ModelAndView modelAndView = new ModelAndView(COMMON_TEMPLATE);
+		modelAndView.addObject("currentDateTime", new Date());
+		modelAndView.addObject("currentDateTimeInMillis", System.currentTimeMillis());
+		modelAndView.addObject("appName", name);
+		modelAndView.addObject("pageTitle", name);
+		modelAndView.addObject("innerTemplate", String.format("templates/%s.vm", innerTemplateName));
+		modelAndView.addObject("homePath", "/home/index.html");
+		modelAndView.addObject("htmlLang", htmlLang);
+
+		return modelAndView;
+	}
+}
