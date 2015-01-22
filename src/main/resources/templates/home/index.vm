@@ -1,5 +1,33 @@
-<div class="container">
-	<div class="jumbotron title-div">
-		<h2>$appName</h2>
-	</div>
+ <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html" style="text-decoration:none">
+            	<img src="/img/ohdsi.png" alt="$appName" style="height:40px"/>
+        	</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="/config.html">Configuration</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+ <div class="container">
+    <!-- Header and app info -->
+    <div class="row row-top">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="jumbotron">
+                <h2>$appName</h2>
+                <p class="sub-text">$appMessage</p>
+            </div>
+        </div>
+    </div>
 </div>

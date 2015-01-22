@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.common.base.Strings;
+
 @Component
 public class CommonTemplateFactory {
 	
@@ -13,6 +15,9 @@ public class CommonTemplateFactory {
 	
 	@Value("${application.name}")
 	private String name;
+	
+	@Value("${application.message}")
+	private String message;
 	
 	@Value("${html.lang}")
 	private String htmlLang;
@@ -29,7 +34,9 @@ public class CommonTemplateFactory {
 		modelAndView.addObject("currentDateTime", new Date());
 		modelAndView.addObject("currentDateTimeInMillis", System.currentTimeMillis());
 		modelAndView.addObject("appName", name);
-		modelAndView.addObject("pageTitle", name);
+		modelAndView.addObject("appMessage", message);
+		modelAndView.addObject("pageTitle", Strings.isNullOrEmpty(pageTitle) ?
+				name : pageTitle);
 		modelAndView.addObject("innerTemplate", String.format("templates/%s.vm", innerTemplateName));
 		modelAndView.addObject("homePath", "/home/index.html");
 		modelAndView.addObject("htmlLang", htmlLang);
