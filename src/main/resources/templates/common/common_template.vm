@@ -3,9 +3,13 @@
 	<head>
 		<title>$pageTitle</title>
 		#parse( "common/styles.vm" )
+		
+		<!--TODO: scripts aren't working at the end for some reason, need to figure out-->
+		#parse( "common/scripts.vm" )
 	</head>
 	<body>
+		
 		#parse( $innerTemplate )
-		#parse( "common/scripts.vm" )
+
 	</body>
 </html>

@@ -4,13 +4,7 @@
 <script type="text/javascript"
 	src="/webjars/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript"
-	src="/webjars/typeaheadjs/0.10.5-1/typeahead.bundle.min.js"></script>
-<script type="text/javascript"
-	src="/webjars/handlebars/2.0.0-1/handlebars.min.js"></script>
-<script type="text/javascript"
 	src="/webjars/jquery-ui/1.11.2/jquery-ui.min.js"></script>
-<script type="text/javascript"
-	src="/webjars/d3js/3.5.3/d3.min.js"></script>
 	
 <!--Angular scripts-->
 <script type="text/javascript"
@@ -18,7 +12,8 @@
 
 <!--Custom scripts-->
 <script type="text/javascript"
-	src="/js/oae.js"></script>
+	src="/js/custom-scripts.js"></script>
+
 
 
 

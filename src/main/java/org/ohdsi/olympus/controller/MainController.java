@@ -1,10 +1,10 @@
-package org.ohdsi.oae.controller;
+package org.ohdsi.olympus.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.ohdsi.oae.view.factory.CommonTemplateFactory;
+import org.ohdsi.olympus.view.factory.CommonTemplateFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +26,6 @@ public class MainController {
 			final HttpSession session) throws Exception {
 		
 		ModelAndView modelAndView = templateFactory.createMasterView(HOME_TEMPLATE_NAME, null);
-		
 		return modelAndView;
 		
 	}

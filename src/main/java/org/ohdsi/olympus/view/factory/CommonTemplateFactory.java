@@ -1,4 +1,4 @@
-package org.ohdsi.oae.view.factory;
+package org.ohdsi.olympus.view.factory;
 
 import java.util.Date;
 
