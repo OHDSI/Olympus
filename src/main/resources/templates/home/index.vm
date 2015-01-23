@@ -20,7 +20,7 @@
     </div>
 </nav>
 
- <div class="container">
+ <div class="container" id="main-launcher">
     <!-- Header and app info -->
     <div class="row row-top">
         <div class="col-md-10 col-md-offset-1">
@@ -29,5 +29,115 @@
                 <p class="sub-text">$appMessage</p>
             </div>
         </div>
+    </div>
+    
+    <!-- TODO probably make projects json driven -->
+    <div class="row">
+        <!-- Projects Row -->
+        <div class="col-md-10 col-md-offset-1">
+	        <div class="row">
+	            <div class="col-md-4 portfolio-item">
+	                <a class="launch-app" href="http://www.ohdsi.org/web/achilles/index.html#/SAMPLE/dashboard">
+	                    <img class="img-responsive img-ohdsi" src="http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?w=100&tok=44f68f&media=t-ohdsi-logo-only.png" alt="">
+	                </a>
+	                <h3>
+	                    <a class="launch-app" href="http://www.ohdsi.org/web/achilles/index.html#/SAMPLE/dashboard">Achilles</a>
+	                </h3>
+	                <p>Automated Characterization of Health Information at Large-scale Longitudinal Evidence Systems (ACHILLES) – descriptive statistics about an OMOP CDM v4 database.</p>
+	            </div>
+	            <div class="col-md-4 portfolio-item">
+	                <a class="launch-app" href="#">
+	                    <img class="img-responsive img-ohdsi" src="http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?w=100&tok=44f68f&media=t-ohdsi-logo-only.png" alt="">
+	                </a>
+	                <h3>
+	                    <a class="launch-app" href="#">Homer</a>
+	                </h3>
+	                <p>Health Outcomes and Medical Effectiveness Research (HOMER): Risk identification and comparative effectiveness system, enabling real-time exploration of the effects of medical products.</p>
+	            </div>
+	            <div class="col-md-4 portfolio-item">
+	                <a class="launch-app" href="#">
+	                    <img class="img-responsive img-ohdsi" src="http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?w=100&tok=44f68f&media=t-ohdsi-logo-only.png" alt="">
+	                </a>
+	                <h3>
+	                    <a class="launch-app" href="#">Plato</a>
+	                </h3>
+	                <p>Patient-Level Assessment of Treatment Outcomes: Predictive models that assess the probability of a patient experiencing any outcome following initiation of any intervention, given his or her personal medical history.</p>
+	            </div>
+	        </div>
+        </div>
+     </div>
+     
+     <div class="row">
+        <!-- Projects Row 2 -->
+        <div class="col-md-10 col-md-offset-1">
+	        <div class="row">
+	            <div class="col-md-4 portfolio-item">
+	                <a class="launch-app" href="#">
+	                    <img class="img-responsive img-ohdsi" src="http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?w=100&tok=44f68f&media=t-ohdsi-logo-only.png" alt="">
+	                </a>
+	                <h3>
+	                    <a class="launch-app" href="#">Hermes</a>
+	                </h3>
+	                <p>Health Entity Relationship and Metadata Exploration System (HERMES)</p>
+	            </div>
+	            <div class="col-md-4 portfolio-item">
+	                <a class="launch-app" href="#">
+	                    <img class="img-responsive img-ohdsi" src="http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?w=100&tok=44f68f&media=t-ohdsi-logo-only.png" alt="">
+	                </a>
+	                <h3>
+	                    <a class="launch-app" href="#">Heracles</a>
+	                </h3>
+	                <p>Heracles is a cohort analysis tool that allows users to select and analyze pre-defined cohorts.</p>
+	            </div>
+	            <div class="col-md-4 portfolio-item">
+	                <a class="launch-app" href="http://www.ohdsi.org/web/cohortui/index.html">
+	                    <img class="img-responsive img-ohdsi" src="http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?w=100&tok=44f68f&media=t-ohdsi-logo-only.png" alt="">
+	                </a>
+	                <h3>
+	                    <a class="launch-app" href="http://www.ohdsi.org/web/cohortui/index.html">Circe</a>
+	                </h3>
+	                <p>The scope of CIRCE is to enable a researcher to specify criteria that identifies a patient population within the Common Data Model (CDM).</p>
+	            </div>
+	        </div>
+        </div>
+     </div>
+     
+     <div class="row">
+        <!-- Projects Row 3 -->
+        <div class="col-md-10 col-md-offset-1">
+	        <div class="row">
+	            <div class="col-md-4 portfolio-item">
+	                <a class="launch-app" href="http://www.ohdsi.org/web/wiki/doku.php?id=documentation:software:whiterabbit">
+	                    <img class="img-responsive img-ohdsi" src="http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?cache=&w=381&h=89&tok=6ddc75&media=documentation:software:whiterabbitlogo.png" alt="">
+	                </a>
+	                <h3>
+	                    <a class="launch-app" href="http://www.ohdsi.org/web/wiki/doku.php?id=documentation:software:whiterabbit">White Rabbit</a>
+	                </h3>
+	                <p>WhiteRabbit is a software tool to help prepare for ETLs (Extraction, Transformation, Loading) of longitudinal healthcare databases into the Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM).</p>
+	            </div>
+	            <div class="col-md-4 portfolio-item">
+	                <a class="launch-app" href="http://www.ohdsi.org/web/wiki/doku.php?id=documentation:software:usagi">
+	                    <img class="img-responsive img-ohdsi" src="http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?media=documentation:usagi_logo.png" alt="">
+	                </a>
+	                <h3>
+	                    <a class="launch-app" href="http://www.ohdsi.org/web/wiki/doku.php?id=documentation:software:usagi">Usagi</a>
+	                </h3>
+	                <p>Usagi is a software tool created by the Observational Health Data Sciences and Informatics (OHDSI) team and is used to help in the process of mapping codes from a source system into terminologies.</p>
+	            </div>
+	        </div>
+        </div>
+     </div>
+</div>
+
+<div id="app-holder-wrapper" class="container" style="display:none">
+    <div class="row" style="padding-top:3px"a>
+        <div class="col-md-12">
+            <a id="cohort-explorer-back">&laquo;Back</a>
+        </div>
+    </div>
+    <div class="row">
+    	<div class="col-md-12">
+    		<iframe id="app-holder" frameborder="0" />
+    	</div>
     </div>
 </div>
