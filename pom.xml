@@ -7,7 +7,11 @@
     <artifactId>Olympus</artifactId>
     <packaging>war</packaging>
     <version>1.0.0-SNAPSHOT</version>
+    
     <name>Olympus</name>
+    <description>This is the launcher for the OHDSI suite of apps.</description>
+    <url>http://www.ohdsi.org/</url>
+    
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<server.port>20000</server.port>
@@ -253,6 +257,5 @@
 			</dependencies>
 		</profile>
     </profiles>
-    <description>This is the launcher for the OHDSI suite of apps.</description>
-    <url>http://www.ohdsi.org/</url>
+
 </project>
