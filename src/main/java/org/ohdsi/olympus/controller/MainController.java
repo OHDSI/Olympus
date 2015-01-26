@@ -1,14 +1,23 @@
 package org.ohdsi.olympus.controller;
 
+import java.net.URL;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.ohdsi.olympus.model.Launchable;
 import org.ohdsi.olympus.view.factory.CommonTemplateFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 
 @Controller
 @RequestMapping({"/home", "/"})
@@ -26,6 +35,15 @@ public class MainController {
 			final HttpSession session) throws Exception {
 		
 		ModelAndView modelAndView = templateFactory.createMasterView(HOME_TEMPLATE_NAME, null);
+		
+		// load up launcher links
+		URL url = Resources.getResource("launchable-links.json");
+		String text = Resources.toString(url, Charsets.UTF_8);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		List<Launchable> myObjects = mapper.readValue(text, new TypeReference<List<Launchable>>(){});
+		modelAndView.addObject("launchableLinks", myObjects);
+		
 		return modelAndView;
 		
 	}

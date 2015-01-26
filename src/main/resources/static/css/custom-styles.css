@@ -94,3 +94,16 @@ a {
 	height: 80px;
 	width: auto;
 }
+
+.navbar-inverse .navbar-nav>li>a {
+	color: #ffffff;
+}
+
+.navbar-inverse {
+	background-color: #1C3E57;
+	border-color: #0B293E;
+}
+
+.navbar-inverse .navbar-toggle {
+	border-color: #0B293E;
+}

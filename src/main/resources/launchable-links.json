@@ -1,0 +1,68 @@
+[
+    {
+        "application-name": "Achilles",
+        "application-description": "Automated Characterization of Health Information at Large-scale Longitudinal Evidence Systems (ACHILLES) – descriptive statistics about an OMOP CDM v4 database.",
+        "url": "http://www.ohdsi.org/web/achilles/index.html#/SAMPLE/dashboard",
+        "image-source": "http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?w=100&amp;tok=44f68f&amp;media=t-ohdsi-logo-only.png",
+        "custom-anchor-attributes": {},
+        "custom-image-attributes": {}
+    },
+    {
+        "application-name": "Homer",
+        "application-description": "Health Outcomes and Medical Effectiveness Research (HOMER): Risk identification and comparative effectiveness system, enabling real-time exploration of the effects of medical products.",
+        "url": "#",
+        "image-source": "http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?w=100&amp;tok=44f68f&amp;media=t-ohdsi-logo-only.png",
+        "custom-anchor-attributes": {},
+        "custom-image-attributes": {}
+    },
+    {
+        "application-name": "Plato",
+        "application-description": "Patient-Level Assessment of Treatment Outcomes: Predictive models that assess the probability of a patient experiencing any outcome following initiation of any intervention, given his or her personal medical history.",
+        "url": "#",
+        "image-source": "http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?w=100&amp;tok=44f68f&amp;media=t-ohdsi-logo-only.png",
+        "custom-anchor-attributes": {},
+        "custom-image-attributes": {}
+    },
+    {
+        "application-name": "Hermes",
+        "application-description": "Health Entity Relationship and Metadata Exploration System (HERMES)",
+        "url": "#",
+        "image-source": "http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?w=100&amp;tok=44f68f&amp;media=t-ohdsi-logo-only.png",
+        "custom-anchor-attributes": {},
+        "custom-image-attributes": {}
+    },
+    {
+        "application-name": "Heracles",
+        "application-description": "Heracles is a cohort analysis tool that allows users to select and analyze pre-defined cohorts.",
+        "url": "#",
+        "image-source": "http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?w=100&amp;tok=44f68f&amp;media=t-ohdsi-logo-only.png",
+        "custom-anchor-attributes": {
+        	"java-web-app": true
+        },
+        "custom-image-attributes": {}
+    },
+    {
+        "application-name": "Circe",
+        "application-description": "The scope of CIRCE is to enable a researcher to specify criteria that identifies a patient population within the Common Data Model (CDM).",
+        "url": "http://www.ohdsi.org/web/cohortui/index.html",
+        "image-source": "http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?w=100&amp;tok=44f68f&amp;media=t-ohdsi-logo-only.png",
+        "custom-anchor-attributes": {},
+        "custom-image-attributes": {}
+    },
+    {
+        "application-name": "WhiteRabbit",
+        "application-description": "WhiteRabbit is a software tool to help prepare for ETLs (Extraction, Transformation, Loading) of longitudinal healthcare databases into the Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM).",
+        "url": "http://www.ohdsi.org/web/wiki/doku.php?id=documentation:software:whiterabbit",
+        "image-source": "http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?cache=&amp;w=381&amp;h=89&amp;tok=6ddc75&amp;media=documentation:software:whiterabbitlogo.png",
+        "custom-anchor-attributes": {},
+        "custom-image-attributes": {}
+    },
+    {
+        "application-name": "Usagi",
+        "application-description": "Usagi is a software tool created by the Observational Health Data Sciences and Informatics (OHDSI) team and is used to help in the process of mapping codes from a source system into terminologies.",
+        "url": "http://www.ohdsi.org/web/wiki/doku.php?id=documentation:software:usagi",
+        "image-source": "http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?media=documentation:usagi_logo.png",
+        "custom-anchor-attributes": {},
+        "custom-image-attributes": {}
+    }
+]

@@ -9,7 +9,7 @@ $(document).ready(function() {
 			$("#app-holder")
 				.attr("src", href)
 				.attr("width", w)
-				.attr("height", "1000");
+				.attr("height", "2500");
 			$("#app-holder-wrapper").slideDown("slow");
 			
 		});

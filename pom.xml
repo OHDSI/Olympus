@@ -22,7 +22,7 @@
 		<html.lang>en-US</html.lang>
 	</properties>
     <build>
-        <finalName>OAE</finalName>
+        <finalName>Olympus</finalName>
         <resources>
 			<resource>
 				<directory>src/main/resources</directory>
