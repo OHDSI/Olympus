@@ -1,0 +1,52 @@
+<div>
+    #parse( "common/navbar.vm" )
+    <div class="container" id="main-launcher">
+        <div class="row row-top">
+        	
+            <form class="form-horizontal">
+            	<div class="form-group">
+            		<h3>CDM Configuration</h3>
+            	</div>
+                <div class="form-group">
+                    <label for="cdmJdbc" class="col-sm-3 control-label">CDM JDBC Url</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="jdbcUrl" placeholder="e.g. jdbc:sqlserver://serverName;user=userName;password=password;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cdmUsername" class="col-sm-3 control-label">CDM Username</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="cdmUsername" placeholder="Username" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cdmPassword" class="col-sm-3 control-label">CDM Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="cdmPassword" placeholder="Password" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cdmDialect" class="col-sm-3 control-label">CDM Dialect</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="cdmDialect" placeholder="e.g. sql server" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cdmSchema" class="col-sm-3 control-label">CDM Schema</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="cdmSchema" placeholder="CDM schema" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cdmResultsSchema" class="col-sm-3 control-label">CDM Results Schema</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="cdmResultsSchema" placeholder="Results Schema" />
+                    </div>
+                </div>
+                <div class="form-group pull-right">
+                    <button id="submitButton" class="btn btn-success" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

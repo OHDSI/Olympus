@@ -24,6 +24,7 @@ import com.google.common.io.Resources;
 public class MainController {
 	
 	private static final String HOME_TEMPLATE_NAME = "home/index";
+	private static final String CONFIGURATION_TEMPLATE_NAME = "home/config";
 	
 	private static final String ERROR_TEMPLATE_NAME = "templates/error";
 	
@@ -43,6 +44,15 @@ public class MainController {
 		ObjectMapper mapper = new ObjectMapper();
 		List<Launchable> myObjects = mapper.readValue(text, new TypeReference<List<Launchable>>(){});
 		modelAndView.addObject("launchableLinks", myObjects);
+		
+		return modelAndView;
+		
+	}
+	
+	@RequestMapping(value = "config")
+	public ModelAndView handleConfigurationRequest(final HttpServletRequest request, final HttpServletResponse res,
+			final HttpSession session) throws Exception {
+		ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
 		
 		return modelAndView;
 		
