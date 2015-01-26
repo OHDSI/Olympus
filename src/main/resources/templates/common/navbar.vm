@@ -1,3 +1,4 @@
+#macro(renderNavBar $activeLink)
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
@@ -13,9 +14,10 @@
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="/index.html" class="active">Home</a></li>
-				<li><a href="/config.html">Configuration</a></li>
+				<li #if ($activeLink == "index") class="active" #end><a href="/index.html">Home</a></li>
+				<li #if ($activeLink == "config") class="active" #end><a href="/config.html">Configuration</a></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>
 </nav>
+#end

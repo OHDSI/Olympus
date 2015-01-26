@@ -107,3 +107,7 @@ a {
 .navbar-inverse .navbar-toggle {
 	border-color: #0B293E;
 }
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {
+	background-color: #021726;
+}

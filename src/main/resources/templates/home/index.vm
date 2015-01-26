@@ -1,6 +1,8 @@
 
 <div>
+	#set ( $current = "index" )
 	#parse( "common/navbar.vm" )
+	#renderNavBar ($current )
 	<div class="container" id="main-launcher">
 		<!-- Header and app info -->
 		<div class="row row-top">
