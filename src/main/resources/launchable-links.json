@@ -26,8 +26,8 @@
     {
         "application-name": "Hermes",
         "application-description": "Health Entity Relationship and Metadata Exploration System (HERMES)",
-        "url": "#",
-        "image-source": "http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?w=100&amp;tok=44f68f&amp;media=t-ohdsi-logo-only.png",
+        "url": "http://www.ohdsi.org/web/hermes/index.html",
+        "image-source": "http://www.ohdsi.org/web/hermes/images/logo.png",
         "custom-anchor-attributes": {},
         "custom-image-attributes": {}
     },
