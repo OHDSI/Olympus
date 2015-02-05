@@ -44,7 +44,7 @@
     {
         "application-name": "Circe",
         "application-description": "The scope of CIRCE is to enable a researcher to specify criteria that identifies a patient population within the Common Data Model (CDM).",
-        "url": "http://www.ohdsi.org/web/cohortui/index.html",
+        "url": "http://www.ohdsi.org/web/circe/",
         "image-source": "http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?w=100&amp;tok=44f68f&amp;media=t-ohdsi-logo-only.png",
         "custom-anchor-attributes": {},
         "custom-image-attributes": {}
