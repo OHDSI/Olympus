@@ -36,9 +36,7 @@
         "application-description": "Heracles is a cohort analysis tool that allows users to select and analyze pre-defined cohorts.",
         "url": "#",
         "image-source": "http://www.ohdsi.org/web/wiki/lib/exe/fetch.php?w=100&amp;tok=44f68f&amp;media=t-ohdsi-logo-only.png",
-        "custom-anchor-attributes": {
-        	"java-web-app": true
-        },
+        "custom-anchor-attributes": {},
         "custom-image-attributes": {}
     },
     {
