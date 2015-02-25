@@ -5,14 +5,14 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class OlympusApp extends SpringBootServletInitializer {
+public class Olympus extends SpringBootServletInitializer {
     
     @Override
     protected SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
-        return application.sources(OlympusApp.class);
+        return application.sources(Olympus.class);
     }
     
     public static void main(final String[] args) throws Exception {
-        new SpringApplicationBuilder(OlympusApp.class).run(args);
+        new SpringApplicationBuilder(Olympus.class).run(args);
     }
 }
