@@ -4,42 +4,66 @@
 	#renderNavBar ($current )
     <div class="container" id="main-launcher">
         <div class="row row-top">
-        	
-            <form class="form-horizontal">
-                <div class="form-group">
+        #if(${msg})
+        <div class="alert alert-success" role="alert">$msg</div>
+        #end
+        #if(${webapi})
+			<div class="row row-top>
+			    <form class="form-horizontal" target="_self" enctype="application/x-www-form-urlencoded" action="/webapi/start" method="post">
+	                <div class="form-group pull-right">
+	                    <button id="launchButton" class="btn btn-success" type="submit">Launch WebApi</button>
+	                </div>
+	            </form>
+            </div>
+       #end
+            <form class="form-horizontal" target="_self" enctype="application/x-www-form-urlencoded" action="/webapi/config" method="post">
+                #springBind("config")
+                #springBind("config.jdbcUrl")
+                <div class="form-group #if(${status.error})has-error#end">
                     <label for="cdmJdbc" class="col-sm-3 control-label">CDM JDBC Url</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="jdbcUrl" placeholder="e.g. jdbc:sqlserver://serverName;user=userName;password=password;" />
+                    	#springFormInput("config.jdbcUrl" "class='form-control' placeholder='e.g. jdbc:sqlserver://serverName;user=userName;password=password;' required maxlength='100'")
+						#springShowErrors("<br/>" "")
                     </div>
                 </div>
-                <div class="form-group">
+                #springBind("config.jdbcUser")
+                <div class="form-group #if(${status.error})has-error#end">
                     <label for="cdmUsername" class="col-sm-3 control-label">CDM Username</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="cdmUsername" placeholder="Username" />
+                    	#springFormInput("config.jdbcUser" 'class="form-control" placeholder="Username" required')
+                    	#springShowErrors("<br/>" "")
                     </div>
                 </div>
-                <div class="form-group">
+                #springBind("config.jdbcPass")
+                <div class="form-group #if(${status.error})has-error#end">
                     <label for="cdmPassword" class="col-sm-3 control-label">CDM Password</label>
                     <div class="col-sm-9">
-                        <input type="password" class="form-control" id="cdmPassword" placeholder="Password" />
+                    	#springFormPasswordInput("config.jdbcPass" 'class="form-control" placeholder="Password"')
+                    	#springShowErrors("<br/>" "")
                     </div>
                 </div>
-                <div class="form-group">
+                #springBind("config.cdmDialect")
+                <div class="form-group #if(${status.error})has-error#end">
                     <label for="cdmDialect" class="col-sm-3 control-label">CDM Dialect</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="cdmDialect" placeholder="e.g. sql server" />
+                    	#springFormInput("config.cdmDialect" 'class="form-control" placeholder="e.g. sql server"')
+                    	#springShowErrors("<br/>" "")
                     </div>
                 </div>
-                <div class="form-group">
+                #springBind("config.cdmSchema")
+                <div class="form-group #if(${status.error})has-error#end">
                     <label for="cdmSchema" class="col-sm-3 control-label">CDM Schema</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="cdmSchema" placeholder="CDM schema" />
+                    	#springFormInput("config.cdmSchema" 'class="form-control" placeholder="CDM schema"')
+                    	#springShowErrors("<br/>" "")
                     </div>
                 </div>
-                <div class="form-group">
+                #springBind("config.ohdsiSchema")
+                <div class="form-group #if(${status.error})has-error#end">
                     <label for="cdmResultsSchema" class="col-sm-3 control-label">CDM Results Schema</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="cdmResultsSchema" placeholder="Results Schema" />
+                        #springFormInput("config.ohdsiSchema" 'class="form-control" placeholder="Ohdsi/Results Schema"')
+                        #springShowErrors("<br/>" "")
                     </div>
                 </div>
                 <div class="form-group pull-right">

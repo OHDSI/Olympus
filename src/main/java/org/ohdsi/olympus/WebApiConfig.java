@@ -11,18 +11,22 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.runner.Runner;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.ohdsi.olympus.model.WebApiPropertiesRepository;
+import org.ohdsi.olympus.model.WebApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
 import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.Order;
 import org.springframework.util.Assert;
 
 /**
  *
  */
 @Configuration
+@Order(3)
 public class WebApiConfig {
     
     private static final Log log = LogFactory.getLog(WebApiConfig.class);
@@ -38,13 +42,12 @@ public class WebApiConfig {
     
     @Bean
     @Lazy
-    public WebAppContext webApi() throws Exception {
+    public WebApiService webApi(File baseDir, WebApiPropertiesRepository repo) throws Exception {
         Assert.state(server != null && server.getEmbeddedServletContainer() instanceof JettyEmbeddedServletContainer,
             "Olympus assumes use of its embedded jetty server");
         
         final JettyEmbeddedServletContainer jetty = (JettyEmbeddedServletContainer) server.getEmbeddedServletContainer();
         final String contextPath = "/WebAPI";
-        final File baseDir = new File(System.getProperty("java.io.tmpdir"), "olympus");
         log.info("Copying WAR to absolute path: " + baseDir);
         baseDir.mkdirs();
         final File destDir = baseDir;
@@ -62,7 +65,7 @@ public class WebApiConfig {
         ctx.setConfigurationClasses(Runner.__plusConfigurationClasses);
         ctx.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", Runner.__containerIncludeJarPattern);
         this.contextHandlerCollection.addHandler(ctx);
-        return ctx;
+        return new WebApiService(ctx, repo);
     }
     
     /*if (container instanceof TomcatEmbeddedServletContainer) {

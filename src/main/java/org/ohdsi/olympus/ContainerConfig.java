@@ -1,5 +1,7 @@
 package org.ohdsi.olympus;
 
+import java.io.File;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.server.Server;
@@ -10,14 +12,21 @@ import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletConta
 import org.springframework.boot.context.embedded.jetty.JettyServerCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 /**
  *
  */
 @Configuration
+@Order(1)
 public class ContainerConfig {
     
     private static final Log log = LogFactory.getLog(ContainerConfig.class);
+    
+    @Bean
+    public File baseDir(){
+        return new File(System.getProperty("java.io.tmpdir"), "olympus");
+    }
     
     @Bean
     public ContextHandlerCollection contextHandlerCollection() {

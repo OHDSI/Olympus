@@ -15,7 +15,7 @@
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li #if ($activeLink == "index") class="active" #end><a href="/index.html">Home</a></li>
-				<li #if ($activeLink == "config") class="active" #end><a href="/config.html">Configuration</a></li>
+				<li #if ($activeLink == "config") class="active" #end><a href="/webapi/config.html">Configuration</a></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>

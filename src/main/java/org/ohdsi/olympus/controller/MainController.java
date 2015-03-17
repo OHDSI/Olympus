@@ -6,14 +6,21 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ohdsi.olympus.model.Launchable;
+import org.ohdsi.olympus.model.WebApiProperties;
+import org.ohdsi.olympus.model.WebApiPropertiesRepository;
 import org.ohdsi.olympus.view.factory.CommonTemplateFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -29,12 +36,13 @@ public class MainController {
     
     private static final String HOME_TEMPLATE_NAME = "home/index";
     
-    private static final String CONFIGURATION_TEMPLATE_NAME = "home/config";
-    
     private static final String ERROR_TEMPLATE_NAME = "templates/error";
     
     @Autowired
-    CommonTemplateFactory templateFactory;
+    private CommonTemplateFactory templateFactory;
+    
+    @Autowired
+    private WebApiPropertiesRepository repo;
     
     @RequestMapping(value = "index")
     public ModelAndView handleIndexRequest(final HttpServletRequest request, final HttpServletResponse res,
@@ -53,18 +61,9 @@ public class MainController {
         return modelAndView;
         
     }
-   
-    @RequestMapping(value = "config")
-    public ModelAndView handleConfigurationRequest(final HttpServletRequest request, final HttpServletResponse res,
-                                                   final HttpSession session) throws Exception {
-        ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
-        
-        return modelAndView;
-        
-    }
     
     /**
-     * We handle error a litle differently because it's expected by SpringBoot to be mapped to
+     * We handle error a little differently because it's expected by SpringBoot to be mapped to
      * /error in the templates section
      * 
      * @param request
