@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.runner.Runner;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.ohdsi.olympus.model.WebApiProperties;
 import org.ohdsi.olympus.model.WebApiPropertiesRepository;
 import org.ohdsi.olympus.model.WebApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,18 @@ public class WebApiConfig {
         ctx.setConfigurationClasses(Runner.__plusConfigurationClasses);
         ctx.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", Runner.__containerIncludeJarPattern);
         this.contextHandlerCollection.addHandler(ctx);
-        return new WebApiService(ctx, repo);
+        WebApiService service = new WebApiService(ctx, repo);
+        WebApiProperties props = repo.findOne(WebApiProperties.ID);
+        if (props != null) {
+            try {
+                WebApiService.setSystemProperties(props);
+                service.start();
+            } catch (Exception e) {
+                log.error("Error occurred starting WebAPI.  Take a look at log and see if you can correct the configuration. If need be, you can delete the Olympus DB and re-enter config: "
+                        + baseDir.getAbsolutePath(), e);
+            }
+        }
+        return service;
     }
     
     /*if (container instanceof TomcatEmbeddedServletContainer) {

@@ -2,7 +2,6 @@ package org.ohdsi.olympus.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -19,6 +18,10 @@ public class WebApiProperties {
     
     @NotNull
     @Size(max = 100, min = 1)
+    private String jdbcDriverClassName;
+    
+    @NotNull
+    @Size(max = 100, min = 1)
     private String jdbcUrl;
     
     @NotNull
@@ -29,39 +32,41 @@ public class WebApiProperties {
     @Size(max = 25, min = 1)
     private String jdbcPass;
     
-//    @NotNull
-//    @Size(max = 100, min = 1)
-    @Transient
+    @NotNull
+    @Size(max = 100, min = 1)
     private String flywayJdbcUrl;
     
-//    @NotNull
-//    @Size(max = 25, min = 1)
-    @Transient
+    @NotNull
+    @Size(max = 25, min = 1)
     private String flywayJdbcUser;
     
-//    @NotNull
-//    @Size(max = 25, min = 1)
-    @Transient
+    @NotNull
+    @Size(max = 25, min = 1)
     private String flywayJdbcPass;
     
-//    @NotNull
-//    @Size(max = 50, min = 1)
-    @Transient
+    @NotNull
+    @Size(max = 100, min = 1)
     private String flywaySchemas;
     
-//    @NotNull
-//    @Size(max = 25, min = 1)
-    @Transient
+    //Figure out via cdmDialect (oracle=classpath:db/migration/oracle)
+    @NotNull
+    @Size(max = 100, min = 1)
+    private String flywayLocations;
+    
+    @NotNull
+    @Size(max = 25, min = 1)
     private String cdmSchema;
     
-//    @NotNull
-//    @Size(max = 25, min = 1)
-    @Transient
+    @NotNull
+    @Size(max = 25, min = 1)
     private String ohdsiSchema;
     
-//    @NotNull
-//    @Size(max = 25, min = 1)
-    @Transient
+    @NotNull
+    @Size(max = 25, min = 1)
+    private String cohortSchema;
+    
+    @NotNull
+    @Size(max = 25, min = 1)
     private String cdmDialect;
     
     /**
@@ -202,6 +207,48 @@ public class WebApiProperties {
      */
     public void setCdmDialect(final String cdmDialect) {
         this.cdmDialect = cdmDialect;
+    }
+    
+    /**
+     * @return the jdbcDriverClassName
+     */
+    public String getJdbcDriverClassName() {
+        return jdbcDriverClassName;
+    }
+    
+    /**
+     * @param jdbcDriverClassName the jdbcDriverClassName to set
+     */
+    public void setJdbcDriverClassName(String jdbcDriverClassName) {
+        this.jdbcDriverClassName = jdbcDriverClassName;
+    }
+    
+    /**
+     * @return the flywayLocations
+     */
+    public String getFlywayLocations() {
+        return flywayLocations;
+    }
+    
+    /**
+     * @param flywayLocations the flywayLocations to set
+     */
+    public void setFlywayLocations(String flywayLocations) {
+        this.flywayLocations = flywayLocations;
+    }
+    
+    /**
+     * @return the cohortSchema
+     */
+    public String getCohortSchema() {
+        return cohortSchema;
+    }
+    
+    /**
+     * @param cohortSchema the cohortSchema to set
+     */
+    public void setCohortSchema(String cohortSchema) {
+        this.cohortSchema = cohortSchema;
     }
     
 }

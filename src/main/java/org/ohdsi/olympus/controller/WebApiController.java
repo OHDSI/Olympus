@@ -25,7 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-@RequestMapping("/webapi")
+@RequestMapping("/webapi/")
 public class WebApiController {
     
     private static final Log log = LogFactory.getLog(WebApiController.class);
@@ -57,7 +57,7 @@ public class WebApiController {
         log.info("Get config");
         ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
         modelAndView.addObject(CONFIG_MODEL_ATTR, this.webApi.getProperties());
-        if(this.webApi.isConfigured()){
+        if (this.webApi.isConfigured()) {
             modelAndView.addObject("webapi", true);
         }
         return modelAndView;
@@ -79,31 +79,25 @@ public class WebApiController {
         String msg = "Saved properties";
         log.debug(msg);
         
+        WebApiService.setSystemProperties(props);
+        log.info("Set saved properties on the system");
+        
         ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
         modelAndView.addObject(CONFIG_MODEL_ATTR, props);
         modelAndView.addObject("msg", msg);
-        if(this.webApi.isConfigured()){
+        if (this.webApi.isConfigured()) {
             modelAndView.addObject("webapi", true);
         }
         return modelAndView;
     }
     
-    /*    @RequestMapping(value = "/config", method = RequestMethod.POST)
-        public ResponseEntity config() throws Exception {
-            //load via db
-            System.setProperty("datasource.driverClassName", "bogus");
-            System.setProperty("flyway.datasource.driverClassName", "bogus");
-            log.info("Set WebApi properties");
-            return new ResponseEntity<String>("WebApi properties set", HttpStatus.OK);
-        }*/
-    
-    @RequestMapping(value = "/stop", method = RequestMethod.POST)
+    @RequestMapping(value = "stop", method = RequestMethod.POST)
     public ResponseEntity stop() throws Exception {
         this.webApi.stop();
         return new ResponseEntity<String>("WebApi stopped", HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/start", method = RequestMethod.POST)
+    @RequestMapping(value = "start", method = RequestMethod.POST)
     public ResponseEntity start() throws Exception {
         this.webApi.start();
         return new ResponseEntity<String>("WebApi started", HttpStatus.OK);
