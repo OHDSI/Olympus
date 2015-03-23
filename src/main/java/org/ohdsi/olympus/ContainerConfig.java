@@ -24,7 +24,7 @@ public class ContainerConfig {
     private static final Log log = LogFactory.getLog(ContainerConfig.class);
     
     @Bean
-    public File baseDir(){
+    public File baseDir() {
         return new File(System.getProperty("java.io.tmpdir"), "olympus");
     }
     
@@ -75,5 +75,5 @@ public class ContainerConfig {
             }
         };
     }
-   
- }
+    
+}

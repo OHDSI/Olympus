@@ -29,6 +29,16 @@ OLYMPUS is a project as part of the Observational Health Data Sciences and Infor
 ##### Getting Started
 * Pending
 
+
+##### Building
+
+WebAPI (package using defaults `mvn clean package`)
+- Add WebAPI.war to Olympus/src/main/webapp/WEB-INF/applications/
+
+Olympus : package with target db profile `mvn clean package -Polympus-oracle` or package will all drivers `-Polympus-comprehensive`
+
+
+
 ##### Getting involved
 * Biweekly calls, call-in information on the Wiki
 	

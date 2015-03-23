@@ -28,7 +28,7 @@
                 </div>
                 #springBind("config.jdbcUrl")
                 <div class="form-group #if(${status.error})has-error#end">
-                    <label for="cdmJdbc" class="col-sm-3 control-label">CDM JDBC Url</label>
+                    <label for="cdmJdbc" class="col-sm-3 control-label">CDM Jdbc Url</label>
                     <div class="col-sm-9">
                     	#springFormInput("config.jdbcUrl" "class='form-control' placeholder='e.g. jdbc:sqlserver://serverName;user=userName;password=password;' required maxlength='100'")
 						#springShowErrors("<br/>" "")
@@ -50,7 +50,15 @@
                     	#springShowErrors("<br/>" "")
                     </div>
                 </div>
-                
+
+               #springBind("config.flywayJdbcDriverClassName")
+                <div class="form-group #if(${status.error})has-error#end">
+                    <label for="flywayJdbcDriverClassName" class="col-sm-3 control-label">CDM Flyway Jdbc Driver Class Name</label>
+                    <div class="col-sm-9">
+                    	#springFormInput("config.flywayJdbcDriverClassName" "class='form-control' placeholder='e.g. com.microsoft.sqlserver.jdbc.SQLServerDriver' required maxlength='100'")
+						#springShowErrors("<br/>" "")
+                    </div>
+                </div>                
                 #springBind("config.flywayJdbcUrl")
                 <div class="form-group #if(${status.error})has-error#end">
                     <label for="flywayJdbcUrl" class="col-sm-3 control-label">CDM Flyway Jdbc Url</label>

@@ -11,7 +11,6 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.runner.Runner;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
-import org.ohdsi.olympus.model.WebApiProperties;
 import org.ohdsi.olympus.model.WebApiPropertiesRepository;
 import org.ohdsi.olympus.model.WebApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
 import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
 import org.springframework.util.Assert;
 
@@ -42,8 +40,7 @@ public class WebApiConfig {
     private ContextHandlerCollection contextHandlerCollection;
     
     @Bean
-    @Lazy
-    public WebApiService webApi(File baseDir, WebApiPropertiesRepository repo) throws Exception {
+    public WebAppContext webApiContext(File baseDir) throws Exception {
         Assert.state(server != null && server.getEmbeddedServletContainer() instanceof JettyEmbeddedServletContainer,
             "Olympus assumes use of its embedded jetty server");
         
@@ -66,18 +63,12 @@ public class WebApiConfig {
         ctx.setConfigurationClasses(Runner.__plusConfigurationClasses);
         ctx.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", Runner.__containerIncludeJarPattern);
         this.contextHandlerCollection.addHandler(ctx);
-        WebApiService service = new WebApiService(ctx, repo);
-        WebApiProperties props = repo.findOne(WebApiProperties.ID);
-        if (props != null) {
-            try {
-                WebApiService.setSystemProperties(props);
-                service.start();
-            } catch (Exception e) {
-                log.error("Error occurred starting WebAPI.  Take a look at log and see if you can correct the configuration. If need be, you can delete the Olympus DB and re-enter config: "
-                        + baseDir.getAbsolutePath(), e);
-            }
-        }
-        return service;
+        return ctx;
+    }
+    
+    @Bean
+    public WebApiService webApi(WebAppContext ctx, WebApiPropertiesRepository repo) {
+        return new WebApiService(ctx, repo);
     }
     
     /*if (container instanceof TomcatEmbeddedServletContainer) {

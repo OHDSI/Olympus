@@ -1,14 +1,18 @@
 package org.ohdsi.olympus.model;
 
+import javax.annotation.PreDestroy;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerInitializedEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.util.Assert;
 
 /**
  *
  */
-public class WebApiService {
+public class WebApiService implements ApplicationListener<EmbeddedServletContainerInitializedEvent> {
     
     private static final Log log = LogFactory.getLog(WebApiService.class);
     
@@ -32,8 +36,8 @@ public class WebApiService {
      * <datasource.ohdsi.schema>OHDSI</datasource.ohdsi.schema>
      * <datasource.cohort.schema>OHDSI</datasource.cohort.schema>
      * <datasource.url>jdbc:oracle:thin:@172.31.80.28:1521:i2b2idp</datasource.url>
-     * <datasource.username>OHDSI</datasource.username>
-     * <datasource.password></datasource.password>
+     * <datasource.username>OHDSI</datasource.username> <datasource.password></datasource.password>
+     * <flyway.datasource.driverClassName></flyway.datasource.driverClassName>
      * <flyway.datasource.url>jdbc:oracle:thin:@172.31.80.28:1521:i2b2idp</flyway.datasource.url>
      * <flyway.datasource.username>OHDSI</flyway.datasource.username>
      * <flyway.datasource.password></flyway.datasource.password>
@@ -48,6 +52,7 @@ public class WebApiService {
         System.setProperty("datasource.url", props.getJdbcUrl());
         System.setProperty("datasource.username", props.getJdbcUser());
         System.setProperty("datasource.password", props.getJdbcPass());
+        System.setProperty("flyway.datasource.driverClassName", props.getFlywayJdbcDriverClassName());
         System.setProperty("flyway.datasource.url", props.getFlywayJdbcUrl());
         System.setProperty("flyway.datasource.username", props.getFlywayJdbcUser());
         System.setProperty("flyway.datasource.password", props.getFlywayJdbcPass());
@@ -68,9 +73,13 @@ public class WebApiService {
         return this.context.isRunning();
     }
     
-    /**
-     * Auto generated method comment
-     */
+    public boolean isConfigured() {
+        if (this.repo.findOne(WebApiProperties.ID) == null) {
+            return false;
+        }
+        return true;
+    }
+    
     public void start() throws Exception {
         Assert.state(!isRunning(), "WebApi is already running");
         Assert.state(isConfigured(), "WebApi has not yet been configured.");
@@ -87,11 +96,26 @@ public class WebApiService {
         this.context.stop();
     }
     
-    public boolean isConfigured() {
-        if (this.repo.findOne(WebApiProperties.ID) == null) {
-            return false;
+    public void init() {
+        if (isConfigured()) {
+            setSystemProperties(getProperties());
+            try {
+                start();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
-        return true;
+    }
+    
+    @PreDestroy
+    public void cleanup() {
+        if (isRunning()) {
+            try {
+                stop();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
     
     /**
@@ -102,6 +126,16 @@ public class WebApiService {
     public WebApiProperties getProperties() {
         WebApiProperties props = this.repo.findOne(WebApiProperties.ID);
         return props == null ? new WebApiProperties() : props;
+    }
+    
+    /* (non-Jsdoc)
+     * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
+     */
+    @Override
+    public void onApplicationEvent(EmbeddedServletContainerInitializedEvent event) {
+        if (event instanceof EmbeddedServletContainerInitializedEvent) {
+            init();
+        }
     }
     
 }

@@ -34,6 +34,10 @@ public class WebApiProperties {
     
     @NotNull
     @Size(max = 100, min = 1)
+    private String flywayJdbcDriverClassName;
+    
+    @NotNull
+    @Size(max = 100, min = 1)
     private String flywayJdbcUrl;
     
     @NotNull
@@ -249,6 +253,22 @@ public class WebApiProperties {
      */
     public void setCohortSchema(String cohortSchema) {
         this.cohortSchema = cohortSchema;
+    }
+
+    
+    /**
+     * @return the flywayJdbcDriverClassName
+     */
+    public String getFlywayJdbcDriverClassName() {
+        return flywayJdbcDriverClassName;
+    }
+
+    
+    /**
+     * @param flywayJdbcDriverClassName the flywayJdbcDriverClassName to set
+     */
+    public void setFlywayJdbcDriverClassName(String flywayJdbcDriverClassName) {
+        this.flywayJdbcDriverClassName = flywayJdbcDriverClassName;
     }
     
 }
