@@ -1,0 +1,77 @@
+<div class="chart-template">
+    <div class="row equal">
+
+
+        <div class="col-sm-3 quick-info-box">
+            <div>
+                <p><h3 style="text-decoration: underline">{{cohort.name}} </h3></p>
+                <p><h4><small ng-show="summary.sourceName != null">Source: </small> {{summary.sourceName}}</h4></p>
+                <p><h4><small ng-show="summary.numPersons != null">Number of Persons: </small> {{summary.numPersons}}</h4></p>
+                <p style="height:10px" ng-show="summary.numPersons != null || summary.numPersons != null">&nbsp;</p>
+                <p><h4><small ng-show="cohort.createdBy != null">Created By: </small> {{cohort.createdBy}}</h4></p>
+                <p><h4><small ng-show="cohort.createdDate != null">Created: </small> {{cohort.createdDate}}</h4></p>
+                <p style="height:100%">&nbsp;</p>
+                <p ng-show="cohort.description != null" style="    position: absolute;bottom: 0;  ">{{cohort.description}}</p>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Population by Gender</h3>
+                </div>
+                <div class="panel-body">
+                    <div id="genderPie" class="chart-well"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Age at First Observation</h3>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="ageatfirstobservation" class="chartcontainer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row equal">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Cumulative Observation</h3>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="cumulativeobservation" class="chartcontainer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Persons With Continuous Observation By Month</h3>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="oppeoplebymonthsingle" class="chartcontainer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -30,10 +30,20 @@ OLYMPUS is a project as part of the Observational Health Data Sciences and Infor
 * Pending
 
 
-##### Building
+##### Building & Packaging
 
 WebAPI (package using defaults `mvn clean package`)
 - Add WebAPI.war to Olympus/src/main/webapp/WEB-INF/applications/
+
+Hermes
+- clone github repo, edit js/config.js (Local,'http://localhost:20000/WebAPI')
+- cp to Olympus/src/main/webapp/Hermes
+
+Circe
+- cp to Olympus/src/main/webapp/Circe, edit js/config.js
+
+Heracles
+- edit Heracles.config.js
 
 Olympus : package with target db profile `mvn clean package -Polympus-oracle` or package will all drivers `-Polympus-comprehensive`
 

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Heracles</title>
+    <link rel="stylesheet" type="text/css" href="build/css/Heracles.min.css">
+</head>
+<body>
+
+<div class="container">
+    <!-- Header and app info -->
+    <div class="row page-one">
+        <div class="col-md-12">
+            <div class="row " style="margin-top:10px">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="jumbotron">
+                        <h2>Heracles</h2>
+                        <h4 class="header-sub">Analysis Runner</h4>
+                        <p class="sub-text">Heracles is the cohort analysis tool for the OMOP Common Data Model (CDM). Begin your analyses by selecting a cohort.</p>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+
+        <!-- Cohort search bar -->
+        <div class="col-md-12">
+            <div id="cohort-search" class="row ">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div id="cohorts-typeahead" class="heracles-typeahead">
+                        <input id="cohorts" type="text" placeholder="Search Cohorts" class="form-control large-input typeahead" focus/>
+                    </div>
+                    <div align="center" class="heracles-link">
+                        <a href="viewer.html">Switch to <b>view</b> Heracles Analyses</a>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div  id="cohort-explorer-main" class="row" style="display:none" ng-controller="CohortExplorerCtrl" >
+    <!-- Cohort Explorer -->
+    <div>
+        <div class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" style="width:200px">
+            <a class="navmenu-brand visible-md visible-lg" href="index.html" style="font-weight: bold">OHDSI Heracles</a>
+            <ul class="nav navmenu-nav" style="border-bottom:1px solid #898989;">
+                <li><a id="cohort-explorer-back"  style="font-size:16px">&laquo;Back</a></li>
+                <li><a ng-click="refreshCohort($event)" style="font-size:16px">Refresh</a></li>
+                <li><a ng-href="viewer.html?cohortId={{cohort.cohortDefinition.id}}" >Heracles Viewer</a></li>
+            </ul>
+
+            <a class="navmenu-brand" style="font-weight: bold">Visualization Packs</a>
+            <ul class="nav navmenu-nav">
+                <li ng-repeat="(k, v) in visualizationPacks" key="{{k}}" >
+                    <a ng-click="selectVizPack($event, k)">{{k}}</a>
+                </li>
+            </ul>
+            <a class="navmenu-brand" style="font-weight: bold" ng-click="scrollAnalysesClick($event, cohort.firstAnalysis)">Analysis Types</a>
+            <ul class="nav navmenu-nav">
+                <li ng-repeat="(k, v) in cohort.analysesMap" key="{{k}}" >
+                    <a ng-click="scrollAnalysesClick($event, k)">{{k}}</a>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="navbar navbar-default navbar-fixed-top hidden-md hidden-lg">
+            <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".navmenu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">OHDSI Heracles</a>
+        </div>
+
+        <div id="run-analysis-container" class="container detail-container" style="padding-left: 30px; padding-right: 30px;display: none" >
+            <div id="cohort-explorer-summary" class="row">
+                <div class="col-sm-4">
+                    <div>
+                        <h3 id="cohort-name" >{{cohort.cohortDefinition.name}}
+                            <!--
+                            <small ng-show="cohort.cohortDefinition.description != null"
+                                   data-toggle="tooltip" data-placement="bottom" title="{{cohort.cohortDefinition.description}}">
+                                <a class="definition">definition</a>
+                            </small>
+                            -->
+                        </h3>
+                        <div>
+                            <p class="cohort-description" >
+                                {{cohort.cohortDefinition.description}}
+                            </p>
+                        </div>
+                        <div class="summary-grouper">
+                            <div ng-show="cohort.totalPatients != null">
+                                <label style="text-decoration:underline">Summary</label>
+                            </div>
+                            <div ng-show="cohort.totalPatients != null" >
+                                <label class="cohort-desc">Total Patients: </label>{{cohort.totalPatients}}</div>
+                            <div ng-show="cohort.meanObsPeriod != null" >
+                                <label class="cohort-desc">Mean Observation Period: </label>{{cohort.meanObsPeriod}}</div>
+                            <div ng-show="cohort.meanAge != null" >
+                                <label class="cohort-desc">Mean Age: </label>{{cohort.meanAge}}</div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div >
+                        <h4 style="text-align:center">Age Distribution</h4>
+                        <div id="age_dist" class="d3-wrapper" />
+                    </div>
+                </div>
+                </div>
+                <div class="col-sm-4">
+                    <div >
+                        <h4 style="text-align:center">Gender Distribution</h4>
+                        <div id="gender_dist" class="d3-wrapper" style="margin-left:20%"/>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <h4>Run Cohort Analyses ({{analysisCount}})</h4>
+                            <span class="toggle-filter-span" filter-key="cohort-analyses">
+                                 <input id="auto-filter-input" placeholder="Type to filter..." type="text" class="form-control auto-filter-check-list-input" style="margin-top:8px" filter-key="cohort-analyses"/>
+                                 <div class="multiselect-wrapper" filter-key="cohort-analyses">
+                                     <div id="auto-filter-div" class="multiselect form-control" style="margin:3px;height:270px;overflow-y:auto;width:100%;" filter-key="cohort-analyses">
+                                        <span style="float:right">
+                                            <div class="btn-group btn-group-xs" style="margin-right:15px">
+                                                <button type="button" class="btn btn-default auto-filter-check-list-select" filter-key="cohort-analyses" id="select-filter-button" >Select all</button>
+                                                <button type="button" class="btn btn-default auto-filter-check-list-clear" filter-key="cohort-analyses" id="deselect-filter-button">Deselect all</button>
+                                            </div>
+                                        </span>
+                                         <div ng-repeat="(k, v) in cohort.analysesMap">
+                                             <label class="toggle-parent-label" key="{{k}}" ng-click="parentAnalysesClick($event)">
+                                                 <input type="checkbox" class="toggle-checkbox-parent-item" filter-key="cohort-analyses"
+                                                        style="margin:4px" value="{{k}}" />
+                                                 {{k}}
+                                             </label>
+                                             <div ng-repeat="item in v">
+                                                 <label class="toggle-child-label {{item.class}}" title="Analysis ID#: {{item.analysisId}}">
+                                                     <input type="checkbox" class="toggle-checkbox-item" ng-click="analysisClick()"
+                                                            style="margin:2px" filter-key="cohort-analyses" value="{{item.analysisName}}" analysis-id="{{item.analysisId}}" parent="{{k}}" />
+                                                     {{item.analysisName}}
+                                                     <span ng-show="item.lastUpdateTimeFormatted != null" class="last-update-time"> (Last Run {{item.lastUpdateTimeFormatted}})</span>
+                                                 </label>
+                                             </div>
+                                         </div>
+
+                                     </div>
+
+                                 </div>
+                            </span>
+            </div>
+            <!--toggle buttons-->
+            <div class="col-sm-8">
+                <h4>Concept Filters</h4>
+                <span class="label label-default toggle-filter-control" toggle-filter="condition" down="false">
+                    <span class="toggle-operator">+</span><span class="toggle-label">Condition</span></span>
+                <span class="label label-default toggle-filter-control" toggle-filter="drug" down="false">
+                    <span class="toggle-operator">+</span><span class="toggle-label">Drug</span></span>
+                <span class="label label-default toggle-filter-control" toggle-filter="procedure" down="false">
+                        <span class="toggle-operator">+</span><span class="toggle-label">Procedure</span></span>
+                <span  class="label label-default toggle-filter-control" toggle-filter="observation" down="false">
+                        <span class="toggle-operator">+</span><span class="toggle-label">Observation</span></span>
+                <span class="label label-default toggle-filter-control" toggle-filter="measurement" down="false">
+                        <span class="toggle-operator">+</span><span class="toggle-label">Measurement</span></span>
+            </div>
+            <div class="col-sm-4" style="height:30px">&nbsp;</div>
+            <!--inputs-->
+            <div class="col-sm-8" id="concept-input-div" style="padding-top:5px">
+                <div class="toggle-filter-input-wrapper" toggle-filter="condition" style="display:none;">
+                    <input type="text" class="form-control toggle-filter-input" toggle-filter="condition" />
+                </div>
+                <div class="toggle-filter-input-wrapper" toggle-filter="drug" style="display:none;">
+                    <input type="text" class="form-control toggle-filter-input" toggle-filter="drug" />
+                </div>
+                <div class="toggle-filter-input-wrapper" toggle-filter="procedure" style="display:none;">
+                    <input type="text" class="form-control toggle-filter-input" toggle-filter="procedure" />
+                </div>
+                <div class="toggle-filter-input-wrapper" toggle-filter="observation" style="display:none;">
+                    <input type="text" class="form-control toggle-filter-input" toggle-filter="observation" />
+                </div>
+                <div class="toggle-filter-input-wrapper" toggle-filter="measurement" style="display:none;">
+                    <input type="text" class="form-control toggle-filter-input" toggle-filter="measurement" />
+                </div>
+            </div>
+            <div class="col-sm-4" style="height:60px">&nbsp;</div>
+            <div class="col-sm-12">
+                <button class="btn btn-lg btn-heracles analyses-button pull-right" filter-key="cohort-analyses" ng-click="submitJob($event)" data-loading-text="...">Begin Analysis</button>
+            </div>
+            <div class="col-sm-12" style="padding:10px">&nbsp;</div>
+        </div>
+</div>
+        <div class="row">
+            <div class="modal fade" id="jobStatusModal" tabindex="-1" role="dialog" aria-labelledby="jobStatusModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="jobStatusModalLabel">{{job.label}}</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{job.message}}
+
+                        <span ng-show="job.job_link != null">
+                            <br /><br />
+                            <a href="{{job.job_link}}" target="_blank">Click here to view Job Status</a>
+                        </span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="spinner-modal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h3><i class="fa fa-cog fa-spin"></i> Loading...</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="messageModalLabel">{{message.label}}</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{message.text}}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="build/js/Heracles.config.js" type="text/javascript"></script>
+<script src="lib/requirejs/require.js" data-main="src/js/require.main"></script>
+<script type="application/javascript">
+    require(['heracles-analysis']);
+</script>
+
+</body>
+
+</html>

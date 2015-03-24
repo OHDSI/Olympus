@@ -1,0 +1,38 @@
+[
+    {
+        "COHORT_DEFINITION_ID": 1,
+        "COHORT_DEFINITION_NAME": "Schizophrenia",
+        "COHORT_DEFINITION_DESCRIPTION": "Patients with a history of schizohphrenia by diagnosis",
+        "DEFINITION_TYPE_CONCEPT_ID": 0,
+        "COHORT_DEFINITION_SYNTAX": "here is some great json code",
+        "SUBJECT_CONCEPT_ID": 0,
+        "COHORT_INITIATION_DATE": "2014-09-12"
+    },
+    {
+        "COHORT_DEFINITION_ID": 2,
+        "COHORT_DEFINITION_NAME": "Type 2 Diabetes",
+        "COHORT_DEFINITION_DESCRIPTION": "Patients with medication or diagnosis evidence of diabetes",
+        "DEFINITION_TYPE_CONCEPT_ID": 0,
+        "COHORT_DEFINITION_SYNTAX": "here is some more great json code",
+        "SUBJECT_CONCEPT_ID": 0,
+        "COHORT_INITIATION_DATE": "2014-11-12"
+    },
+    {
+        "COHORT_DEFINITION_ID": 3,
+        "COHORT_DEFINITION_NAME": "Post-Partum Depression",
+        "COHORT_DEFINITION_DESCRIPTION": "Patients with evidence of Post-Partum depression by diagnosis or NLP",
+        "DEFINITION_TYPE_CONCEPT_ID": 0,
+        "COHORT_DEFINITION_SYNTAX": "even better json code",
+        "SUBJECT_CONCEPT_ID": 0,
+        "COHORT_INITIATION_DATE": "2014-05-12"
+    },
+    {
+        "COHORT_DEFINITION_ID": 4,
+        "COHORT_DEFINITION_NAME": "Dementia",
+        "COHORT_DEFINITION_DESCRIPTION": "Patients with Alzheimer's or Cognitive decline",
+        "DEFINITION_TYPE_CONCEPT_ID": 0,
+        "COHORT_DEFINITION_SYNTAX": "super json code",
+        "SUBJECT_CONCEPT_ID": 0,
+        "COHORT_INITIATION_DATE": "2014-02-12"
+    }
+]

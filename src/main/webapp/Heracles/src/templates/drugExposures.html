@@ -1,0 +1,132 @@
+<div class="chart-template">
+    <h3 class="cohort-name-header">{{cohort.name}}</h3>
+
+
+    <div class="row equal">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Drug Prevalence
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="active" id="treemap-tab"><a href="#drug_treemap_panel"  role="tab" data-toggle="tab">Treemap</a>
+                            </li>
+                            <li><a href="#drug_table_panel"  role="tab" data-toggle="tab">Table</a>
+                            </li>
+                        </ul>
+                        <div id='content' class="tab-content">
+                            <div class="tab-pane active" id="drug_treemap_panel">
+                                <div id="treemap_container">
+                                    <div class="treemap_zoomtarget"></div>
+                                </div>
+
+                                <div class="treemap_legend">Box Size: Prevalence, Color: Records per Person (Blue to Green = Low to High), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom</div>
+                            </div>
+                            <div class="tab-pane" id="drug_table_panel">
+                                <table id="drug_table" class="display">
+                                    <thead>
+                                    <tr>
+                                        <th>Concept Id</th>
+                                        <th>ATC 1</th>
+                                        <th>ATC 3</th>
+                                        <th>ATC 5</th>
+                                        <th>Ingredient</th>
+                                        <th>RxNorm</th>
+                                        <th>Person Count</th>
+                                        <th>Prevalence</th>
+                                        <th>Records per Person</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="reportDrugExposuresDrilldown" class="hidden reportDrilldown">
+        <div id="drugDrilldownTitle" class="reportTitle"></div>
+        <div class="row equal">
+            <div class="col-sm-12">
+                <div id="panelDrugPrevalence" class="panel panel-default">
+                    <div class="panel-heading">
+                        Drug Prevalence
+                    </div>
+                    <div class="panel-body">
+                        <div class="drilldown" id="trellisLinePlot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row equal">
+            <div class="col-sm-12">
+                <div id="panelDrugExposurePrevalenceByMonth" class="panel panel-default">
+                    <div class="panel-heading">
+                        Drug Exposure Prevalence by Month
+                    </div>
+                    <div class="panel-body">
+                        <div class="drilldown" id="drugPrevalenceByMonth"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row equal">
+            <div class="col-md-3">
+                <div id="panelAgeAtFirstDiagnosis" class="panel panel-default">
+                    <div class="panel-heading">
+                        Age at First Exposure
+                    </div>
+                    <div class="panel-body">
+                        <div class="drilldown" id="ageAtFirstExposure"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div id="panelDaysSupplyDistribution" class="panel panel-default">
+                    <div class="panel-heading">
+                        Days Supply
+                    </div>
+                    <div class="panel-body">
+                        <div class="drilldown" id="daysSupplyDistribution"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div id="panelQuantityDistribution" class="panel panel-default">
+                    <div class="panel-heading">
+                        Quantity
+                    </div>
+                    <div class="panel-body">
+                        <div class="drilldown" id="quantityDistribution"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div id="panelRefillsDistribution" class="panel panel-default">
+                    <div class="panel-heading">
+                        Refills
+                    </div>
+                    <div class="panel-body">
+                        <div class="drilldown" id="refillsDistribution"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div id="panelDrugsByType" class="panel panel-default">
+                    <div class="panel-heading">
+                        Drugs by Type
+                    </div>
+                    <div class="panel-body">
+                        <div class="drilldown" id="drugsByType"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

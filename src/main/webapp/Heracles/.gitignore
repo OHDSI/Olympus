@@ -1,0 +1,9 @@
+/target/
+.settings
+.classpath
+.project
+.springBeans
+/.idea/
+/bower_components
+/node_modules
+npm-debug.log

@@ -1,0 +1,54 @@
+<div class="chart-template">
+    <h3 class="cohort-name-header">{{cohort.name}}</h3>
+
+    <div class="row equal">
+        <div class="col-sm-2 quick-info-box">
+            <div>
+                <p><h4><small ng-show="summary.sourceName != null">Source: </small> {{summary.sourceName}}</h4></p>
+                <p><h4><small ng-show="summary.numPersons != null">Number of Persons: </small> {{summary.numPersons}}</h4></p>
+            </div>
+        </div>
+        <div class="col-sm-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Year of Birth
+                </div>
+                <div class="panel-body">
+                    <div id="birthyearhist" class="chartcontainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row equal">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Population by Gender
+                </div>
+                <div class="panel-body">
+                    <div id="genderPie" style="text-align:center"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Population by Race
+                </div>
+                <div class="panel-body">
+                    <div id="raceTypePie" style="text-align: center; width: auto"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Population by Ethnicity
+                </div>
+                <div class="panel-body">
+                    <div id="ethnicityTypePie" style="text-align: center; width: auto"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

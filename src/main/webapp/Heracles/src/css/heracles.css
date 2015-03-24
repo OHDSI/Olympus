@@ -1,0 +1,609 @@
+@import "typeahead.css";
+@import url("../../lib/bootstrap/bootstrap.css");
+@import url("../../lib/jasny-bootstrap/css/jasny-bootstrap.min.css");
+@import url("../../lib/colorbrewer/colorbrewer.css");
+
+.sub-text {
+	color: #BEEDF6;
+}
+
+.sub-text-alt {
+    color: #C5E3F6;
+}
+
+.header-sub {
+    color: lightgray;
+}
+
+.jumbotron {
+	background: #13A0BA;
+    color: white;
+    background: -webkit-linear-gradient(#13A0BA, #026476); /* For Safari 5.1 to 6.0 */
+  	background: -o-linear-gradient(#13A0BA, #026476); /* For Opera 11.1 to 12.0 */
+  	background: -moz-linear-gradient(#13A0BA, #026476); /* For Firefox 3.6 to 15 */
+  	background: linear-gradient(#13A0BA, #026476); /* Standard syntax */
+}
+
+.jumbotron-alt {
+    background: #1F78B4;
+    color: white;
+    background: -webkit-linear-gradient(#1F78B4, #064B77); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#1F78B4, #064B77); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#1F78B4, #064B77); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#1F78B4, #064B77); /* Standard syntax */
+}
+
+.large-input {
+	padding: 10px;
+    font-size: 15pt;
+    line-height: 2.45;
+    height: 50px;
+}
+
+.btn-heracles {
+	color: #fff;
+	background-color: #0A7184;
+	border-color: #168296;
+}
+
+a {
+	cursor:pointer;
+}
+
+.cohort-desc {
+	padding-right: 4px;
+}
+
+.definition {
+	text-decoration: underline;	
+	padding: 2px 10px;
+}
+
+ .toggle-child-label {
+ 	font-weight:normal;
+ 	padding-left:40px;
+ 	cursor:pointer;
+ }
+ 
+.toggle-parent-label {
+	cursor:pointer;
+}
+ 
+ 
+.toggle-filter-control {
+	font-size: 90%;
+	background-color:#aaa;
+    cursor:pointer;
+}
+
+.toggle-filter-active {
+    background-color: #666;
+}
+ 
+.multiselect {
+	width: 20em;
+	height: 15em;
+	border: solid 1px #c0c0c0;
+	overflow: auto;
+}
+
+.multiselect label {
+	display: block;
+}
+
+.multiselect-on {
+	color: #ffffff;
+	background-color: #000099;
+}
+
+.analyses-button {
+	margin-top:10px;
+}
+
+.d3-wrapper {
+	text-align: center;
+}
+
+.analysis-complete {
+    color: #898989;
+}
+
+.analysis-open {
+
+}
+
+.cohort-description {
+    color: #898989;
+    padding: 2px;
+}
+
+.summary-grouper {
+    padding: 2px;
+}
+
+.last-update-time {
+    font-style: oblique;
+    color: #787878;
+    font-family: serif;
+    font-size: 12px;
+}
+
+.heracles-link {
+    padding-top: 20px;
+    font-size: 14pt;
+
+}
+
+.heracles-link > a {
+    color: darkgray;
+}
+
+.navmenu-nav > li > a {
+    padding: 6px 15px;
+}
+
+.navbar-offcanvas, .navmenu {
+    width: 200px;
+}
+
+html, body {
+    height: 100%;
+}
+body {
+    padding: 50px 0 0 0;
+    overflow-x: hidden;
+
+}
+
+.navmenu {
+    padding-top: 50px;
+}
+
+.navbar {
+    display: block;
+    text-align: center;
+}
+.navbar-brand {
+    display: inline-block;
+    float: none;
+}
+.navbar-toggle {
+    position: absolute;
+    float: left;
+    margin-left: 15px;
+}
+
+.container {
+    max-width: 100%;
+}
+
+.detail-container {
+    width: auto;
+}
+
+.chart-well > svg {
+    padding: 3px;
+}
+
+.rotate {
+
+    /* Safari */
+    -webkit-transform: rotate(-90deg);
+
+    /* Firefox */
+    -moz-transform: rotate(-90deg);
+
+    /* IE */
+    -ms-transform: rotate(-90deg);
+
+    /* Opera */
+    -o-transform: rotate(-90deg);
+
+    /* Internet Explorer */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+
+}
+
+/*
+.chart-template > .row {
+    display: table;
+}
+*/
+.chart-template > .row [class*="col-"] > panel {
+    /*
+    float: none;
+    display: table-cell;
+    vertical-align: top;
+    */
+    /*
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+    */
+}
+@media screen and (min-width: 768px) {
+    .equal, .equal > div[class*='col-'] {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        flex: 1 1 auto;
+    }
+}
+
+.panel {
+    width: 100%;
+}
+
+.panel-table {
+    margin: 20px;
+}
+
+.report {
+    display: none;
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+}
+/* D3 Tip Styles */
+
+.d3-tip {
+    /*white-space: nowrap;*/
+    line-height: 1;
+    font-size: 10px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+    pointer-events: none;
+    max-width: 400px;
+}
+/* Creates a small triangle extender for the tooltip */
+
+.d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    pointer-events: none;
+}
+/* Northward tooltips */
+
+.d3-tip.n:after {
+    content: "\25BC";
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+    text-align: center;
+}
+/* Eastward tooltips */
+
+.d3-tip.e:after {
+    content: "\25C0";
+    margin: -4px 0 0 0;
+    top: 50%;
+    left: -8px;
+}
+/* Southward tooltips */
+
+.d3-tip.s:after {
+    content: "\25B2";
+    margin: 0 0 1px 0;
+    top: -8px;
+    left: 0;
+    text-align: center;
+}
+/* Westward tooltips */
+
+.d3-tip.w:after {
+    content: "\25B6";
+    margin: -4px 0 0 -1px;
+    top: 50%;
+    left: 100%;
+}
+.tab-pane {
+    padding: 7px 7px 7px 7px;
+}
+.clear {
+    clear: both;
+}
+/* Condition Occurrence Report */
+
+.pathleaf {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+.pathleafstat {
+    font-size: 12px;
+    color: #666;
+    font-family: "Courier New";
+    margin-bottom: 2px;
+}
+.pathstep {
+    font-size: 12px;
+    color: #333;
+    margin-bottom: 1px;
+}
+hr.path {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+#condition_table tr {
+    cursor: pointer;
+}
+#treemap_container rect {
+    cursor: pointer;
+}
+th {
+    white-space: nowrap;
+}
+.dropdown-menu li {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.dropdown-menu li:hover {
+    background-color: #eee;
+}
+.numeric {
+    text-align: right;
+}
+.hidden {
+    display: none;
+}
+table.dataTable tbody td {
+    padding: 2px 4px;
+    vertical-align: top;
+}
+#datasourceTitle {
+    margin-top: 65px;
+    font-size: 16px;
+    font-weight: bold;
+}
+/* datatables.colvis override */
+
+ul.ColVis_collection {
+    width: 200px;
+}
+button.ColVis_Button {
+    margin-left: 10px;
+    height: 25px;
+    -webkit-box-shadow: 1px 1px 1px #ccc;
+    -moz-box-shadow: 1px 1px 1px #ccc;
+    -ms-box-shadow: 1px 1px 1px #ccc;
+    -o-box-shadow: 1px 1px 1px #ccc;
+    box-shadow: 1px 1px 1px #ccc;
+}
+
+table.dataTable.hover tbody tr:hover.selected,
+table.dataTable.hover tbody tr.odd:hover.selected,
+table.dataTable.hover tbody tr.even:hover.selected, table.dataTable.display tbody tr:hover.selected,
+table.dataTable.display tbody tr.odd:hover.selected,
+table.dataTable.display tbody tr.even:hover.selected {
+    background-color:  rgba(89, 159, 216, 0.5);
+}
+
+table.dataTable.stripe tbody tr.odd.selected, table.dataTable.display tbody tr.odd.selected {
+    background-color:  rgba(89, 159, 216, 0.5);
+}
+
+table.dataTable tbody tr.even.selected,
+table.dataTable tbody tr.odd.selected {
+    background-color:  rgba(89, 159, 216, 0.5);
+}
+
+.sorting_1 {
+    background-color: rgba(89, 159, 216, 0.3) !important;
+}
+.sorting_2 {
+    background-color: rgba(89, 159, 216, 0.2) !important;
+}
+.sorting_3 {
+    background-color: rgba(89, 159, 216, 0.1) !important;
+}
+.popover {
+    max-width: 800px;
+    z-index: 1040;
+}
+
+div.chartcontainer {
+    line-height: 0px;
+}
+/* Legend Styles */
+
+.legend {
+    padding: 5px;
+    font: 10px arial;
+}
+/* general bar styles */
+
+.area {
+    fill: rgb(68, 68, 136);
+}
+.bar {
+    fill: #1f77b4;
+}
+/* Barchart styles */
+
+.barlabel {
+    font-family: arial;
+    font-size: 8px;
+}
+/* Boxplot styles */
+
+.boxplot {
+    font: 10px arial;
+}
+.boxplot .median {
+    stroke: #1f77b4;
+}
+.boxplot line {
+    stroke: #1f77b4;
+    stroke-width: 1px;
+}
+.boxplot rect,
+.boxplot circle {
+    fill: rgba(31, 119, 180, 0.2);
+    stroke: #1f77b4;
+    stroke-width: 1px;
+}
+.boxplot .whisker {
+    stroke-dasharray: 3, 3;
+    stroke: #1f77b4;
+}
+.boxplot .outlier {
+    fill: none;
+    stroke: #1f77b4;
+}
+
+table.boxplotValues tr td
+{
+    text-align: right;
+    padding: 0px 3px;
+}
+
+.lineplot .line {
+    fill: none;
+    stroke: #1f77b4;
+    stroke-width: 1px;
+}
+.g-trellis .x-guide path.domain,
+.g-trellis .y-guide path.domain {
+    fill: none;
+}
+.g-trellis .x-guide .tick line {
+    stroke: #ccc;
+    stroke-width: .6;
+}
+.g-trellis .y-guide .tick line {
+    stroke: #ccc;
+    stroke-width: .6;
+}
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+}
+.axis text {
+    font-family: arial;
+    font-size: 8px;
+}
+.axislabel {
+    font-family: arial;
+    font-weight: bold;
+}
+table.data td:first-child {
+    text-align: right;
+}
+table.data td {
+    padding-left: 3px;
+    padding-right: 3px;
+    white-space: nowrap;
+}
+.g-overlay {
+    fill: none;
+    pointer-events: all;
+}
+.g-label-value,
+.g-label-year {
+    font-size: 10px;
+}
+.trellisLegend {
+    font-size: 10px;
+    font-family: arial;
+}
+.grouper {
+    fill: none;
+    stroke: white;
+    stroke-width: 2px;
+    display: none;
+}
+#treemap_container svg {
+    shape-rendering: 'crispEdges';
+}
+.treemap_legend {
+    font-size: 10px;
+}
+
+.focus
+{
+    opacity: 0;
+}
+
+@media (min-width: 1px) {
+    .navbar-toggle {
+        display: block !important;
+    }
+}
+
+.ng-cloak {
+    opacity: 0;
+}
+
+@media (min-width: 992px) {
+    #viewer-container, #cohort-explorer-main {
+        padding: 0 0 0 200px;
+    }
+    .navmenu {
+        padding-top: 0;
+    }
+    .navbar {
+        display: none !important; /* IE8 fix */
+    }
+}
+
+.quick-info-box {
+    background: #f8f8f8;
+    color: #636363;
+    margin-bottom: 20px;
+    margin-left: 15px;
+    border-radius: 5px;
+}
+
+.cohort-name-header {
+    padding-left: 6px;
+}
+
+#spinner-modal .modal-dialog,
+#spinner-modal .modal-content,
+#spinner-modal .modal-body {
+    background: transparent;
+    color: rgba(255,255,255,1);
+    box-shadow: none;
+    border: none;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
+.reportTitle {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.reportDrilldown {
+    padding: 20px;
+}
+
+.donut-tip {
+    padding: 4px 6px;
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.9);
+    font-size: 11px;
+    text-align: center;
+    color: #fff;
+}

@@ -1,0 +1,33 @@
+.inputField
+{
+	background-color: #eee;
+	border-bottom: solid 1px #ccc;
+	border-left: none;
+	border-top: none;
+	border-right: none;
+	padding: 3px;
+	padding-left: 10px;
+	outline: none;
+}
+
+button:focus
+{
+	outline:none !important;
+}
+
+img.spin {
+    -webkit-animation-name: rotation;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes rotation {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(359deg);
+    }
+}

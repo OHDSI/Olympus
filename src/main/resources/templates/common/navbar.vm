@@ -8,7 +8,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.html" style="text-decoration:none">
+			<a class="navbar-brand" href="/index.html" style="text-decoration:none">
 				<img src="/img/ohdsi.png" alt="$appName" style="height:40px"/>
 			</a>
 		</div>

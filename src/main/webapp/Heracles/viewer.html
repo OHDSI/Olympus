@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Heracles</title>
+    <link rel="stylesheet" type="text/css" href="build/css/Heracles.min.css">
+    <link rel="stylesheet" type="text/css" href="lib/datatables/jquery.datatables.colvis.css">
+    <link rel="stylesheet" type="text/css" href="lib/datatables/jquery.datatables.css">
+</head>
+<body>
+
+<div class="container" id="searcher-container">
+    <!-- Header and app info -->
+    <div class="row page-one">
+        <div class="col-md-12">
+            <div class="row " style="margin-top:10px">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="jumbotron jumbotron-alt">
+                        <h2>Heracles</h2>
+                        <h4 class="header-sub">Analysis Viewer</h4>
+                        <p class="sub-text-alt">Heracles is the cohort analysis tool for the OMOP Common Data Model (CDM). Begin your analyses by selecting a cohort.</p>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+
+        <!-- Cohort search bar -->
+        <div class="col-md-12">
+            <div id="cohort-search" class="row ">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div id="cohorts-viewer-typeahead" class="heracles-typeahead">
+                        <input id="cohorts" type="text" placeholder="Search Cohorts" class="form-control large-input typeahead" />
+                    </div>
+                    <div align="center" class="heracles-link">
+                        <a href="index.html">Switch to <b>run</b> Heracles Analyses</a>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div  id="viewer-container" style="display: none" ng-controller="CohortViewerCtrl">
+    <div class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" style="width:200px">
+        <a class="navmenu-brand visible-md visible-lg" ng-click="goBack($event)" style="font-weight: bold">OHDSI Heracles</a>
+        <ul class="nav navmenu-nav" style="border-bottom:1px solid #898989;">
+            <li><a ng-click="goBack($event)" style="font-size:16px">&laquo;Back</a></li>
+            <li><a ng-click="refreshCohortVisualization($event)" style="font-size:16px">Refresh</a></li>
+            <li><a ng-href="index.html?cohortId={{cohort.id}}">Heracles Runner</a></li>
+        </ul>
+        <ul class="nav navmenu-nav">
+            <li class="active"><a id="dashboard" class="chartTypes">Dashboard</a></li>
+            <li><a id="cohortSpecific" class="chartTypes">Cohort Specific</a></li>
+            <li><a id="heraclesHeel" class="chartTypes">Heracles Heel</a></li>
+            <li><a id="person" class="chartTypes">Person</a></li>
+            <li><a id="observationPeriods" class="chartTypes">Observation Periods</a></li>
+            <li><a id="dataDensity" class="chartTypes">Data Density</a></li>
+            <li><a id="condition" class="chartTypes">Condition</a></li>
+            <li><a id="conditionEras" class="chartTypes">Condition Eras</a></li>
+            <li><a id="observations" class="chartTypes">Observations</a></li>
+            <li><a id="drugEras" class="chartTypes">Drug Eras</a></li>
+            <li><a id="drugExposures" class="chartTypes">Drug Exposures</a></li>
+            <li><a id="procedures" class="chartTypes">Procedures</a></li>
+            <li><a id="visits" class="chartTypes">Visits</a></li>
+            <li><a id="death" class="chartTypes">Death</a></li>
+        </ul>
+
+    </div>
+
+    <div class="navbar navbar-default navbar-fixed-top hidden-md hidden-lg">
+        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".navmenu">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">OHDSI Heracles</a>
+    </div>
+
+    <div class="container detail-container">
+        <div id="chart-container">
+            <div id="chart-wrapper" ng-include="template" ng-cloak>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="spinner-modal">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h3><i class="fa fa-cog fa-spin"></i> <span id="loading-text">Loading...</span></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="build/js/Heracles.config.js" type="text/javascript"></script>
+<script src="lib/requirejs/require.js" data-main="src/js/require.main"></script>
+<script type="application/javascript">
+    require(['heracles-results']);
+</script>
+
+</body>
+
+</html>
