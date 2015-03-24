@@ -51,7 +51,8 @@ public class WebApiConfig {
         final File destDir = baseDir;
         final File destFile = new File(destDir, "WebAPI.war");
         final InputStream is = this.sc.getResourceAsStream("/WEB-INF/applications/WebAPI.war");
-        log.info(("IS: " + is) == null ? null : is.available());
+        Assert.notNull(is, "InputStream for WebAPI.war resource must not be null");
+        log.debug("InputStream for WebAPI.war: " + is.available());
         FileUtils.copyInputStreamToFile(is, destFile);
         
         WebAppContext ctx = new WebAppContext();
