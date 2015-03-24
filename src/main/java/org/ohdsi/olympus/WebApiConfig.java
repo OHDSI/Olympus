@@ -14,6 +14,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import org.ohdsi.olympus.model.WebApiPropertiesRepository;
 import org.ohdsi.olympus.model.WebApiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
 import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainer;
 import org.springframework.context.annotation.Bean;
@@ -40,11 +41,13 @@ public class WebApiConfig {
     private ContextHandlerCollection contextHandlerCollection;
     
     @Bean
-    public WebAppContext webApiContext(File baseDir) throws Exception {
-        Assert.state(server != null && server.getEmbeddedServletContainer() instanceof JettyEmbeddedServletContainer,
+    public WebAppContext webApiContext(final File baseDir) throws Exception {
+        Assert.state((this.server != null)
+                && (this.server.getEmbeddedServletContainer() instanceof JettyEmbeddedServletContainer),
             "Olympus assumes use of its embedded jetty server");
         
-        final JettyEmbeddedServletContainer jetty = (JettyEmbeddedServletContainer) server.getEmbeddedServletContainer();
+        final JettyEmbeddedServletContainer jetty = (JettyEmbeddedServletContainer) this.server
+                .getEmbeddedServletContainer();
         final String contextPath = "/WebAPI";
         log.info("Copying WAR to absolute path: " + baseDir);
         baseDir.mkdirs();
@@ -55,7 +58,7 @@ public class WebApiConfig {
         log.debug("InputStream for WebAPI.war: " + is.available());
         FileUtils.copyInputStreamToFile(is, destFile);
         
-        WebAppContext ctx = new WebAppContext();
+        final WebAppContext ctx = new WebAppContext();
         ctx.setServer(jetty.getServer());
         ctx.setContextPath(contextPath);
         ctx.setWar(destFile.getAbsolutePath());
@@ -68,8 +71,9 @@ public class WebApiConfig {
     }
     
     @Bean
-    public WebApiService webApi(WebAppContext ctx, WebApiPropertiesRepository repo) {
-        return new WebApiService(ctx, repo);
+    public WebApiService webApi(@Value("${olympus.webapi.launch.enabled}") final boolean isWebApiLaunchEnabled,
+                                final WebAppContext ctx, final WebApiPropertiesRepository repo) {
+        return new WebApiService(isWebApiLaunchEnabled, ctx, repo);
     }
     
     /*if (container instanceof TomcatEmbeddedServletContainer) {

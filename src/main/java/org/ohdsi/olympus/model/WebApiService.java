@@ -20,12 +20,15 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
     
     private WebApiPropertiesRepository repo;
     
+    private boolean isWebApiLaunchEnabled;
+    
     /**
      * @param ctx
      */
-    public WebApiService(WebAppContext ctx, WebApiPropertiesRepository repo) {
+    public WebApiService(boolean isWebApiLaunchEnabled, WebAppContext ctx, WebApiPropertiesRepository repo) {
         this.context = ctx;
         this.repo = repo;
+        this.isWebApiLaunchEnabled = isWebApiLaunchEnabled;
     }
     
     /**
@@ -70,7 +73,9 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
      * @return
      */
     public boolean isRunning() {
-        return this.context.isRunning();
+        synchronized (this.context) {
+            return this.context.isRunning();
+        }
     }
     
     public boolean isConfigured() {
@@ -81,26 +86,34 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
     }
     
     public void start() throws Exception {
-        Assert.state(!isRunning(), "WebApi is already running");
-        Assert.state(isConfigured(), "WebApi has not yet been configured.");
-        log.info("Starting WebAppContext: " + context);
-        this.context.start();
+        synchronized (this.context) {
+            Assert.state(!isRunning(), "WebApi is already running");
+            Assert.state(isConfigured(), "WebApi has not yet been configured.");
+            log.info("Starting WebAppContext: " + context);
+            this.context.start();
+        }
     }
     
     /**
      * Auto generated method comment
      */
     public void stop() throws Exception {
-        Assert.state(isRunning(), "WebApi is not running.");
-        log.info("Stopping WebAppContext: " + context);
-        this.context.stop();
+        synchronized (this.context) {
+            Assert.state(isRunning(), "WebApi is not running.");
+            log.info("Stopping WebAppContext: " + context);
+            this.context.stop();
+        }
     }
     
     public void init() {
         if (isConfigured()) {
             setSystemProperties(getProperties());
             try {
-                start();
+                if (this.isWebApiLaunchEnabled) {
+                    start();
+                } else {
+                    log.warn("WebApi launch disabled.");
+                }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

@@ -3,6 +3,29 @@
 	#set ( $current = "index" )
 	#parse( "common/navbar.vm" )
 	#renderNavBar ($current )
+
+<div class="container" id="main-launcher">
+    <div class="row row-top">
+        <div class="col-md-12">
+	        <div class="tab-content">
+
+	            <div class="tab-pane" id="hermes" data-src="http://localhost:20000/Hermes/index.html">
+	                <iframe src="" frameborder="0" webkitallowfullscreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowFullScreen" style="overflow:hidden;height:2500;width:100%" height="2500" width="100%"></iframe>
+	            </div>
+	
+	            <div class="tab-pane" id="circe" data-src="http://localhost:20000/Circe/index.html">
+	                <iframe src="" frameborder="0" webkitallowfullscreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowFullScreen" style="overflow:hidden;height:2500;width:100%" height="2500" width="100%"></iframe>
+	            </div>
+	
+	
+	            <div class="tab-pane" id="heracles" data-src="http://localhost:20000/Heracles/index.html">
+	                <iframe src="" frameborder="0" webkitallowfullscreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowFullScreen" style="overflow:hidden;height:2500;width:100%" height="2500" width="100%"></iframe>
+	            </div>
+	        </div>
+        </div>
+    </div>
+</div>
+#*
 	<div class="container" id="main-launcher">
 		<!-- Header and app info -->
 		<div class="row row-top">
@@ -13,7 +36,6 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
 				<div class="row">
@@ -53,4 +75,5 @@
 			</div>
 		</div>
 	</div>
+*#
 </div> 

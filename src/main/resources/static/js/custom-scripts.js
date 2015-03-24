@@ -16,5 +16,21 @@ $(document).ready(function() {
 		e.stopPropagation();
 		return false;
 	});
+	
+	$('#btnLaunchWebApi').click(function() {
+	    // handle form processing here
+	  	$('button').prop('disabled', true);
+	});
+	
+	$('#apps').click('show', function(e) {
+		//alert('hello'+e.target);
+	    paneID = $(e.target).attr('href');
+	    src = $(paneID).attr('data-src');
+	    // if the iframe hasn't already been loaded once
+	    if($(paneID+" iframe").attr("src")=="")
+	    {
+	        $(paneID+" iframe").attr("src",src);
+	    }
+	});
 
 });

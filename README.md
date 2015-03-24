@@ -47,6 +47,8 @@ Heracles
 
 Olympus : package with target db profile `mvn clean package -Polympus-oracle` or package will all drivers `-Polympus-comprehensive`
 
+##### Running Olympus
+`java -XX:MaxPermSize=128m -jar Olympus-XXX-exec.war`
 
 
 ##### Getting involved

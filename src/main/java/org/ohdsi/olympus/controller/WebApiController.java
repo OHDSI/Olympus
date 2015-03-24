@@ -58,7 +58,11 @@ public class WebApiController {
         ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
         modelAndView.addObject(CONFIG_MODEL_ATTR, this.webApi.getProperties());
         if (this.webApi.isConfigured()) {
-            modelAndView.addObject("webapi", true);
+            if(this.webApi.isRunning()){
+                modelAndView.addObject("msg", "WebApi is currently running");
+            }else{
+                modelAndView.addObject("webapi", true);
+            }
         }
         return modelAndView;
         
@@ -89,6 +93,12 @@ public class WebApiController {
             modelAndView.addObject("webapi", true);
         }
         return modelAndView;
+    }
+    
+    @RequestMapping(value = "request-start", method = RequestMethod.POST)
+    public ModelAndView handleStartSubmission() throws Exception {
+        start();//TODO catch exception
+        return handleConfigurationRequest();
     }
     
     @RequestMapping(value = "stop", method = RequestMethod.POST)

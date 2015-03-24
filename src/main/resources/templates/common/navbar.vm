@@ -17,6 +17,22 @@
 				<li #if ($activeLink == "index") class="active" #end><a href="/index.html">Home</a></li>
 				<li #if ($activeLink == "config") class="active" #end><a href="/webapi/config.html">Configuration</a></li>
 			</ul>
+			#if ($activeLink == "index")
+			<ul class="nav navbar-nav navbar-right">
+			    <li class="dropdown">
+			      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Apps<span class="caret"></span></a>
+			      <ul class="dropdown-menu" role="menu" id="apps">
+			        <li><a href="#circe" data-toggle="tab">Circe</a></li>
+		        	<li><a href="#hermes" data-toggle="tab">Hermes</a></li>
+		        	<li><a href="#heracles" data-toggle="tab">Heracles</a></li>
+		        	#*
+			        <li class="divider"></li>
+			        <li><a href="#">Job Viewer</a></li>
+			        *#
+			      </ul>
+			    </li>
+			</ul>
+			#end
 		</div><!--/.nav-collapse -->
 	</div>
 </nav>
