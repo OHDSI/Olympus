@@ -66,6 +66,7 @@ public class WebApiConfig {
         ctx.setThrowUnavailableOnStartupException(true);
         ctx.setConfigurationClasses(Runner.__plusConfigurationClasses);
         ctx.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", Runner.__containerIncludeJarPattern);
+        ctx.setAllowDuplicateFragmentNames(true);//needed to attempt re-attempt start after failure
         this.contextHandlerCollection.addHandler(ctx);
         return ctx;
     }

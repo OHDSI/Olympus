@@ -4,7 +4,10 @@ import javax.annotation.PreDestroy;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerInitializedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.util.Assert;
@@ -16,16 +19,19 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
     
     private static final Log log = LogFactory.getLog(WebApiService.class);
     
-    private WebAppContext context;
+    private final WebAppContext context;
     
-    private WebApiPropertiesRepository repo;
+    private final WebApiPropertiesRepository repo;
     
-    private boolean isWebApiLaunchEnabled;
+    private final boolean isWebApiLaunchEnabled;
+    
+    @Autowired
+    private ContextHandlerCollection contextHandlerCollection;
     
     /**
      * @param ctx
      */
-    public WebApiService(boolean isWebApiLaunchEnabled, WebAppContext ctx, WebApiPropertiesRepository repo) {
+    public WebApiService(final boolean isWebApiLaunchEnabled, final WebAppContext ctx, final WebApiPropertiesRepository repo) {
         this.context = ctx;
         this.repo = repo;
         this.isWebApiLaunchEnabled = isWebApiLaunchEnabled;
@@ -50,7 +56,7 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
      * 
      * @param props
      */
-    public static void setSystemProperties(WebApiProperties props) {
+    public static void setSystemProperties(final WebApiProperties props) {
         System.setProperty("datasource.driverClassName", props.getJdbcDriverClassName());
         System.setProperty("datasource.url", props.getJdbcUrl());
         System.setProperty("datasource.username", props.getJdbcUser());
@@ -89,7 +95,7 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
         synchronized (this.context) {
             Assert.state(!isRunning(), "WebApi is already running");
             Assert.state(isConfigured(), "WebApi has not yet been configured.");
-            log.info("Starting WebAppContext: " + context);
+            log.info("Starting WebAppContext: " + this.context);
             this.context.start();
         }
     }
@@ -100,22 +106,18 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
     public void stop() throws Exception {
         synchronized (this.context) {
             Assert.state(isRunning(), "WebApi is not running.");
-            log.info("Stopping WebAppContext: " + context);
+            log.info("Stopping WebAppContext: " + this.context);
             this.context.stop();
         }
     }
     
-    public void init() {
+    public void init() throws Exception {
         if (isConfigured()) {
             setSystemProperties(getProperties());
-            try {
-                if (this.isWebApiLaunchEnabled) {
-                    start();
-                } else {
-                    log.warn("WebApi launch disabled.");
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            if (this.isWebApiLaunchEnabled) {
+                start();
+            } else {
+                log.warn("WebApi launch disabled.");
             }
         }
     }
@@ -125,7 +127,8 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
         if (isRunning()) {
             try {
                 stop();
-            } catch (Exception e) {
+                removeHandler();
+            } catch (final Exception e) {
                 throw new RuntimeException(e);
             }
         }
@@ -137,7 +140,7 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
      * @return WebApiProperties never null
      */
     public WebApiProperties getProperties() {
-        WebApiProperties props = this.repo.findOne(WebApiProperties.ID);
+        final WebApiProperties props = this.repo.findOne(WebApiProperties.ID);
         return props == null ? new WebApiProperties() : props;
     }
     
@@ -145,10 +148,30 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
      * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
      */
     @Override
-    public void onApplicationEvent(EmbeddedServletContainerInitializedEvent event) {
+    public void onApplicationEvent(final EmbeddedServletContainerInitializedEvent event) {
         if (event instanceof EmbeddedServletContainerInitializedEvent) {
-            init();
+            try {
+                init();
+            } catch (final Exception e) {
+                log.error("<<<ERROR>>> WebAPI was not able to start up successfully, please check your configuration.", e);
+                //intentionally not throwing exception
+                try {
+                    for (final Configuration config : this.context.getConfigurations()) {
+                        log.info("Deconfigure: " + config);
+                        config.deconfigure(this.context);
+                        config.destroy(this.context);
+                    }
+                } catch (final Exception ex) {
+                    log.error("Error attempting to deconfigure and destroy", ex);
+                }
+                removeHandler();
+            }
         }
+    }
+    
+    private void removeHandler() {
+        log.info("Removing handler");
+        this.contextHandlerCollection.removeHandler(this.context);
     }
     
 }

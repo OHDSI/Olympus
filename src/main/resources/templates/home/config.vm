@@ -4,14 +4,17 @@
 	#renderNavBar ($current )
     <div class="container" id="main-launcher">
         <div class="row row-top">
+        #if(${errorMsg})
+        <div class="alert alert-danger" role="alert">$errorMsg</div>
+        #end
         #if(${msg})
         <div class="alert alert-success" role="alert">$msg</div>
         #end
         #if(${webapi})
         <div class="container">
-			<form method="POST" action="/webapi/request-start" role="form">
+			<form method="POST" action="/webapi/request-start" id="frmLaunchWebApi">
 				<div class="form-group pull-right">
-			        <button id="btnLaunchWebApi" class="btn btn-success">Launch WebApi</button>
+			        <button type="submit" id="btnLaunchWebApi" class="btn btn-success">Launch WebApi</button>
 			    </div>
 			</form>
 		</div>

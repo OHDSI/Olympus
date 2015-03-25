@@ -53,16 +53,19 @@ public class WebApiController {
     private CommonTemplateFactory templateFactory;
     
     @RequestMapping(value = "config")
-    public ModelAndView handleConfigurationRequest() throws Exception {
-        log.info("Get config");
+    public ModelAndView handleConfigurationRequest(String errorMsg) throws Exception {
+        log.debug("Get config");
         ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
         modelAndView.addObject(CONFIG_MODEL_ATTR, this.webApi.getProperties());
         if (this.webApi.isConfigured()) {
-            if(this.webApi.isRunning()){
+            if (this.webApi.isRunning()) {
                 modelAndView.addObject("msg", "WebApi is currently running");
-            }else{
+            } else {
                 modelAndView.addObject("webapi", true);
             }
+        }
+        if (errorMsg != null) {
+            modelAndView.addObject("errorMsg", errorMsg);
         }
         return modelAndView;
         
@@ -97,8 +100,15 @@ public class WebApiController {
     
     @RequestMapping(value = "request-start", method = RequestMethod.POST)
     public ModelAndView handleStartSubmission() throws Exception {
-        start();//TODO catch exception
-        return handleConfigurationRequest();
+        String errorMsg = null;
+        try {
+            start();
+        } catch (Exception e) {
+            errorMsg = String.format("WebAPI was not able to start up successfully, please check your configuration. (%s)",
+                e.getMessage());
+            log.error(errorMsg, e);
+        }
+        return handleConfigurationRequest(errorMsg);
     }
     
     @RequestMapping(value = "stop", method = RequestMethod.POST)
@@ -109,6 +119,7 @@ public class WebApiController {
     
     @RequestMapping(value = "start", method = RequestMethod.POST)
     public ResponseEntity start() throws Exception {
+        
         this.webApi.start();
         return new ResponseEntity<String>("WebApi started", HttpStatus.OK);
     }

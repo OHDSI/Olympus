@@ -17,9 +17,11 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	$('#btnLaunchWebApi').click(function() {
+	$('#frmLaunchWebApi').submit(function() {
 	    // handle form processing here
 	  	$('button').prop('disabled', true);
+	  	//form submit
+	  	return true;
 	});
 	
 	$('#apps').click('show', function(e) {
