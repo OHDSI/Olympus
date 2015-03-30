@@ -2,6 +2,7 @@ package org.ohdsi.olympus.model;
 
 import javax.annotation.PreDestroy;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
@@ -57,20 +58,58 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
      * @param props
      */
     public static void setSystemProperties(final WebApiProperties props) {
-        System.setProperty("datasource.driverClassName", props.getJdbcDriverClassName());
-        System.setProperty("datasource.url", props.getJdbcUrl());
-        System.setProperty("datasource.username", props.getJdbcUser());
-        System.setProperty("datasource.password", props.getJdbcPass());
-        System.setProperty("flyway.datasource.driverClassName", props.getFlywayJdbcDriverClassName());
-        System.setProperty("flyway.datasource.url", props.getFlywayJdbcUrl());
-        System.setProperty("flyway.datasource.username", props.getFlywayJdbcUser());
-        System.setProperty("flyway.datasource.password", props.getFlywayJdbcPass());
-        System.setProperty("flyway.schemas", props.getFlywaySchemas());
-        System.setProperty("flyway.locations", props.getFlywayLocations());
-        System.setProperty("datasource.dialect", props.getCdmDialect());
-        System.setProperty("datasource.cdm.schema", props.getCdmSchema());
-        System.setProperty("datasource.ohdsi.schema", props.getOhdsiSchema());
-        System.setProperty("datasource.cohort.schema", props.getCohortSchema());
+        String dialect = props.getCdmDialect();
+        String flywayLocations;
+        String driverClassName;
+        String jdbcUrl;
+        String flywayJdbcUrl;
+        String flywayUser = StringUtils.isEmpty(props.getFlywayJdbcUser()) ? props.getJdbcUser() : props.getFlywayJdbcUser();
+        String flywayPass = StringUtils.isEmpty(props.getFlywayJdbcPass()) ? props.getJdbcPass() : props.getFlywayJdbcPass();
+        String flywaySchemas = StringUtils.isEmpty(props.getFlywaySchemas()) ? props.getOhdsiSchema() : props
+                .getFlywaySchemas();
+        if ("oracle".equals(dialect)) {
+            driverClassName = "oracle.jdbc.OracleDriver";
+            flywayLocations = "classpath:db/migration/oracle";
+            jdbcUrl = String.format("jdbc:oracle:thin:@%s:%s:%s", props.getJdbcIpAddress(), props.getJdbcPort(),
+                props.getCdmDataSourceSid());
+            flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayDataSourceSid()) ? jdbcUrl : String.format(
+                "jdbc:oracle:thin:@%s:%s:%s", props.getJdbcIpAddress(), props.getJdbcPort(), props.getFlywayDataSourceSid());
+        } else if ("postgresql".equals(dialect)) {
+            driverClassName = "org.postgresql.Driver";
+            flywayLocations = "classpath:db/migration/postgresql";
+            jdbcUrl = String.format("jdbc:postgresql://%s:%s/%s", props.getJdbcIpAddress(), props.getJdbcPort(),
+                props.getCdmDataSourceSid());
+            flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayDataSourceSid()) ? jdbcUrl : String.format(
+                "jdbc:postgresql://%s:%s/%s", props.getJdbcIpAddress(), props.getJdbcPort(), props.getFlywayDataSourceSid());
+        } else {
+            //sql server
+            driverClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+            flywayLocations = "classpath:db/migration/sqlserver";
+            jdbcUrl = String.format("jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), props.getJdbcPort(),
+                props.getCdmDataSourceSid());
+            flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayDataSourceSid()) ? jdbcUrl : String.format(
+                "jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), props.getJdbcPort(),
+                props.getFlywayDataSourceSid());
+        }
+        setProperty("datasource.driverClassName", driverClassName);
+        setProperty("datasource.url", jdbcUrl);
+        setProperty("datasource.username", props.getJdbcUser());
+        setProperty("datasource.password", props.getJdbcPass());
+        setProperty("flyway.datasource.driverClassName", driverClassName);
+        setProperty("flyway.datasource.url", flywayJdbcUrl);
+        setProperty("flyway.datasource.username", flywayUser);
+        setProperty("flyway.datasource.password", flywayPass);
+        setProperty("flyway.schemas", flywaySchemas);
+        setProperty("flyway.locations", flywayLocations);
+        setProperty("datasource.dialect", props.getCdmDialect());
+        setProperty("datasource.cdm.schema", props.getCdmSchema());
+        setProperty("datasource.ohdsi.schema", props.getOhdsiSchema());
+        setProperty("datasource.cohort.schema", props.getCohortSchema());
+    }
+    
+    private static void setProperty(String key, String value) {
+        log.debug(String.format("Property [%s,%s]", key, key.toLowerCase().contains("pass") ? "***" : value));
+        System.setProperty(key, value);
     }
     
     /**

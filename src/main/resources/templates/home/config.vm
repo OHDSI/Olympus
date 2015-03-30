@@ -21,7 +21,17 @@
         #end
             <form class="form-horizontal" target="_self" enctype="application/x-www-form-urlencoded" action="/webapi/config" method="post">
                #springBind("config")
-               #springBind("config.jdbcDriverClassName")
+               
+               #springBind("config.cdmDialect")
+                <div class="form-group #if(${status.error})has-error#end">
+                    <label for="cdmJdbc" class="col-sm-3 control-label">CDM DataSource Dialect</label>
+                    <div class="col-sm-9">
+                    	#springFormSingleSelect("config.cdmDialect", $config.dialectOptions)
+                    	#springShowErrors("<br/>" "")
+                    </div>
+                </div>
+                
+               #* springBind("config.jdbcDriverClassName")
                 <div class="form-group #if(${status.error})has-error#end">
                     <label for="cdmJdbcDriverClassName" class="col-sm-3 control-label">CDM JDBC Driver Class Name</label>
                     <div class="col-sm-9">
@@ -29,14 +39,32 @@
 						#springShowErrors("<br/>" "")
                     </div>
                 </div>
-                #springBind("config.jdbcUrl")
+                *#
+                
+                #springBind("config.jdbcIpAddress")
                 <div class="form-group #if(${status.error})has-error#end">
-                    <label for="cdmJdbc" class="col-sm-3 control-label">CDM Jdbc Url</label>
+                    <label for="cdmJdbc" class="col-sm-3 control-label">CDM DataSource IP Address</label>
                     <div class="col-sm-9">
-                    	#springFormInput("config.jdbcUrl" "class='form-control' placeholder='e.g. jdbc:sqlserver://serverName;user=userName;password=password;' required maxlength='100'")
+                    	#springFormInput("config.jdbcIpAddress" "class='form-control'")
 						#springShowErrors("<br/>" "")
                     </div>
                 </div>
+				#springBind("config.jdbcPort")
+                <div class="form-group #if(${status.error})has-error#end">
+                    <label for="cdmJdbc" class="col-sm-3 control-label">CDM DataSource Port</label>
+                    <div class="col-sm-9">
+                    	#springFormInput("config.jdbcPort" "class='form-control'")
+						#springShowErrors("<br/>" "")
+                    </div>
+                </div>            
+				#springBind("config.cdmDataSourceSid")
+                <div class="form-group #if(${status.error})has-error#end">
+                    <label for="cdmJdbc" class="col-sm-3 control-label">CDM DataSource SID/Service Name</label>
+                    <div class="col-sm-9">
+                    	#springFormInput("config.cdmDataSourceSid" "class='form-control'")
+						#springShowErrors("<br/>" "")
+                    </div>
+                </div>      
                 #springBind("config.jdbcUser")
                 <div class="form-group #if(${status.error})has-error#end">
                     <label for="cdmUsername" class="col-sm-3 control-label">CDM Username</label>
@@ -53,64 +81,7 @@
                     	#springShowErrors("<br/>" "")
                     </div>
                 </div>
-
-               #springBind("config.flywayJdbcDriverClassName")
-                <div class="form-group #if(${status.error})has-error#end">
-                    <label for="flywayJdbcDriverClassName" class="col-sm-3 control-label">CDM Flyway Jdbc Driver Class Name</label>
-                    <div class="col-sm-9">
-                    	#springFormInput("config.flywayJdbcDriverClassName" "class='form-control' placeholder='e.g. com.microsoft.sqlserver.jdbc.SQLServerDriver' required maxlength='100'")
-						#springShowErrors("<br/>" "")
-                    </div>
-                </div>                
-                #springBind("config.flywayJdbcUrl")
-                <div class="form-group #if(${status.error})has-error#end">
-                    <label for="flywayJdbcUrl" class="col-sm-3 control-label">CDM Flyway Jdbc Url</label>
-                    <div class="col-sm-9">
-                    	#springFormInput("config.flywayJdbcUrl" "class='form-control' placeholder='e.g. jdbc:sqlserver://serverName;user=userName;password=password;' required maxlength='100'")
-						#springShowErrors("<br/>" "")
-                    </div>
-                </div>
-                #springBind("config.flywayJdbcUser")
-                <div class="form-group #if(${status.error})has-error#end">
-                    <label for="flywayJdbcUsername" class="col-sm-3 control-label">CDM Flyway Jdbc Username</label>
-                    <div class="col-sm-9">
-                    	#springFormInput("config.flywayJdbcUser" 'class="form-control" placeholder="Username" required')
-                    	#springShowErrors("<br/>" "")
-                    </div>
-                </div>
-                #springBind("config.flywayJdbcPass")
-                <div class="form-group #if(${status.error})has-error#end">
-                    <label for="flywayJdbcPassword" class="col-sm-3 control-label">CDM Flyway Jdbc Password</label>
-                    <div class="col-sm-9">
-                    	#springFormPasswordInput("config.flywayJdbcPass" 'class="form-control" placeholder="Password"')
-                    	#springShowErrors("<br/>" "")
-                    </div>
-                </div>
-                #springBind("config.flywaySchemas")
-                <div class="form-group #if(${status.error})has-error#end">
-                    <label for="flywaySchemas" class="col-sm-3 control-label">CDM Flyway Schemas (case sensitive)</label>
-                    <div class="col-sm-9">
-                    	#springFormInput("config.flywaySchemas" 'class="form-control" placeholder="Flyway Schemas"')
-                    	#springShowErrors("<br/>" "")
-                    </div>
-                </div>
-                #springBind("config.flywayLocations")
-                <div class="form-group #if(${status.error})has-error#end">
-                    <label for="flywayLocations" class="col-sm-3 control-label">CDM Flyway Locations</label>
-                    <div class="col-sm-9">
-                    	#springFormInput("config.flywayLocations" 'class="form-control" placeholder="classpath:db/migration/sqlserver"')
-                    	#springShowErrors("<br/>" "")
-                    </div>
-                </div>
                 
-                #springBind("config.cdmDialect")
-                <div class="form-group #if(${status.error})has-error#end">
-                    <label for="cdmDialect" class="col-sm-3 control-label">CDM Dialect</label>
-                    <div class="col-sm-9">
-                    	#springFormInput("config.cdmDialect" 'class="form-control" placeholder="e.g. sql server"')
-                    	#springShowErrors("<br/>" "")
-                    </div>
-                </div>
                 #springBind("config.cdmSchema")
                 <div class="form-group #if(${status.error})has-error#end">
                     <label for="cdmSchema" class="col-sm-3 control-label">CDM Schema</label>
@@ -135,6 +106,48 @@
                         #springShowErrors("<br/>" "")
                     </div>
                 </div>
+<div>
+<a class="btn btn-primary btn-xs" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+  Advanced config
+</a>
+<div class="collapse" id="collapseExample">
+  <div class="well">
+                                
+                #springBind("config.flywayDataSourceSid")
+                <div class="form-group #if(${status.error})has-error#end">
+                    <label for="flywayJdbc" class="col-sm-3 control-label">CDM Flyway DataSource SID/Service Name</label>
+                    <div class="col-sm-9">
+                    	#springFormInput("config.flywayDataSourceSid" "class='form-control'")
+						#springShowErrors("<br/>" "")
+                    </div>
+                </div>
+                #springBind("config.flywayJdbcUser")
+                <div class="form-group #if(${status.error})has-error#end">
+                    <label for="flywayJdbcUsername" class="col-sm-3 control-label">CDM Flyway Jdbc Username</label>
+                    <div class="col-sm-9">
+                    	#springFormInput("config.flywayJdbcUser" "class='form-control'")
+                    	#springShowErrors("<br/>" "")
+                    </div>
+                </div>
+                #springBind("config.flywayJdbcPass")
+                <div class="form-group #if(${status.error})has-error#end">
+                    <label for="flywayJdbcPassword" class="col-sm-3 control-label">CDM Flyway Jdbc Password</label>
+                    <div class="col-sm-9">
+                    	#springFormPasswordInput("config.flywayJdbcPass" "class='form-control'")
+                    	#springShowErrors("<br/>" "")
+                    </div>
+                </div>
+                #springBind("config.flywaySchemas")
+                <div class="form-group #if(${status.error})has-error#end">
+                    <label for="flywaySchemas" class="col-sm-3 control-label">CDM Flyway Schemas (case sensitive)</label>
+                    <div class="col-sm-9">
+                    	#springFormInput("config.flywaySchemas" 'class="form-control" placeholder="Flyway Schemas"')
+                    	#springShowErrors("<br/>" "")
+                    </div>
+                </div>
+  </div>
+</div>  
+</div>              
                 <div class="form-group pull-right">
                     <button id="submitButton" class="btn btn-success" type="submit">Submit Properties</button>
                 </div>

@@ -81,6 +81,7 @@ public class WebApiController {
             view.addObject("errors", result);
             return view;
         }
+        
         log.debug("Saving properties");
         props = this.repo.save(props);
         String msg = "Saved properties";
@@ -93,7 +94,11 @@ public class WebApiController {
         modelAndView.addObject(CONFIG_MODEL_ATTR, props);
         modelAndView.addObject("msg", msg);
         if (this.webApi.isConfigured()) {
-            modelAndView.addObject("webapi", true);
+            if (this.webApi.isRunning()) {
+                modelAndView.addObject("msg", "WebApi is currently running");
+            } else {
+                modelAndView.addObject("webapi", true);
+            }
         }
         return modelAndView;
     }

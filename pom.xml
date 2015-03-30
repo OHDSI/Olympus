@@ -19,7 +19,7 @@
 		<!-- Spring Boot manages spring.version as well -->
 		<spring.boot.version>1.2.1.RELEASE</spring.boot.version>
 		<tomcat.version>8.0.15</tomcat.version>
-		<jetty.version>9.2.4.v20141103</jetty.version>
+		<jetty.version>9.2.10.v20150310</jetty.version>
 		<start-class>org.ohdsi.olympus.Olympus</start-class>
 		<spring.profiles.active>default</spring.profiles.active>
 
@@ -191,6 +191,11 @@
 					<artifactId>spring-boot-starter-tomcat</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<version>${jetty.version}</version>
+			<artifactId>jetty-runner</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

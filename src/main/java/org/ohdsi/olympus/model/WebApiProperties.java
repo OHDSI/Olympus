@@ -1,7 +1,11 @@
 package org.ohdsi.olympus.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -16,13 +20,30 @@ public class WebApiProperties {
     @Id
     private int id = 1;
     
+    @Transient
+    private static Map<String, String> dialectOptions;
+    static {
+        dialectOptions = new HashMap<String, String>();
+        dialectOptions.put("oracle", "oracle");
+        dialectOptions.put("sql server", "sql server");
+        dialectOptions.put("postgresql", "postgresql");
+    }
+
     @NotNull
-    @Size(max = 100, min = 1)
-    private String jdbcDriverClassName;
+    @Size(max = 25, min = 1)
+    private String cdmDialect;
     
     @NotNull
-    @Size(max = 100, min = 1)
-    private String jdbcUrl;
+    @Size(max = 25, min = 1)
+    private String jdbcIpAddress;
+    
+    @NotNull
+    @Size(max = 10, min = 1)
+    private String jdbcPort;
+    
+    @NotNull
+    @Size(max = 25, min = 1)
+    private String cdmDataSourceSid;
     
     @NotNull
     @Size(max = 25, min = 1)
@@ -31,31 +52,6 @@ public class WebApiProperties {
     @NotNull
     @Size(max = 25, min = 1)
     private String jdbcPass;
-    
-    @NotNull
-    @Size(max = 100, min = 1)
-    private String flywayJdbcDriverClassName;
-    
-    @NotNull
-    @Size(max = 100, min = 1)
-    private String flywayJdbcUrl;
-    
-    @NotNull
-    @Size(max = 25, min = 1)
-    private String flywayJdbcUser;
-    
-    @NotNull
-    @Size(max = 25, min = 1)
-    private String flywayJdbcPass;
-    
-    @NotNull
-    @Size(max = 100, min = 1)
-    private String flywaySchemas;
-    
-    //Figure out via cdmDialect (oracle=classpath:db/migration/oracle)
-    @NotNull
-    @Size(max = 100, min = 1)
-    private String flywayLocations;
     
     @NotNull
     @Size(max = 25, min = 1)
@@ -69,177 +65,179 @@ public class WebApiProperties {
     @Size(max = 25, min = 1)
     private String cohortSchema;
     
-    @NotNull
-    @Size(max = 25, min = 1)
-    private String cdmDialect;
+    @Size(max = 25, min = 0)
+    private String flywayDataSourceSid;
+    
+    @Size(max = 25, min = 0)
+    private String flywayJdbcUser;
+    
+    @Size(max = 25, min = 0)
+    private String flywayJdbcPass;
+    
+    //default to OHDSI schema
+    @Size(max = 100, min = 0)
+    private String flywaySchemas;
+
     
     /**
-     * @return the jdbcUrl
+     * @return the id
      */
-    public String getJdbcUrl() {
-        return this.jdbcUrl;
+    public int getId() {
+        return id;
     }
+
     
     /**
-     * @param jdbcUrl the jdbcUrl to set
+     * @param id the id to set
      */
-    public void setJdbcUrl(final String jdbcUrl) {
-        this.jdbcUrl = jdbcUrl;
+    public void setId(int id) {
+        this.id = id;
     }
+
     
     /**
-     * @return the jdbcUser
+     * @return the dialectOptions
      */
-    public String getJdbcUser() {
-        return this.jdbcUser;
+    public static Map<String, String> getDialectOptions() {
+        return dialectOptions;
     }
+
     
     /**
-     * @param jdbcUser the jdbcUser to set
+     * @param dialectOptions the dialectOptions to set
      */
-    public void setJdbcUser(final String jdbcUser) {
-        this.jdbcUser = jdbcUser;
+    public static void setDialectOptions(Map<String, String> dialectOptions) {
+        WebApiProperties.dialectOptions = dialectOptions;
     }
-    
-    /**
-     * @return the jdbcPass
-     */
-    public String getJdbcPass() {
-        return this.jdbcPass;
-    }
-    
-    /**
-     * @param jdbcPass the jdbcPass to set
-     */
-    public void setJdbcPass(final String jdbcPass) {
-        this.jdbcPass = jdbcPass;
-    }
-    
-    /**
-     * @return the flywayJdbcUrl
-     */
-    public String getFlywayJdbcUrl() {
-        return this.flywayJdbcUrl;
-    }
-    
-    /**
-     * @param flywayJdbcUrl the flywayJdbcUrl to set
-     */
-    public void setFlywayJdbcUrl(final String flywayJdbcUrl) {
-        this.flywayJdbcUrl = flywayJdbcUrl;
-    }
-    
-    /**
-     * @return the flywayJdbcUser
-     */
-    public String getFlywayJdbcUser() {
-        return this.flywayJdbcUser;
-    }
-    
-    /**
-     * @param flywayJdbcUser the flywayJdbcUser to set
-     */
-    public void setFlywayJdbcUser(final String flywayJdbcUser) {
-        this.flywayJdbcUser = flywayJdbcUser;
-    }
-    
-    /**
-     * @return the flywayJdbcPass
-     */
-    public String getFlywayJdbcPass() {
-        return this.flywayJdbcPass;
-    }
-    
-    /**
-     * @param flywayJdbcPass the flywayJdbcPass to set
-     */
-    public void setFlywayJdbcPass(final String flywayJdbcPass) {
-        this.flywayJdbcPass = flywayJdbcPass;
-    }
-    
-    /**
-     * @return the flywaySchemas
-     */
-    public String getFlywaySchemas() {
-        return this.flywaySchemas;
-    }
-    
-    /**
-     * @param flywaySchemas the flywaySchemas to set
-     */
-    public void setFlywaySchemas(final String flywaySchemas) {
-        this.flywaySchemas = flywaySchemas;
-    }
-    
-    /**
-     * @return the cdmSchema
-     */
-    public String getCdmSchema() {
-        return this.cdmSchema;
-    }
-    
-    /**
-     * @param cdmSchema the cdmSchema to set
-     */
-    public void setCdmSchema(final String cdmSchema) {
-        this.cdmSchema = cdmSchema;
-    }
-    
-    /**
-     * @return the ohdsiSchema
-     */
-    public String getOhdsiSchema() {
-        return this.ohdsiSchema;
-    }
-    
-    /**
-     * @param ohdsiSchema the ohdsiSchema to set
-     */
-    public void setOhdsiSchema(final String ohdsiSchema) {
-        this.ohdsiSchema = ohdsiSchema;
-    }
+
     
     /**
      * @return the cdmDialect
      */
     public String getCdmDialect() {
-        return this.cdmDialect;
+        return cdmDialect;
     }
+
     
     /**
      * @param cdmDialect the cdmDialect to set
      */
-    public void setCdmDialect(final String cdmDialect) {
+    public void setCdmDialect(String cdmDialect) {
         this.cdmDialect = cdmDialect;
     }
+
     
     /**
-     * @return the jdbcDriverClassName
+     * @return the jdbcIpAddress
      */
-    public String getJdbcDriverClassName() {
-        return jdbcDriverClassName;
+    public String getJdbcIpAddress() {
+        return jdbcIpAddress;
     }
+
     
     /**
-     * @param jdbcDriverClassName the jdbcDriverClassName to set
+     * @param jdbcIpAddress the jdbcIpAddress to set
      */
-    public void setJdbcDriverClassName(String jdbcDriverClassName) {
-        this.jdbcDriverClassName = jdbcDriverClassName;
+    public void setJdbcIpAddress(String jdbcIpAddress) {
+        this.jdbcIpAddress = jdbcIpAddress;
     }
+
     
     /**
-     * @return the flywayLocations
+     * @return the jdbcPort
      */
-    public String getFlywayLocations() {
-        return flywayLocations;
+    public String getJdbcPort() {
+        return jdbcPort;
     }
+
     
     /**
-     * @param flywayLocations the flywayLocations to set
+     * @param jdbcPort the jdbcPort to set
      */
-    public void setFlywayLocations(String flywayLocations) {
-        this.flywayLocations = flywayLocations;
+    public void setJdbcPort(String jdbcPort) {
+        this.jdbcPort = jdbcPort;
     }
+
+    
+    /**
+     * @return the cdmDataSourceSid
+     */
+    public String getCdmDataSourceSid() {
+        return cdmDataSourceSid;
+    }
+
+    
+    /**
+     * @param cdmDataSourceSid the cdmDataSourceSid to set
+     */
+    public void setCdmDataSourceSid(String cdmDataSourceSid) {
+        this.cdmDataSourceSid = cdmDataSourceSid;
+    }
+
+    
+    /**
+     * @return the jdbcUser
+     */
+    public String getJdbcUser() {
+        return jdbcUser;
+    }
+
+    
+    /**
+     * @param jdbcUser the jdbcUser to set
+     */
+    public void setJdbcUser(String jdbcUser) {
+        this.jdbcUser = jdbcUser;
+    }
+
+    
+    /**
+     * @return the jdbcPass
+     */
+    public String getJdbcPass() {
+        return jdbcPass;
+    }
+
+    
+    /**
+     * @param jdbcPass the jdbcPass to set
+     */
+    public void setJdbcPass(String jdbcPass) {
+        this.jdbcPass = jdbcPass;
+    }
+
+    
+    /**
+     * @return the cdmSchema
+     */
+    public String getCdmSchema() {
+        return cdmSchema;
+    }
+
+    
+    /**
+     * @param cdmSchema the cdmSchema to set
+     */
+    public void setCdmSchema(String cdmSchema) {
+        this.cdmSchema = cdmSchema;
+    }
+
+    
+    /**
+     * @return the ohdsiSchema
+     */
+    public String getOhdsiSchema() {
+        return ohdsiSchema;
+    }
+
+    
+    /**
+     * @param ohdsiSchema the ohdsiSchema to set
+     */
+    public void setOhdsiSchema(String ohdsiSchema) {
+        this.ohdsiSchema = ohdsiSchema;
+    }
+
     
     /**
      * @return the cohortSchema
@@ -247,6 +245,7 @@ public class WebApiProperties {
     public String getCohortSchema() {
         return cohortSchema;
     }
+
     
     /**
      * @param cohortSchema the cohortSchema to set
@@ -257,18 +256,66 @@ public class WebApiProperties {
 
     
     /**
-     * @return the flywayJdbcDriverClassName
+     * @return the flywayDataSourceSid
      */
-    public String getFlywayJdbcDriverClassName() {
-        return flywayJdbcDriverClassName;
+    public String getFlywayDataSourceSid() {
+        return flywayDataSourceSid;
     }
 
     
     /**
-     * @param flywayJdbcDriverClassName the flywayJdbcDriverClassName to set
+     * @param flywayDataSourceSid the flywayDataSourceSid to set
      */
-    public void setFlywayJdbcDriverClassName(String flywayJdbcDriverClassName) {
-        this.flywayJdbcDriverClassName = flywayJdbcDriverClassName;
+    public void setFlywayDataSourceSid(String flywayDataSourceSid) {
+        this.flywayDataSourceSid = flywayDataSourceSid;
+    }
+
+    
+    /**
+     * @return the flywayJdbcUser
+     */
+    public String getFlywayJdbcUser() {
+        return flywayJdbcUser;
+    }
+
+    
+    /**
+     * @param flywayJdbcUser the flywayJdbcUser to set
+     */
+    public void setFlywayJdbcUser(String flywayJdbcUser) {
+        this.flywayJdbcUser = flywayJdbcUser;
+    }
+
+    
+    /**
+     * @return the flywayJdbcPass
+     */
+    public String getFlywayJdbcPass() {
+        return flywayJdbcPass;
+    }
+
+    
+    /**
+     * @param flywayJdbcPass the flywayJdbcPass to set
+     */
+    public void setFlywayJdbcPass(String flywayJdbcPass) {
+        this.flywayJdbcPass = flywayJdbcPass;
+    }
+
+    
+    /**
+     * @return the flywaySchemas
+     */
+    public String getFlywaySchemas() {
+        return flywaySchemas;
+    }
+
+    
+    /**
+     * @param flywaySchemas the flywaySchemas to set
+     */
+    public void setFlywaySchemas(String flywaySchemas) {
+        this.flywaySchemas = flywaySchemas;
     }
     
 }
