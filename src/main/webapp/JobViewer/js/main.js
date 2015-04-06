@@ -44,6 +44,52 @@ require(['jquery','datatables','jobService'], function ($,dt,js) {
 		    } );
 			});
 		*/
+		var str = {"totalPages":28,"totalElements":274,"size":10,"number":0,"content":[{"status":"COMPLETED","startDate":1428082844800,"endDate":1428083960957,"exitStatus":"COMPLETED","executionId":273,"jobInstance":{"instanceId":273,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428069660174,"endDate":1428074406780,"exitStatus":"COMPLETED","executionId":272,"jobInstance":{"instanceId":272,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428068011131,"endDate":1428068394335,"exitStatus":"COMPLETED","executionId":271,"jobInstance":{"instanceId":271,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428067349879,"endDate":1428068513543,"exitStatus":"COMPLETED","executionId":270,"jobInstance":{"instanceId":270,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428067250577,"endDate":1428067263955,"exitStatus":"COMPLETED","executionId":269,"jobInstance":{"instanceId":269,"name":"cohortAnalysisJob"}},{"status":"STARTED","startDate":1428013952929,"endDate":null,"exitStatus":"UNKNOWN","executionId":268,"jobInstance":{"instanceId":268,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428011587752,"endDate":1428011591898,"exitStatus":"COMPLETED","executionId":267,"jobInstance":{"instanceId":267,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428000821732,"endDate":1428000835177,"exitStatus":"COMPLETED","executionId":266,"jobInstance":{"instanceId":266,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1427979766116,"endDate":1427979777240,"exitStatus":"COMPLETED","executionId":265,"jobInstance":{"instanceId":265,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1427917129125,"endDate":1427917148393,"exitStatus":"COMPLETED","executionId":264,"jobInstance":{"instanceId":264,"name":"cohortAnalysisJob"}}],"sort":null,"first":true,"last":false,"numberOfElements":10}
+//		alert(str.content);	
+		$('#jobExecutions').dataTable( {
+//		        data: str,
+//				data: str,
+//				ajax: str
+				data: str.content,
+//			  "ajax": function (data, callback, settings) {
+//				    callback(
+////				      JSON.parse( localStorage.getItem('dataTablesData') )
+//				    		JSON.parse(str)
+//				    );
+//				  },
+//		        ajax:{data: str,dataSrc:'content'},
+		        columns: [
+ 					{"data": "jobInstance.instanceId"},
+		            { "data": "jobInstance.name"},
+		            { "data": "executionId"},
+		            { "data": "status" },
+		            { "data": "startDate", "type":"Date.parse()"},
+		            { "data": "endDate"}
+		        ],
+		        "columnDefs": [
+		                       {
+		                           // The `data` parameter refers to the data for the cell (defined by the
+		                           // `data` option, which defaults to the column being worked with, in
+		                           // this case `data: 0`.
+		                           "render": function ( data, type, row ) {
+		                        	   var d = '';
+		                        	   if(data != null){
+		                        		   d = new Date(data);
+		                        	   }
+		                               return d;
+		                           },
+		                           "targets": [3,4]
+		                       },
+		                       {
+		                           "render": function ( data, type, row ) {
+		                        	   return data + ' (' + row.jobInstance.instanceId + ')';//row[1];//row[1] + ' (' + data + ')';
+		                           },
+		                           "targets": [1]
+		                       },
+		                       { "visible": false,  "targets": [ 0 ] }
+		                   ]
+		    } );
+			/*
 		$.when(js.getJobNames(), js.getJobExecutions()).done(function( jobNames, jobExecutions) {
 			console.log(jobNames[0]);
 			console.log(jobExecutions[0]);
@@ -63,7 +109,7 @@ require(['jquery','datatables','jobService'], function ($,dt,js) {
 		            { data: "content.0" }
 		        ]
 		    } );
-			});
+			});*/
 		
 /*		$.when(js.getJobExecutions()).done(function(jobExecutions) {
 		    var tblJobExecutions = $('#jobExecutions').dataTable( {
