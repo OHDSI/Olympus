@@ -23,41 +23,23 @@ require.config({
 
 require(['jquery','datatables','jobService'], function ($,dt,js) {
 	
-	$(document).ready(function() {
-/*		$.when(js.getJobNames(),js.getJobExecutions()).done(function(jobNames, jobExecutions) {
-			  // Handle both XHR objects
-			alert(jobNames);
-			alert(jobExecutions);
-		    var tblJobNames = $('#jobNames').dataTable( {
-		        data: jobNames,
-//		        columns: [
-//		            { "": "" }
-//		        ]
-		    } );
+//	$(document).ready(function() {
+//		var str = {"totalPages":28,"totalElements":274,"size":10,"number":0,"content":[{"status":"COMPLETED","startDate":1428082844800,"endDate":1428083960957,"exitStatus":"COMPLETED","executionId":273,"jobInstance":{"instanceId":273,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428069660174,"endDate":1428074406780,"exitStatus":"COMPLETED","executionId":272,"jobInstance":{"instanceId":272,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428068011131,"endDate":1428068394335,"exitStatus":"COMPLETED","executionId":271,"jobInstance":{"instanceId":271,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428067349879,"endDate":1428068513543,"exitStatus":"COMPLETED","executionId":270,"jobInstance":{"instanceId":270,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428067250577,"endDate":1428067263955,"exitStatus":"COMPLETED","executionId":269,"jobInstance":{"instanceId":269,"name":"cohortAnalysisJob"}},{"status":"STARTED","startDate":1428013952929,"endDate":null,"exitStatus":"UNKNOWN","executionId":268,"jobInstance":{"instanceId":268,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428011587752,"endDate":1428011591898,"exitStatus":"COMPLETED","executionId":267,"jobInstance":{"instanceId":267,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428000821732,"endDate":1428000835177,"exitStatus":"COMPLETED","executionId":266,"jobInstance":{"instanceId":266,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1427979766116,"endDate":1427979777240,"exitStatus":"COMPLETED","executionId":265,"jobInstance":{"instanceId":265,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1427917129125,"endDate":1427917148393,"exitStatus":"COMPLETED","executionId":264,"jobInstance":{"instanceId":264,"name":"cohortAnalysisJob"}}],"sort":null,"first":true,"last":false,"numberOfElements":10}
+			
+		$.when(/*js.getJobNames(), */js.getJobExecutions()).done(function(/* jobNames,*/ jobExecutions) {
+			//when 1 param, just jobExecutions object = use jobExecutions.content
+			//when 2 param, [3] object, status, object = use jobExecutions[0].content
+//			console.log(jobNames[0]);
+			console.log(jobExecutions);
+/*		    var tblJobNames = $('#jobNames').dataTable( {
+		        data: jobNames[0],
+		        columns: [
+		            { "data": "" }
+		        ]
+		    } );*/
 		    
 		    var tblJobExecutions = $('#jobExecutions').dataTable( {
-		        data: jobExecutions,
-		        ajax:{dataSrc:"content"},
-		        columns: [
-		            { data: "executionId" }
-		        ]
-		    } );
-			});
-		*/
-		var str = {"totalPages":28,"totalElements":274,"size":10,"number":0,"content":[{"status":"COMPLETED","startDate":1428082844800,"endDate":1428083960957,"exitStatus":"COMPLETED","executionId":273,"jobInstance":{"instanceId":273,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428069660174,"endDate":1428074406780,"exitStatus":"COMPLETED","executionId":272,"jobInstance":{"instanceId":272,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428068011131,"endDate":1428068394335,"exitStatus":"COMPLETED","executionId":271,"jobInstance":{"instanceId":271,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428067349879,"endDate":1428068513543,"exitStatus":"COMPLETED","executionId":270,"jobInstance":{"instanceId":270,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428067250577,"endDate":1428067263955,"exitStatus":"COMPLETED","executionId":269,"jobInstance":{"instanceId":269,"name":"cohortAnalysisJob"}},{"status":"STARTED","startDate":1428013952929,"endDate":null,"exitStatus":"UNKNOWN","executionId":268,"jobInstance":{"instanceId":268,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428011587752,"endDate":1428011591898,"exitStatus":"COMPLETED","executionId":267,"jobInstance":{"instanceId":267,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1428000821732,"endDate":1428000835177,"exitStatus":"COMPLETED","executionId":266,"jobInstance":{"instanceId":266,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1427979766116,"endDate":1427979777240,"exitStatus":"COMPLETED","executionId":265,"jobInstance":{"instanceId":265,"name":"cohortAnalysisJob"}},{"status":"COMPLETED","startDate":1427917129125,"endDate":1427917148393,"exitStatus":"COMPLETED","executionId":264,"jobInstance":{"instanceId":264,"name":"cohortAnalysisJob"}}],"sort":null,"first":true,"last":false,"numberOfElements":10}
-//		alert(str.content);	
-		$('#jobExecutions').dataTable( {
-//		        data: str,
-//				data: str,
-//				ajax: str
-				data: str.content,
-//			  "ajax": function (data, callback, settings) {
-//				    callback(
-////				      JSON.parse( localStorage.getItem('dataTablesData') )
-//				    		JSON.parse(str)
-//				    );
-//				  },
-//		        ajax:{data: str,dataSrc:'content'},
+				data: jobExecutions/*[0]*/.content,
 		        columns: [
  					{"data": "jobInstance.instanceId"},
 		            { "data": "jobInstance.name"},
@@ -78,7 +60,7 @@ require(['jquery','datatables','jobService'], function ($,dt,js) {
 		                        	   }
 		                               return d;
 		                           },
-		                           "targets": [3,4]
+		                           "targets": [4,5]
 		                       },
 		                       {
 		                           "render": function ( data, type, row ) {
@@ -89,74 +71,10 @@ require(['jquery','datatables','jobService'], function ($,dt,js) {
 		                       { "visible": false,  "targets": [ 0 ] }
 		                   ]
 		    } );
-			/*
-		$.when(js.getJobNames(), js.getJobExecutions()).done(function( jobNames, jobExecutions) {
-			console.log(jobNames[0]);
-			console.log(jobExecutions[0]);
-			alert(jobNames[0]);
-		    var tblJobNames = $('#jobNames').dataTable( {
-		        data: jobNames[0],
-//		        columns: [
-//		            { "": "" }
-//		        ]
-		    } );
-		    
-		    var tblJobExecutions = $('#jobExecutions').dataTable( {
-		        ajax: jobExecutions[0],
-		        //ajax:{dataSrc:""},
-		        columns: [
-		            { data: "totalPages"},
-		            { data: "content.0" }
-		        ]
-		    } );
-			});*/
-		
-/*		$.when(js.getJobExecutions()).done(function(jobExecutions) {
-		    var tblJobExecutions = $('#jobExecutions').dataTable( {
-		        data: jobExecutions,
-		        ajax:{dataSrc:"content"},
-		        columns: [
-		            { data: "executionId" }
-		        ]
-		    } );
-			});*/
-		
-		//var data = [{"id":14,"name":"Homeless Female Patients","description":"Cohort derived from NLP of Homeless Female patients","expressionType":"SIMPLE_EXPRESSION","createdBy":"OHDSI","createdDate":"2015-03-06, 14:39","modifiedBy":null,"modifiedDate":null}];
-/*		var data = cd.getCohortDefinitionList();
-		alert(data);
-	    var table = $('#example').dataTable( {
-	        data: data,
-//	        ajax:{dataSrc:""},
-	        columns: [
-	            { data: "id" },
-	            { data: "name" }
-	        ]
-	    } );*/
+			});
 	    
 //		setInterval( function () {
 //		    table.ajax.reload( null, false ); // user paging is not reset on reload
 //		}, 30000 );
-	} );
-	
-	
-	
-	
-/*// console.log($('#example'));
-	var table = $('#example').dataTable( {
-//		 "processing": true,
-//	        "serverSide": true,
-		ajax: cd.getCohortDefinitionList(),
-//        ajax: { dataSrc: "", ajax : cd.getCohortDefinitionList() },
-//        ajax: { dataSrc: "", ajax : "http:localhost:20000/WebAPI/cohortdefinition" },
-//		"ajax": "test.json",
-        columns: [
-            { "id": "id" },
-            { "name": "name" }
-        ]
-    } );
-	
-	setInterval( function () {
-	    table.ajax.reload( null, false ); // user paging is not reset on reload
-	}, 30000 );*/
-	
+//	} );
 });
