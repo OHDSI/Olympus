@@ -25,6 +25,7 @@
 			        <li><a href="#circe" data-toggle="tab">Circe</a></li>
 		        	<li><a href="#hermes" data-toggle="tab">Hermes</a></li>
 		        	<li><a href="#heracles" data-toggle="tab">Heracles</a></li>
+		        	<li><a href="#jobviewer" data-toggle="tab">Job Viewer</a></li>
 		        	#*
 			        <li class="divider"></li>
 			        <li><a href="#">Job Viewer</a></li>
