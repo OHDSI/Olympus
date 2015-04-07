@@ -20,7 +20,7 @@ define(function (require, exports) {
 	
 	function getJobExecutions() {
 		var promise = $.ajax({
-			url: config.webAPIRoot + 'job/execution?pageIndex=0&pageSize=1000'
+			url: config.webAPIRoot + 'job/execution?comprehensivePage=true'
 		});
 		return promise;
 	}

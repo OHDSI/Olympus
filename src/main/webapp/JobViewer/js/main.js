@@ -18,8 +18,8 @@ require.config({
 				 'jqueryui/jquery.ui.autocomplete.scroll',
 				 'css!jqueryui/jquery.dataTables.css',
 				 'css!jqueryui/dataTables.colVis.css'
-				]/*,
-	urlArgs: { 'bust': Date.now() }//clear cache */
+				],
+	urlArgs: { 'bust': Date.now() }//clear cache 
 });
 
 require(['jquery','datatables','jobService'], function ($,dt,js) {
@@ -46,8 +46,9 @@ $(document).ready(function() {
 		            { "data": "jobInstance.name"},
 		            { "data": "executionId"},
 		            { "data": "status" },
-		            { "data": "startDate", "type":"Date.parse()"},
-		            { "data": "endDate"}
+		            { "data": "startDate"},
+		            { "data": "endDate"},
+		            { "data": "jobParameters"},
 		        ],
 		        "columnDefs": [
 		                       {
@@ -65,12 +66,31 @@ $(document).ready(function() {
 		                       },
 		                       {
 		                           "render": function ( data, type, row ) {
-		                        	   return data + ' (' + row.jobInstance.instanceId + ')';//row[1];//row[1] + ' (' + data + ')';
+		                        	   var keys = Object.keys( data );
+		                        	   var displayVal = '';
+		                        	   for (var i in keys) {
+		                        		   var dataValue = data[keys[i]];
+		                        		   if("time" == keys[i]){
+		                        			   //dataValue = new Date(dataValue);
+		                        			   //ignore for now
+		                        		   }else{
+		                        			   displayVal+='<div>'+keys[i]+':'+dataValue+'</div>';
+		                        		   }
+		                        		   //console.log(displayVal);
+		                        	   }
+		                               return displayVal;
+		                           },
+		                           "targets": [6]
+		                       },
+		                       {
+		                           "render": function ( data, type, row ) {
+		                        	   return data + ' (' + row.jobInstance.instanceId + ')';
 		                           },
 		                           "targets": [1]
 		                       },
 		                       { "visible": false,  "targets": [ 0 ] }
-		                   ]
+		                   ],
+		          order: [ 4, "desc" ],
 		    } );
 			});
 	    
