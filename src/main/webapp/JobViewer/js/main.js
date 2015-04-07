@@ -18,8 +18,8 @@ require.config({
 				 'jqueryui/jquery.ui.autocomplete.scroll',
 				 'css!jqueryui/jquery.dataTables.css',
 				 'css!jqueryui/dataTables.colVis.css'
-				],
-	urlArgs: { 'bust': Date.now() }//clear cache 
+				]/*,
+	urlArgs: { 'bust': Date.now() }//clear cache*/ 
 });
 
 require(['jquery','datatables','jobService'], function ($,dt,js) {
@@ -31,7 +31,7 @@ $(document).ready(function() {
 			//when 1 param, just jobExecutions object = use jobExecutions.content
 			//when 2 param, [3] object, status, object = use jobExecutions[0].content
 //			console.log(jobNames[0]);
-			console.log(jobExecutions);
+			//console.log(jobExecutions);
 /*		    var tblJobNames = $('#jobNames').dataTable( {
 		        data: jobNames[0],
 		        columns: [
