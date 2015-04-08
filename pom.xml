@@ -19,7 +19,7 @@
 		<!-- Spring Boot manages spring.version as well -->
 		<spring.boot.version>1.2.1.RELEASE</spring.boot.version>
 		<tomcat.version>8.0.15</tomcat.version>
-		<jetty.version>9.2.10.v20150310</jetty.version>
+		<jetty.version>9.2.4.v20141103</jetty.version>
 		<start-class>org.ohdsi.olympus.Olympus</start-class>
 		<spring.profiles.active>default</spring.profiles.active>
 
