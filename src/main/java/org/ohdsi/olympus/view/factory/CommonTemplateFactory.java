@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.common.base.Strings;
@@ -40,6 +42,7 @@ public class CommonTemplateFactory {
 		modelAndView.addObject("innerTemplate", String.format("templates/%s.vm", innerTemplateName));
 		modelAndView.addObject("homePath", "/home/index.html");
 		modelAndView.addObject("htmlLang", htmlLang);
+		modelAndView.addObject("req", ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest());
 
 		return modelAndView;
 	}

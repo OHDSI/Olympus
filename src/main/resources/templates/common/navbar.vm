@@ -22,10 +22,11 @@
 			    <li class="dropdown">
 			      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Apps<span class="caret"></span></a>
 			      <ul class="dropdown-menu" role="menu" id="apps">
-			        <li><a href="#circe" data-toggle="tab">Circe</a></li>
-		        	<li><a href="#hermes" data-toggle="tab">Hermes</a></li>
-		        	<li><a href="#heracles" data-toggle="tab">Heracles</a></li>
-		        	<li><a href="#jobviewer" data-toggle="tab">Job Viewer</a></li>
+			        #if($req.isUserInRole("CIRCE"))<li><a href="#circe" data-toggle="tab">Circe</a></li>#end
+		        	#if($req.isUserInRole("HERMES"))<li><a href="#hermes" data-toggle="tab">Hermes</a></li>#end
+		        	#if($req.isUserInRole("HERACLES"))<li><a href="#heracles" data-toggle="tab">Heracles</a></li>#end
+		        	#if($req.isUserInRole("CALYPSO"))<li><a href="#calypso" data-toggle="tab">Calypso</a></li>#end
+		        	#if($req.isUserInRole("JOB_VIEWER"))<li><a href="#jobviewer" data-toggle="tab">Job Viewer</a></li>#end
 		        	#*
 			        <li class="divider"></li>
 			        <li><a href="#">Job Viewer</a></li>

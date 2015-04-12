@@ -11,6 +11,9 @@
 	<logger name="org.ohdsi">
 		<level value="debug" />
 	</logger>
+	<logger name="org.springframework.security">
+		<level value="debug" />
+	</logger>
 	<root>
 		<level value="info" />
 		<appender-ref ref="stdout" />

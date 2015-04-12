@@ -44,7 +44,7 @@ public class MainController {
     @Autowired
     private WebApiPropertiesRepository repo;
     
-    @RequestMapping(value = "index")
+    @RequestMapping(value = {"index",""})
     public ModelAndView handleIndexRequest(final HttpServletRequest request, final HttpServletResponse res,
                                            final HttpSession session) throws Exception {
         

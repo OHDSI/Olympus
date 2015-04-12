@@ -1,0 +1,32 @@
+<div>
+   	#set ( $current = "login" )
+	#parse( "common/navbar.vm" )
+	#renderNavBar ($current )
+    <div class="container" id="main-launcher">
+        <div class="row row-top">
+        #if(${error})
+        <div class="alert alert-danger" role="alert">$error.message</div>
+        #end
+        #if(${msg})
+        <div class="alert alert-success" role="alert">$msg</div>
+        #end
+<form class="form-horizontal" role="form" action="/login" method="post">
+    <input type="hidden" name="$_csrf.parameterName" value="$_csrf.token"/>
+
+    <div>
+        <label for="username">Username</label>
+        <input type="username" name="username" id="username" value="#if($defaultUsername)$defaultUsername#end" required autofocus/>
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" value="#if($defaultPassword)$defaultPassword#end" required/>
+    </div>
+    <!--<div>
+        <label for="remember-me">Remember me</label>
+        <input type="checkbox" name="remember-me" id="remember-me"/>
+    </div>-->
+    <button type="submit">Sign in</button>
+</form>
+        </div>
+    </div>
+</div>
