@@ -21,10 +21,10 @@
         <label for="password">Password</label>
         <input type="password" name="password" id="password" value="#if($defaultPassword)$defaultPassword#end" required/>
     </div>
-    <!--<div>
+    <div>
         <label for="remember-me">Remember me</label>
         <input type="checkbox" name="remember-me" id="remember-me"/>
-    </div>-->
+    </div>
     <button type="submit">Sign in</button>
 </form>
         </div>

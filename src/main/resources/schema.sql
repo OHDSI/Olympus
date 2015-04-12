@@ -14,6 +14,14 @@ create table authorities (
 );
 create unique index ix_auth_username on authorities (username,authority);
 
+CREATE TABLE persistent_logins (
+    username VARCHAR(64) NOT NULL,
+    series VARCHAR(64) NOT NULL,
+    token VARCHAR(64) NOT NULL,
+    last_used TIMESTAMP NOT NULL,
+    PRIMARY KEY (series)
+);
+
 CREATE TABLE IF NOT EXISTS WEBAPI_PROPERTIES 
 (id INTEGER NOT NULL,
 jdbc_ip_address VARCHAR(100) NOT NULL,
