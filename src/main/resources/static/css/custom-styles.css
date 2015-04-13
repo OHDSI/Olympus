@@ -1,4 +1,12 @@
-html, body { height: 100% }
+@import url(http://fonts.googleapis.com/css?family=Titillium+Web);
+
+html, body { 
+	height: 100%;
+	font-family: 'Titillium Web', sans-serif;
+
+}
+
+
 
 .sub-text {
 	color: #D1D8DE;
@@ -110,4 +118,48 @@ a {
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {
 	background-color: #021726;
+}
+
+
+.form-signin {
+	color: #BEB7B5;
+  max-width: 400px;
+  /* padding: 15px; */
+  /* margin: 0 auto; */
+     position: absolute;
+    bottom: 0;
+    left: 0;
+    padding-left: 50px;
+    padding-bottom: 50px;
+  width: 350px;
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }

@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               .antMatchers("/Heracles/**").hasAuthority("HERACLES")
               .antMatchers("/JobViewer/**").hasAuthority("JOB_VIEWER")
               .antMatchers("/Calypso/**").hasAuthority("CALYPSO")
-              .antMatchers("/WebAPI/**").hasAuthority("WEBAPI")
+              //.antMatchers("/WebAPI/**").hasAuthority("WEBAPI") //TODO Review options of securing WebAPI itself
               .anyRequest().authenticated();
       http
               .formLogin().failureUrl("/login?error")

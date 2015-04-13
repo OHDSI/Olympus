@@ -1,4 +1,4 @@
-<div>
+<div class="container">
    	#set ( $current = "login" )
 	#parse( "common/navbar.vm" )
 	#renderNavBar ($current )
@@ -10,22 +10,36 @@
         #if(${msg})
         <div class="alert alert-success" role="alert">$msg</div>
         #end
-<form class="form-horizontal" role="form" action="/login" method="post">
+<style type="text/css">
+
+body { 
+
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: black; 
+  background: url(/img/greekColumns.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+</style>
+      
+      
+<form class="form-signin" role="form" action="/login" method="post">
+<h2 class="form-signin-heading">Please sign in</h2>
     <input type="hidden" name="$_csrf.parameterName" value="$_csrf.token"/>
 
-    <div>
-        <label for="username">Username</label>
-        <input type="username" name="username" id="username" value="#if($defaultUsername)$defaultUsername#end" required autofocus/>
-    </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" value="#if($defaultPassword)$defaultPassword#end" required/>
-    </div>
-    <div>
-        <label for="remember-me">Remember me</label>
-        <input type="checkbox" name="remember-me" id="remember-me"/>
-    </div>
-    <button type="submit">Sign in</button>
+        <label for="username" class="sr-only">Username</label>
+        <input type="username" name="username" class="form-control" id="username" value="#if($defaultUsername)$defaultUsername#end" placeholder="Username" required autofocus/>
+        <label for="password" class="sr-only" >Password</label>
+        <input type="password" name="password" class="form-control" id="password" value="#if($defaultPassword)$defaultPassword#end" placeholder="Password" required/>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me" id="remember-me"> Remember me
+          </label>
+        </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 </form>
         </div>
     </div>

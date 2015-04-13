@@ -1,7 +1,6 @@
 package org.ohdsi.olympus.controller;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.EnumSet;
 
 import javax.validation.Valid;
 
@@ -17,10 +16,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -29,29 +28,13 @@ public class UserController {
     
     private static final Log log = LogFactory.getLog(UserController.class);
     
+    private static final EnumSet<Role> ROLES = EnumSet.allOf(Role.class);
+    
     @Autowired
     private UserRepository userRepository;
     
     @Autowired
     private CommonTemplateFactory templateFactory;
-    
-    @RequestMapping(value = "/create/test", method = RequestMethod.GET)
-    public ModelAndView testInsert(@RequestParam("username") String username) {
-        log.debug("Getting user create form");
-        User u = new User();
-        u.setUsername(username);
-        u.setPassword("test");
-        u.setEnabled(true);
-        Set<Role> roles = new HashSet<Role>();
-        roles.add(Role.CALYPSO);
-        roles.add(Role.CIRCE);
-        roles.add(Role.WEBAPI);
-        roles.add(Role.HERACLES);
-        u.setRoles(roles);
-        this.userRepository.save(u);
-        log.info("saved");
-        return new ModelAndView("user_create");//, "form", new UserCreateForm());
-    }
     
     /*
     private final UserCreateFormValidator userCreateFormValidator;
@@ -70,6 +53,11 @@ public class UserController {
     //                .orElseThrow(() -> new NoSuchElementException(String.format("User=%s not found", id))));
     //    }
     
+    @ModelAttribute("roles")
+    public EnumSet<Role> getRoles() {
+        return ROLES;
+    }
+    
     @RequestMapping
     public ModelAndView getUsersPage() {
         log.debug("Getting users page");
@@ -84,6 +72,7 @@ public class UserController {
         log.debug("Getting user create form");
         ModelAndView modelAndView = templateFactory.createMasterView("user/user_create", "Create User");
         modelAndView.addObject("form", new UserCreateForm());
+        //        modelAndView.addObject("roles", ROLES);
         return modelAndView;
     }
     
@@ -92,6 +81,9 @@ public class UserController {
     public ModelAndView handleUserCreateForm(@Valid @ModelAttribute("form") UserCreateForm form, BindingResult bindingResult) {
         log.debug(String.format("Processing user create form={%s}, bindingResult={%s}", form, bindingResult));
         ModelAndView view = templateFactory.createMasterView("user/user_create", "Create User");
+        if (form.getRoles() == null || form.getRoles().isEmpty()) {
+            bindingResult.addError(new FieldError("form","roles", "Roles are required"));
+        }
         if (bindingResult.hasErrors()) {
             log.info("Has Errors: " + bindingResult);
             view.addObject("form", form);

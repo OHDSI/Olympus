@@ -6,7 +6,8 @@
 	
 <style type="text/css">
 
-body { 
+
+body {
   background: url(/img/mtOlympusSkourta.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;

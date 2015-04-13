@@ -12,22 +12,22 @@ OLYMPUS is a project as part of the Observational Health Data Sciences and Infor
 * A dashboard for app launching
 * A configuration page for setting up WebAPI
 * A job server for managing long-running jobs
-* TBD: Security
+* Security
 
 ##### Technology
 * Java
 * Spring
-* Tomcat
+* Jetty
 * HTML5 / JS
 
 ##### System Requirements
-* JRE >= 1.6
+* JRE >= 1.7 (Java 8 recommended due to a known issue with Java 7 when connected to VPNs)
 
 ##### Dependencies
 * OMOP V5 CDM running an OHDSI supported dialect
 
 ##### Getting Started
-* Pending
+* TODO
 
 
 ##### Building & Packaging
