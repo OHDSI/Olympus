@@ -33,6 +33,8 @@ $(document).ready(function() {
 	    {
 	        $(paneID+" iframe").attr("src",src);
 	    }
+	    
+	    $("body").css("background", "white");
 	});
 
 });

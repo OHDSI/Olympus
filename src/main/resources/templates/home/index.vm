@@ -3,17 +3,35 @@
 	#set ( $current = "index" )
 	#parse( "common/navbar.vm" )
 	#renderNavBar ($current )
+	
+<style type="text/css">
+
+body { 
+  background: url(/img/mtOlympusSkourta.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+</style>
 
 <div class="container" id="main-launcher">
     <div class="row row-top">
         <div class="col-md-12">
 	        <div class="tab-content">
 	            <div class="tab-pane active" id="main">
-					<div class="col-md-10 col-md-offset-1">
-						<div class="jumbotron">
-							<h2>$appName</h2>
-							<p class="sub-text">$appMessage</p>
+	            	<div class="row" style="margin-top:150px">
+						<div class="col-md-10 col-md-offset-1">
+							<div class="jumbotron">
+								<h2>$appName</h2>
+								<p class="sub-text">$appMessage</p>
+							</div>
 						</div>
+						<div class="col-md-1"></div>
+					</div>
+					
+					<div class="row">
+					
 					</div>
 	            </div>
 
