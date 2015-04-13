@@ -27,10 +27,29 @@
     <div class="form-group #if(${status.error})has-error#end">
         <label class="col-sm-3 control-label" for="password">Password</label>
         <div class="col-sm-9">
-        #springFormInput("form.password" "class='form-control'")
+        #springFormPasswordInput("form.password" "class='form-control'")
         #springShowErrors("<br/>" "")
         </div>
     </div>
+    
+    #springBind("form.roles")
+    <div class="form-group #if(${status.error})has-error#end">
+         <label class="col-sm-3 control-label" for="roles">Roles</label>
+        <div class="col-sm-9">
+ 	<select multiple="multiple" name="roles">
+		#foreach($option in $roles)
+			<option value="${option}"
+			#foreach($item in $form.roles)
+				#if($item == $option)
+					selected="selected"
+				#end
+			#end
+			>$option</option>
+		#end
+	</select>
+	#springShowErrors("<br/>" "")
+	</div>
+	</div>
                 <div class="form-group pull-right">
                     <button id="submitButton" class="btn btn-success" type="submit">Submit Properties</button>
                 </div>
