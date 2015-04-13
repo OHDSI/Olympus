@@ -13,5 +13,5 @@ INSERT INTO authorities (username, authority)
 VALUES ('admin', 'HERACLES');
 INSERT INTO authorities (username, authority)
 VALUES ('admin', 'CALYPSO');
-INSERT INTO authorities (username, authority)
-VALUES ('admin', 'WEBAPI');
+--INSERT INTO authorities (username, authority)
+--VALUES ('admin', 'WEBAPI');
