@@ -2,7 +2,12 @@ package org.ohdsi.olympus.view.factory;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.ohdsi.olympus.model.WebApiService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -23,6 +28,9 @@ public class CommonTemplateFactory {
 	
 	@Value("${html.lang}")
 	private String htmlLang;
+	
+	@Autowired
+    private WebApiService webApi;
 
 	/**
 	 * Creates a common velocity template with the head, body, script and css includes
@@ -31,7 +39,7 @@ public class CommonTemplateFactory {
 	 * @param pageTitle The title of the page
 	 */
 	public ModelAndView createMasterView (String innerTemplateName, String pageTitle) {
-		
+	    HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		ModelAndView modelAndView = new ModelAndView(COMMON_TEMPLATE);
 		modelAndView.addObject("currentDateTime", new Date());
 		modelAndView.addObject("currentDateTimeInMillis", System.currentTimeMillis());
@@ -42,8 +50,12 @@ public class CommonTemplateFactory {
 		modelAndView.addObject("innerTemplate", String.format("templates/%s.vm", innerTemplateName));
 		modelAndView.addObject("homePath", "/home/index.html");
 		modelAndView.addObject("htmlLang", htmlLang);
-		modelAndView.addObject("req", ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest());
-
+		modelAndView.addObject("req", request);
+		modelAndView.addObject("webapi",this.webApi);
+        CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+        if (csrfToken != null) {
+            modelAndView.addObject("_csrf", csrfToken);
+        }
 		return modelAndView;
 	}
 }

@@ -57,8 +57,11 @@ public class WebApiConfig {
         Assert.notNull(is, "InputStream for WebAPI.war resource must not be null");
         log.debug("InputStream for WebAPI.war: " + is.available());
         FileUtils.copyInputStreamToFile(is, destFile);
-        
+
         final WebAppContext ctx = new WebAppContext();
+        //The following is to work-around a problem with WebAPI inheriting the Olympus classloader.
+        //Cannot load configuration class: org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
+        ctx.setServerClasses(new String[]{"org.springframework.security."});
         ctx.setServer(jetty.getServer());
         ctx.setContextPath(contextPath);
         ctx.setWar(destFile.getAbsolutePath());

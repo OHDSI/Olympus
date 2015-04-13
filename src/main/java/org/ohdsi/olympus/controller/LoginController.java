@@ -40,10 +40,7 @@ public class LoginController {
                 modelAndView.addObject("error", exception);
             }
         }
-        CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
-        if (csrfToken != null) {
-            modelAndView.addObject("_csrf", csrfToken);
-        }
+
         if (!StringUtils.isEmpty(defaultUsername)) {
             modelAndView.addObject("defaultUsername", defaultUsername);
         }
