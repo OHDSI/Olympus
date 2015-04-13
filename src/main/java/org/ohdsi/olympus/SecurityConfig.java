@@ -19,30 +19,27 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 @Configuration
-public class SecurityConfig extends
-   WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
     private DataSource dataSource;
-
+    
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager();
         userDetailsService.setDataSource(dataSource);
         PasswordEncoder encoder = new BCryptPasswordEncoder();
- 
+        
         auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
         auth.jdbcAuthentication().dataSource(dataSource);
     }
-
-  @Override
-  public void configure(WebSecurity web) throws Exception {
-    web
-      .ignoring()
-         .antMatchers("/static/**","/webjars/**","/js/**","/css/**","/img/**");
-  }
-  
-  @Override
+    
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/static/**", "/webjars/**", "/js/**", "/css/**", "/img/**","/console/**");
+    }
+    
+    @Override
   protected void configure(HttpSecurity http) throws Exception {
       http
               .headers().frameOptions().disable()
@@ -66,11 +63,11 @@ public class SecurityConfig extends
               .rememberMe().tokenRepository(persistentTokenRepository())
               .tokenValiditySeconds(1209600);//14 days
           }
-       
-          @Bean
-          public PersistentTokenRepository persistentTokenRepository() {
-              JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
-              db.setDataSource(dataSource);
-              return db;
-          }
+    
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+        db.setDataSource(dataSource);
+        return db;
+    }
 }

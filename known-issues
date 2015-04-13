@@ -1,0 +1,29 @@
+The following error happens on Mac when connected to VPN.  H2 console triggers this.
+Reports indicate may possibly be a bug in java 7?  TODO: try java 8
+```
+2015-04-12 22:29:19.603 WARN main / -  - unavailable
+org.h2.message.DbException: IO Exception: "java.net.UnknownHostException: rg-skokharlt.rii.local: rg-skokharlt.rii.local: nodename nor servname provided, or not known" [90028-186]
+	at org.h2.message.DbException.get(DbException.java:168)
+	at org.h2.message.DbException.convert(DbException.java:287)
+	at org.h2.util.NetUtils.getLocalAddress(NetUtils.java:268)
+	at org.h2.server.web.WebServer.updateURL(WebServer.java:348)
+	at org.h2.server.web.WebServer.init(WebServer.java:337)
+	at org.h2.server.web.WebServlet.init(WebServlet.java:53)
+	at javax.servlet.GenericServlet.init(GenericServlet.java:244)
+	at org.eclipse.jetty.servlet.ServletHolder.initServlet(ServletHolder.java:612)
+	at org.eclipse.jetty.servlet.ServletHolder.initialize(ServletHolder.java:395)
+	at org.eclipse.jetty.servlet.ServletHandler.initialize(ServletHandler.java:871)
+	at org.springframework.boot.context.embedded.jetty.JettyEmbeddedWebAppContext$JettyEmbeddedServletHandler.deferredInitialize(JettyEmbeddedWebAppContext.java:46)
+	at org.springframework.boot.context.embedded.jetty.JettyEmbeddedWebAppContext.deferredInitialize(JettyEmbeddedWebAppContext.java:36)
+	at org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainer.handleDeferredInitialize(JettyEmbeddedServletContainer.java:162)
+	at org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainer.handleDeferredInitialize(JettyEmbeddedServletContainer.java:168)
+	at org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainer.start(JettyEmbeddedServletContainer.java:109)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.startEmbeddedServletContainer(EmbeddedWebApplicationContext.java:287)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.finishRefresh(EmbeddedWebApplicationContext.java:141)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:483)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:118)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:691)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
+	at org.springframework.boot.builder.SpringApplicationBuilder.run(SpringApplicationBuilder.java:139)
+	at org.ohdsi.olympus.Olympus.main(Olympus.java:16)
+```
