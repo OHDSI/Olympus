@@ -52,6 +52,9 @@ public class WebApiController {
     @Autowired
     private CommonTemplateFactory templateFactory;
     
+    @Autowired
+    private MainController mainController;
+    
     @RequestMapping(value = "config")
     public ModelAndView handleConfigurationRequest(String errorMsg) throws Exception {
         log.debug("Get config");
@@ -113,7 +116,12 @@ public class WebApiController {
                 e.getMessage());
             log.error(errorMsg, e);
         }
-        return handleConfigurationRequest(errorMsg);
+        if (errorMsg != null) {
+        	return handleConfigurationRequest(errorMsg);
+        } else {
+        	return mainController.handleIndexRequest();
+        }
+        
     }
     
     @RequestMapping(value = "stop", method = RequestMethod.POST)

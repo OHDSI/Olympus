@@ -24,13 +24,19 @@ $(document).ready(function() {
 	  	return true;
 	});
 	
-	$('#apps').click('show', function(e) {
+	$('#apps, .launch-apps-link').click('show', function(e) {
 		//alert('hello'+e.target);
 	    paneID = $(e.target).attr('href');
 	    src = $(paneID).attr('data-src');
 	    // if the iframe hasn't already been loaded once
 	    if($(paneID+" iframe").attr("src")=="")
 	    {
+	    	var lbl = $(e.target).text().trim();
+	    	// Job viewer is it's own thing
+	    	if ("Job Viewer" === lbl) {
+	    		lbl = "Apps";
+	    	}
+	    	$("#apps-label").html(lbl+ ' <span class="caret"></span>');
 	        $(paneID+" iframe").attr("src",src);
 	    }
 	    

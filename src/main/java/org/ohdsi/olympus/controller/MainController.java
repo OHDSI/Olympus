@@ -45,8 +45,7 @@ public class MainController {
     private WebApiPropertiesRepository repo;
     
     @RequestMapping(value = {"index",""})
-    public ModelAndView handleIndexRequest(final HttpServletRequest request, final HttpServletResponse res,
-                                           final HttpSession session) throws Exception {
+    public ModelAndView handleIndexRequest() throws Exception {
         
         ModelAndView modelAndView = templateFactory.createMasterView(HOME_TEMPLATE_NAME, null);
         

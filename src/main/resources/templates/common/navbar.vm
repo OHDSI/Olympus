@@ -15,6 +15,23 @@
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li #if ($activeLink == "index") class="active" #end><a href="/index.html">Home</a></li>
+
+			#if ($webapi.isRunning() && $req.userPrincipal && $activeLink == "index")
+				 #if($req.isUserInRole("JOB_VIEWER")) <li><a class="launch-apps-link" href="#jobviewer" data-toggle="tab" id="jobviewer-link">Job Viewer</a></li> #end
+			    <li class="dropdown">
+			      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="apps-label">Apps<span class="caret"></span></a>
+			      <ul class="dropdown-menu" role="menu" id="apps">
+			      	#if($req.isUserInRole("ACHILLES"))<li><a href="#achilles" data-toggle="tab" id="achilles-link">Achilles</a></li>#end
+		        	#if($req.isUserInRole("HERACLES"))<li><a href="#heracles" data-toggle="tab" id="heracles-link">Heracles</a></li>#end
+		        	#if($req.isUserInRole("CALYPSO"))<li><a href="#calypso" data-toggle="tab" id="calypso-link">Calypso</a></li>#end
+			        #if($req.isUserInRole("HERMES"))<li><a href="#hermes" data-toggle="tab" id="hermes-link">Hermes</a></li>#end
+			        #if($req.isUserInRole("CIRCE"))<li><a href="#circe" data-toggle="tab" id="circe-link">Circe</a></li>#end
+		        	#if($req.isUserInRole("ATHENA"))<li><a href="#athena" data-toggle="tab" id="athena-link">Athena</a></li>#end
+			      </ul>
+			    </li>
+			   
+			#end
+			
 			#if ($req.userPrincipal && $req.isUserInRole("ADMIN"))
 				<li class="dropdown">
 			      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin<span class="caret"></span></a>
@@ -25,18 +42,7 @@
 			      </ul>
 			    </li>
 			#end
-			#if ($webapi.isRunning() && $req.userPrincipal && $activeLink == "index")
-			    <li class="dropdown">
-			      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Apps<span class="caret"></span></a>
-			      <ul class="dropdown-menu" role="menu" id="apps">
-			        #if($req.isUserInRole("CIRCE"))<li><a href="#circe" data-toggle="tab" id="circe-link">Circe</a></li>#end
-		        	#if($req.isUserInRole("HERMES"))<li><a href="#hermes" data-toggle="tab" id="hermes-link">Hermes</a></li>#end
-		        	#if($req.isUserInRole("HERACLES"))<li><a href="#heracles" data-toggle="tab" id="heracles-link">Heracles</a></li>#end
-		        	#if($req.isUserInRole("CALYPSO"))<li><a href="#calypso" data-toggle="tab" id="calypso-link">Calypso</a></li>#end
-		        	#if($req.isUserInRole("JOB_VIEWER"))<li><a href="#jobviewer" data-toggle="tab" id="jobviewer-link">Job Viewer</a></li>#end
-			      </ul>
-			    </li>
-			#end
+			
 				
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

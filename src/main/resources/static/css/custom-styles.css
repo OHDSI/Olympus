@@ -15,7 +15,7 @@ html, body {
 
 .jumbotron {
 	color: white;
-	background: #1C3E57;
+	background: #231E18;
 	padding: 30px;
 }
 
@@ -109,7 +109,7 @@ a {
 }
 
 .navbar-inverse {
-	background-color: #1C3E57;
+	background-color: #231E18;
 	border-color: #0B293E;
 }
 
@@ -118,7 +118,7 @@ a {
 }
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {
-	background-color: #021726;
+	background-color: #374862;
 }
 
 
@@ -184,9 +184,13 @@ a {
 	  font-weight: bold;
   color: #787878;
   font-size: 15px;
-  font-family: 'Julius Sans One', sans-serif;
 }
 
 .launch-link-row {
 	cursor: pointer;
+	margin-top:10px;
+}
+
+.launch-app-names {
+	padding-left: 20px;
 }
