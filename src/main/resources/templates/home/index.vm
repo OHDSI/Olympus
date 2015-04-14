@@ -8,7 +8,7 @@
 
 
 body {
-  background: url(/img/mtOlympusSkourta.jpg) no-repeat center center fixed; 
+  background: url(/img/meteora.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -21,18 +21,92 @@ body {
         <div class="col-md-12">
 	        <div class="tab-content">
 	            <div class="tab-pane active" id="main">
-	            	<div class="row" style="margin-top:150px">
+	            	<div class="row" style="margin-top:20%">
 						<div class="col-md-10 col-md-offset-1">
 							<div class="jumbotron">
-								<h2>$appName</h2>
+								<h2 style="font-family: 'Julius Sans One', sans-serif;font-size:60px">$appName</h2>
 								<p class="sub-text">$appMessage</p>
 							</div>
 						</div>
 						<div class="col-md-1"></div>
 					</div>
-					
+					#if ($webapi.isRunning() && $req.userPrincipal)
 					<div class="row">
-					
+						<div class="col-md-10 col-md-offset-1">
+							<div class="row" style="
+    background: rgba(255, 255, 255, 0.85);     background-color: 0 0 0 0.4;
+    padding: 30px;
+    border-radius: 8px;
+    margin: 4px;
+							">
+								 #if($req.isUserInRole("CIRCE"))
+								<div class="col-sm-4 launch-link-row" type="circe">
+									<div class="row">
+										<div class="col-sm-4">
+											<img src="/img/circe-Cropped-shadow.png" style="height:80px; width: auto;"/>
+										</div>
+										<div class="col-sm-8">
+											<label class="launcher-header">Circe</label>
+											<label class="launcher-subheader">Create some cohorts</label>
+										</div>
+									</div>
+								</div>
+								#end
+								#if($req.isUserInRole("HERMES"))
+								<div class="col-sm-4 launch-link-row" type="hermes">
+									<div class="row">
+										<div class="col-sm-4">
+											<img src="/img/hermes-Cropped-shadow.png" style="height:80px; width: auto;"/>
+										</div>
+										<div class="col-sm-8">
+											<label class="launcher-header">Hermes</label>
+											<label class="launcher-subheader">Search some vocab</label>
+										</div>
+									</div>
+								</div>
+								#end
+								#if($req.isUserInRole("HERACLES"))
+								<div class="col-sm-4 launch-link-row" type="heracles">
+																		<div class="row">
+										<div class="col-sm-4">
+											<img src="/img/heracles-Cropped-shadow.png" style="height:80px; width: auto;"/>
+										</div>
+										<div class="col-sm-8">
+											<label class="launcher-header">Heracles</label>
+											<label class="launcher-subheader">Analyze some cohorts</label>
+										</div>
+									</div>
+								</div>
+								#end
+								#if($req.isUserInRole("CALYPSO"))
+								<div class="col-sm-4 launch-link-row" type="calypso" style="margin-top:10px">
+									<div class="row">
+										<div class="col-sm-4">
+											<img src="/img/calypso-Cropped-shadow.png" style="height:80px; width: auto;"/>
+										</div>
+										<div class="col-sm-8">
+											<label class="launcher-header">Calypso</label>
+											<label class="launcher-subheader">Do some feasibility</label>
+										</div>
+									</div>
+								</div>
+								#end
+								#if($req.isUserInRole("JOB_VIEWER"))
+								<div class="col-sm-4 launch-link-row" type="jobviewer" style="margin-top:10px">
+									<div class="row">
+										<div class="col-sm-4">
+											<img src="/img/acropolis-Cropped-shadow.png" style="height:80px; width: auto;"/>
+										</div>
+										<div class="col-sm-8">
+											<label class="launcher-header">Job Viewer</label>
+											<label class="launcher-subheader">View some jobs</label>
+										</div>
+									</div>
+								</div>
+								#end
+							</div>
+						</div>
+						#end
 					</div>
 	            </div>
 

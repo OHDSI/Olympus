@@ -36,5 +36,10 @@ $(document).ready(function() {
 	    
 	    $("body").css("background", "white");
 	});
+	
+	$(".launch-link-row").click(function() {
+		var type = $(this).attr("type");
+		$("#" + type + "-link").trigger("click");
+	});
 
 });
