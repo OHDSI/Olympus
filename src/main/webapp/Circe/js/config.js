@@ -1,7 +1,7 @@
 define([], function () {
 	var config = {};
 	
-	config.webAPIRoot = "http://localhost:20000/WebAPI/";
+	config.webAPIRoot = "https://nlp01.regenstrief.org:8443/WebAPI/";
 	
 	return config;
 	
