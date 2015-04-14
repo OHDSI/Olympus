@@ -1,5 +1,5 @@
-define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer"],
-    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer) {
+define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer", "tabletools"],
+    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer, TableTools) {
 
         function DrugExposureRenderer() {}
         DrugExposureRenderer.prototype = {};
@@ -29,6 +29,17 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
             $(document).on( 'shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
                 $(window).trigger("resize");
+
+                // Version 1.
+                $('table:visible').each(function()
+                {
+                    var oTableTools = TableTools.fnGetInstance(this);
+
+                    if (oTableTools && oTableTools.fnResizeRequired())
+                    {
+                        oTableTools.fnResizeButtons();
+                    }
+                });
             });
 
             function boxplot_helper(data, target, xlabel, ylabel, width, height) {
@@ -83,6 +94,11 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         boxplot_helper(data.quantityDistribution, '#quantityDistribution', 'Quantity', 'Quantity', 360,300);
                         boxplot_helper(data.refillsDistribution, '#refillsDistribution', 'Refills', 'Refills', 360,300);
 
+                        common.generateCSVDownload($("#ageAtFirstExposure"), data.ageAtFirstExposure, "ageAtFirstExposure");
+                        common.generateCSVDownload($("#daysSupplyDistribution"), data.daysSupplyDistribution, "daysSupplyDistribution");
+                        common.generateCSVDownload($("#quantityDistribution"), data.quantityDistribution, "quantityDistribution");
+                        common.generateCSVDownload($("#refillsDistribution"), data.refillsDistribution, "refillsDistribution");
+
                         // drug  type visualization
                         var donut = new jnj_chart.donut();
                         var drugsByType = common.mapConceptData(data.drugsByType);
@@ -97,6 +113,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 .domain(drugsByType)
                                 .range(colorbrewer.Paired[10])
                         });
+                        common.generateCSVDownload($("#drugsByType"), data.drugsByType, "drugsByType");
 
                         // prevalence by month
                         var prevByMonth = common.normalizeArray(data.prevalenceByMonth, true);
@@ -119,6 +136,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 yLabel: "Prevalence per 1000 People"
                             });
                         }
+                        common.generateCSVDownload($("#drugPrevalenceByMonth"), data.prevalenceByMonth, "prevalenceByMonth");
 
                         // render trellis
                         var trellisData = common.normalizeArray(data.prevalenceByGenderAgeYear, true);
@@ -190,6 +208,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     .range(["#1F78B4", "#FB9A99", "#33A02C"])
                             });
                         }
+                        common.generateCSVDownload($("#trellisLinePlot"), data.prevalenceByGenderAgeYear, "prevalenceByGenderAgeYear");
 
                         $('#spinner-modal').modal('hide');
                     }, error : function() {
@@ -297,7 +316,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
                         datatable = $('#drug_table').DataTable({
                             order: [ 6, 'desc' ],
-                            dom: 'Clfrtip',
+                            dom: 'T<"clear">lfrtip',
                             data: table_data,
                             columns: [
                                 {

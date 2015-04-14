@@ -21,8 +21,8 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster',
         var refresh = true;
         if (lastRefreshed) {
             var now = _.now();
-            // don't refresh more than once every 5 mins
-            if (+lastRefreshed + 300000 >= now) {
+            // don't refresh more than once every 30s
+            if (+lastRefreshed + 30000 >= now) {
                 refresh = false;
             }
         }

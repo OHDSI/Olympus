@@ -1,1 +1,1 @@
-function getWebApiUrl() { return 'http://localhost:20000/WebAPI'; }
+function getWebApiUrl() { return 'https://nlp01.regenstrief.org:8443/WebAPI'; }

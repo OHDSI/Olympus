@@ -1,5 +1,5 @@
-define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer"],
-    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer) {
+define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer", "tabletools"],
+    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer, TableTools) {
 
     function ConditionRenderer() {}
     ConditionRenderer.prototype = {};
@@ -28,6 +28,17 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
         $(document).on( 'shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
             $(window).trigger("resize");
+
+            // Version 1.
+            $('table:visible').each(function()
+            {
+                var oTableTools = TableTools.fnGetInstance(this);
+
+                if (oTableTools && oTableTools.fnResizeRequired())
+                {
+                    oTableTools.fnResizeButtons();
+                }
+            });
         });
 
         ConditionRenderer.drilldown = function (concept_id, concept_name) {
@@ -66,6 +77,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             yLabel: 'Age at First Diagnosis'
                         });
                     }
+                    common.generateCSVDownload($("#ageAtFirstDiagnosis"), data.ageAtFirstDiagnosis, "ageAtFirstDiagnosis");
 
                     // prevalence by month
                     d3.selectAll("#conditionPrevalenceByMonth svg").remove();
@@ -90,6 +102,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             yLabel: "Prevalence per 1000 People"
                         });
                     }
+                    common.generateCSVDownload($("#conditionPrevalenceByMonth"), data.prevalenceByMonth, "prevalenceByMonth");
 
                     // condition type visualization
                     var conditionType = common.mapConceptData(data.conditionsByType);
@@ -108,6 +121,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 .range(colorbrewer.Paired[10])
                         });
                     }
+                    common.generateCSVDownload($("#conditionsByType"), data.conditionsByType, "conditionsByType");
 
                     // render trellis
                     d3.selectAll("#trellisLinePlot svg").remove();
@@ -175,11 +189,12 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             yFormat: d3.format("0.2f"),
                             tickPadding: 20,
                             colors: d3.scale.ordinal()
-                                .domain(["MALE", "FEMALE", "UNKNOWN",])
+                                .domain(["MALE", "FEMALE", "UNKNOWN"])
                                 .range(["#1F78B4", "#FB9A99", "#33A02C"])
 
                         });
                     }
+                    common.generateCSVDownload($("#trellisLinePlot"), data.prevalenceByGenderAgeYear, "prevalenceByGenderAgeYear");
 
                     $('#spinner-modal').modal('hide');
                 }, error : function(data) {
@@ -290,7 +305,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
                     datatable = $('#condition_table').DataTable({
                         order: [6, 'desc'],
-                        dom: 'Clfrtip',
+                        dom: 'T<"clear">lfrtip',
                         data: table_data,
                         columns: [
                             {

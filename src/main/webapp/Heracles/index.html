@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Heracles</title>
+    <title>Heracles Analysis Runner</title>
     <link rel="stylesheet" type="text/css" href="build/css/Heracles.min.css">
 </head>
 <body>
@@ -48,24 +48,25 @@
         <div class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" style="width:200px">
             <a class="navmenu-brand visible-md visible-lg" href="index.html" style="font-weight: bold">OHDSI Heracles</a>
             <ul class="nav navmenu-nav" style="border-bottom:1px solid #898989;">
-                <li><a id="cohort-explorer-back"  style="font-size:16px">&laquo;Back</a></li>
+                <li><a href="index.html"  style="font-size:16px">&laquo;Back</a></li>
                 <li><a ng-click="refreshCohort($event)" style="font-size:16px">Refresh</a></li>
                 <li><a ng-href="viewer.html?cohortId={{cohort.cohortDefinition.id}}" >Heracles Viewer</a></li>
             </ul>
 
-            <a class="navmenu-brand" style="font-weight: bold">Visualization Packs</a>
+            <a class="navmenu-brand" style="font-weight: bold" ng-click="scrollAnalysesClick($event, cohort.firstAnalysis)">Visualization Packs</a>
             <ul class="nav navmenu-nav">
                 <li ng-repeat="(k, v) in visualizationPacks" key="{{k}}" >
-                    <a ng-click="selectVizPack($event, k)">{{k}}</a>
+                    <label viz-type="{{k}}" style="padding:2px 0px 2px 15px; cursor: pointer"><input type="checkbox" ng-click="selectVizPack($event, k)" class="viz-pack-checkbox" viz-type="{{k}}"/>  {{k}}</label>
                 </li>
             </ul>
+            <!--
             <a class="navmenu-brand" style="font-weight: bold" ng-click="scrollAnalysesClick($event, cohort.firstAnalysis)">Analysis Types</a>
             <ul class="nav navmenu-nav">
                 <li ng-repeat="(k, v) in cohort.analysesMap" key="{{k}}" >
                     <a ng-click="scrollAnalysesClick($event, k)">{{k}}</a>
                 </li>
             </ul>
-
+            -->
         </div>
 
         <div class="navbar navbar-default navbar-fixed-top hidden-md hidden-lg">
@@ -191,7 +192,21 @@
                     <input type="text" class="form-control toggle-filter-input" toggle-filter="measurement" />
                 </div>
             </div>
-            <div class="col-sm-4" style="height:60px">&nbsp;</div>
+
+            <div class="col-sm-4" style="height:45px">&nbsp;</div>
+
+            <div class="col-md-12">
+                <label>Small Cell Count: <span style="color:#aaa"> (Cell size to exclude)</span></label><br/>
+                <input type="number" value="1" id="smallCellCount" />
+                <br/>
+            </div>
+
+            <div class="col-md-12" style="margin-top:10px">
+                <label><input type="checkbox" id="heraclesHeel"/> Run Heracles Heel <span style="color:#aaa">(Evaluates data for errors)</span></label>
+            </div>
+            <div class="col-md-12" style="margin-top:10px">
+                <label><input type="checkbox" id="cohortPeriodOnly"/> Cohort Period Only <span style="color:#aaa">(Limit to inside the cohort period)</span></label>
+            </div>
             <div class="col-sm-12">
                 <button class="btn btn-lg btn-heracles analyses-button pull-right" filter-key="cohort-analyses" ng-click="submitJob($event)" data-loading-text="...">Begin Analysis</button>
             </div>

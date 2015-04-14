@@ -1,5 +1,5 @@
-define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer"],
-    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer) {
+define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer", "tabletools"],
+    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer, TableTools) {
 
         function ObservationsRenderer() {}
         ObservationsRenderer.prototype = {};
@@ -28,6 +28,17 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
             $(document).on( 'shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
                 $(window).trigger("resize");
+
+                // Version 1.
+                $('table:visible').each(function()
+                {
+                    var oTableTools = TableTools.fnGetInstance(this);
+
+                    if (oTableTools && oTableTools.fnResizeRequired())
+                    {
+                        oTableTools.fnResizeButtons();
+                    }
+                });
             });
 
             ObservationsRenderer.drilldown = function (concept_id, concept_name) {
@@ -48,9 +59,9 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             var firstDiagnosis = common.normalizeArray(data.ageAtFirstOccurrence);
                             if (!firstDiagnosis.empty) {
                                 var ageAtFirstOccurrence = new jnj_chart.boxplot();
-                                bpseries = [];
-                                bpdata = common.normalizeDataframe(firstDiagnosis);
-                                for (i = 0; i < bpdata.category.length; i++) {
+                                var bpseries = [];
+                                var bpdata = common.normalizeDataframe(firstDiagnosis);
+                                for (var i = 0; i < bpdata.category.length; i++) {
                                     bpseries.push({
                                         Category: bpdata.category[i],
                                         min: bpdata.minValue[i],
@@ -67,6 +78,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     yLabel: 'Age at First Occurrence'
                                 });
                             }
+                            common.generateCSVDownload($("#ageAtFirstOccurrence"), data.ageAtFirstOccurrence, "ageAtFirstOccurrence");
 
                             // prevalence by month
                             var prevData = common.normalizeArray(data.prevalenceByMonth);
@@ -92,6 +104,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     yLabel: "Prevalence per 1000 People"
                                 });
                             }
+                            common.generateCSVDownload($("#observationPrevalenceByMonth"), data.prevalenceByMonth, "observationPrevalenceByMonth");
 
                             // observation type visualization
                             if (data.observationsByType && data.observationsByType.length > 0) {
@@ -105,6 +118,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     }
                                 });
                             }
+                            common.generateCSVDownload($("#observationsByType"), data.observationsByType, "observationsByType");
 
                             // render trellis
                             var trellisData = common.normalizeArray(data.prevalenceByGenderAgeYear, true);
@@ -177,6 +191,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
                                 });
                             }
+                            common.generateCSVDownload($("#trellisLinePlot"), data.prevalenceByGenderAgeYear, "prevalenceByGenderAgeYear");
 
                             // Records by Unit
                             var recordsByUnit = new jnj_chart.donut();
@@ -224,6 +239,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     }
                                 });
                             }
+                            common.generateCSVDownload($("#recordsByUnit"), data.recordsByUnit, "recordsByUnit");
 
                             // Observation Value Distribution
                             var obsValueDist = common.normalizeArray(data.observationValueDistribution);
@@ -253,112 +269,9 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     yLabel: 'Observation Value'
                                 });
                             }
+                            common.generateCSVDownload($("#observationValues"), data.observationValueDistribution, "observationValues");
 
-                            // Lower Limit Distribution
-                            var lowerLimitDist = common.normalizeArray(data.lowerLimitDistribution);
-                            if (!lowerLimitDist.empty) {
-                                var lowerLimit = new jnj_chart.boxplot();
-                                bpseries = [];
-                                bpdata = common.normalizeDataframe(lowerLimitDist);
 
-                                bpseries = bpdata.category.map(function (d, i) {
-                                    var item =
-                                    {
-                                        Category: bpdata.category[i],
-                                        min: bpdata.minValue[i],
-                                        max: bpdata.maxValue[i],
-                                        median: bpdata.medianValue[i],
-                                        LIF: bpdata.p10Value[i],
-                                        q1: bpdata.p25Value[i],
-                                        q3: bpdata.p75Value[i],
-                                        UIF: bpdata.p90Value[i]
-                                    };
-                                    return item;
-                                }, bpdata);
-
-                                lowerLimit.render(bpseries, "#lowerLimit", 300, 200, {
-                                    yMax: d3.max(bpdata.p90Value) || bpdata.p90Value, // handle when dataframe is not array of values
-                                    xLabel: 'Unit',
-                                    yLabel: 'Observation Value'
-                                });
-                            }
-
-                            // Upper Limit Distribution
-                            var upperLimitDist = common.normalizeArray(data.upperLimitDistribution);
-                            if (!upperLimitDist.empty) {
-                                var upperLimit = new jnj_chart.boxplot();
-                                bpseries = [];
-                                bpdata = common.normalizeDataframe(upperLimitDist);
-
-                                bpseries = bpdata.category.map(function (d, i) {
-                                    var item =
-                                    {
-                                        Category: bpdata.category[i],
-                                        min: bpdata.minValue[i],
-                                        max: bpdata.maxValue[i],
-                                        median: bpdata.medianValue[i],
-                                        LIF: bpdata.p10Value[i],
-                                        q1: bpdata.p25Value[i],
-                                        q3: bpdata.p75Value[i],
-                                        UIF: bpdata.p90Value[i]
-                                    };
-                                    return item;
-                                }, bpdata);
-
-                                upperLimit.render(bpseries, "#upperLimit", 300, 200, {
-                                    yMax: d3.max(bpdata.p90Value) || bpdata.p90Value, // handle when dataframe is not array of values
-                                    xLabel: 'Unit',
-                                    yLabel: 'Observation Value'
-                                });
-                            }
-
-                            // relative to norm pie
-                            var valuesRelativeToNormData = common.normalizeArray(data.valuesRelativeToNorm);
-                            if (!valuesRelativeToNormData.empty) {
-                                var relativeToNorm = new jnj_chart.donut();
-                                var dataRelativeToNorm = [];
-
-                                if (valuesRelativeToNormData.conceptName instanceof Array) {
-                                    dataRelativeToNorm = valuesRelativeToNormData.conceptName.map(function (d, i) {
-                                        var item =
-                                        {
-                                            id: this.conceptName[i],
-                                            label: this.conceptName[i],
-                                            value: this.countValue[i]
-                                        };
-                                        return item;
-                                    }, valuesRelativeToNormData);
-                                }
-                                else {
-                                    dataRelativeToNorm.push(
-                                        {
-                                            id: valuesRelativeToNormData.conceptName,
-                                            label: valuesRelativeToNormData.conceptName,
-                                            value: valuesRelativeToNormData.countValue
-                                        });
-                                }
-
-                                dataRelativeToNorm.sort(function (a, b) {
-                                    var nameA = a.label.toLowerCase(),
-                                        nameB = b.label.toLowerCase();
-                                    if (nameA < nameB) { //sort string ascending
-                                        return -1;
-                                    }
-                                    if (nameA > nameB) {
-                                        return 1;
-                                    }
-                                    return 0; //default return value (no sorting)
-                                });
-
-                                relativeToNorm.render(dataRelativeToNorm, "#relativeToNorm", 500, 300, {
-                                    margin: {
-                                        top: 5,
-                                        left: 5,
-                                        right: 200,
-                                        bottom: 5
-                                    }
-                                });
-                            }
                         }
                         $('#spinner-modal').modal('hide');
                     }, error : function() {
@@ -366,6 +279,32 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                     }
                 });
             };
+
+            function getColors(data) {
+                /*
+                console.log(data);
+
+                if (data.length <= 3) {
+                    var colors = [];
+                    $.each(data, function() {
+                        var lbl = this.label.toLowerCase();
+                        if (lbl.indexOf("above") >= 0 || lbl.indexOf("high") >= 0) {
+                            colors.push("#e31a1c");
+                        } else if (lbl.indexOf("below") >= 0 || lbl.indexOf("low") >= 0) {
+                            colors.push("#1f78b4");
+                        } else if (lbl.indexOf("normal") >= 0 || lbl.indexOf("within") >= 0) {
+                            colors.push("#33a02c");
+                        } else {
+                            colors.push("#6a3d9a");
+                        }
+                    });
+console.log(colors);
+                    return colors;
+                }
+                */
+
+                return colorbrewer.Dark2[3];
+            }
 
 
             function buildHierarchyFromJSON(data, threshold) {
@@ -468,7 +407,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
                         datatable = $('#observation_table').DataTable({
                             order: [6, 'desc'],
-                            dom: 'Clfrtip',
+                            dom: 'T<"clear">lfrtip',
                             data: table_data,
                             columns: [
                                 {

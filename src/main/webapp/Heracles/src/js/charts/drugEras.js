@@ -1,6 +1,5 @@
-define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer"],
-    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer) {
-
+define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer", "tabletools"],
+    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer, TableTools) {
         function DrugErasRenderer() {}
         DrugErasRenderer.prototype = {};
         DrugErasRenderer.prototype.constructor = DrugErasRenderer;
@@ -28,6 +27,17 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
             $(document).on( 'shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
                 $(window).trigger("resize");
+
+                // Version 1.
+                $('table:visible').each(function()
+                {
+                    var oTableTools = TableTools.fnGetInstance(this);
+
+                    if (oTableTools && oTableTools.fnResizeRequired())
+                    {
+                        oTableTools.fnResizeButtons();
+                    }
+                });
             });
 
 
@@ -79,6 +89,9 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         boxplot_helper(data.ageAtFirstExposure,'#drugeras_age_at_first_exposure',500,300,'Gender','Age at First Exposure');
                         boxplot_helper(data.lengthOfEra,'#drugeras_length_of_era',500,300,'', 'Days');
 
+                        common.generateCSVDownload($("#drugeras_age_at_first_exposure"), data.ageAtFirstExposure, "ageAtFirstExposure");
+                        common.generateCSVDownload($("#drugeras_length_of_era"), data.lengthOfEra, "lengthOfEra");
+
                         // prevalence by month
                         var byMonth = common.normalizeArray(data.prevalenceByMonth, true);
                         if (!byMonth.empty) {
@@ -100,6 +113,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 yLabel: "Prevalence per 1000 People"
                             });
                         }
+                        common.generateCSVDownload($("#drugeraPrevalenceByMonth"), data.prevalenceByMonth, "prevalenceByMonth");
 
 
 
@@ -172,6 +186,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
                             });
                         }
+                        common.generateCSVDownload($("#trellisLinePlot"), data.prevalenceByGenderAgeYear, "prevalenceByGenderAgeYear");
                         $('#spinner-modal').modal('hide');
                     }, error : function(data) {
                         $('#spinner-modal').modal('hide');
@@ -280,7 +295,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
                         datatable = $('#drugera_table').DataTable({
                             order: [ 5, 'desc' ],
-                            dom: 'Clfrtip',
+                            dom: 'T<"clear">lfrtip',
                             data: table_data,
                             columns: [
                                 {

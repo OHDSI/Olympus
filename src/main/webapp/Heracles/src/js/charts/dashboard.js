@@ -18,18 +18,22 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
             $('#loading-text').text("Rendering Visualizations...");
             // gender
             d3.selectAll("#genderPie svg").remove();
-            genderDonut = new jnj_chart.donut();
-            genderDonut.render(common.mapConceptData(data.gender), "#genderPie", 260, 100, {
-                colors: d3.scale.ordinal()
-                    .domain([8507, 8551, 8532])
-                    .range(["#1F78B4", "#33A02C", "#FB9A99"]),
-                margin: {
-                    top: 5,
-                    bottom: 10,
-                    right: 150,
-                    left: 10
-                }
-            });
+            if (data.gender) {
+                genderDonut = new jnj_chart.donut();
+                genderDonut.render(common.mapConceptData(data.gender), "#genderPie", 260, 100, {
+                    colors: d3.scale.ordinal()
+                        .domain([8507, 8551, 8532])
+                        .range(["#1F78B4", "#33A02C", "#FB9A99"]),
+                    margin: {
+                        top: 5,
+                        bottom: 10,
+                        right: 150,
+                        left: 10
+                    }
+                });
+
+                common.generateCSVDownload($('#genderPie'), data.gender, "gender");
+            }
 
             // age at first obs histogram
             var histData = {};
@@ -39,14 +43,19 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
             histData.intervals = 100;
             histData.data = common.normalizeArray(data.ageAtFirstObservation, true);
 
-            d3.selectAll("#ageatfirstobservation svg").remove();
-            var ageAtFirstObservationData = common.mapHistogram(histData);
-            var ageAtFirstObservationHistogram = new jnj_chart.histogram();
-            ageAtFirstObservationHistogram.render(ageAtFirstObservationData, "#ageatfirstobservation", 460, 195, {
-                xFormat: d3.format('d'),
-                xLabel: 'Age',
-                yLabel: 'People'
-            });
+            if (!histData.data.empty) {
+
+                d3.selectAll("#ageatfirstobservation svg").remove();
+                var ageAtFirstObservationData = common.mapHistogram(histData);
+                var ageAtFirstObservationHistogram = new jnj_chart.histogram();
+                ageAtFirstObservationHistogram.render(ageAtFirstObservationData, "#ageatfirstobservation", 460, 195, {
+                    xFormat: d3.format('d'),
+                    xLabel: 'Age',
+                    yLabel: 'People'
+                });
+
+                common.generateCSVDownload($("#ageatfirstobservation"), data.ageAtFirstObservation, "ageAtFirstObservation");
+            }
 
             // cumulative observation
             var result = common.normalizeArray(data.cumulativeObservation, false);
@@ -79,6 +88,8 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                     xLabel: cumulativeObservationXLabel,
                     yLabel: 'Percent of Population'
                 });
+
+                common.generateCSVDownload($("#cumulativeobservation"), data.cumulativeObservation, "cumulativeObservation");
             }
             // observedByMonth
             var observedByMonth = common.normalizeArray(data.observedByMonth, false);
@@ -101,6 +112,8 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                 xLabel: "Date",
                 yLabel: "People"
             });
+
+            common.generateCSVDownload($("#oppeoplebymonthsingle"), data.observedByMonth, "observedByMonth");
             $('#spinner-modal').modal('hide');
         })
         .fail(function() {

@@ -62,6 +62,33 @@ define(["d3", "jquery", "lodash"], function (d3, $, _) {
 		return result;
 	}
 
+    function map30DayDataToSeries(data, options) {
+        var defaults = {
+            dateField: "x",
+            yValue: "y",
+            yPercent: "p"
+        };
+
+        var options = $.extend({}, defaults, options);
+
+        var series = {};
+        series.name = "All Time";
+        series.values = [];
+        if (data && !data.empty) {
+            for (var i = 0; i < data[options.dateField].length; i++) {
+                series.values.push({
+                    xValue: data[options.dateField][i],
+                    yValue: data[options.yValue][i],
+                    yPercent: data[options.yPercent][i]
+                });
+            }
+            series.values.sort(function (a, b) {
+                return a.xValue - b.xValue;
+            });
+        }
+        return [series]; // return series wrapped in an array
+    }
+
 	function mapMonthYearDataToSeries(data, options) {
 		var defaults = {
 			dateField: "x",
@@ -188,15 +215,48 @@ define(["d3", "jquery", "lodash"], function (d3, $, _) {
 
         return obj;
     }
+
+    function generateCSVDownload(viz, data, fileName) {
+        if (data instanceof Array && data.length > 0 && viz) {
+
+            var parent = viz.parents(".panel").find(".panel-title");
+            if (!parent  || parent.length === 0) {
+                parent = viz.parents(".panel").find(".panel-heading");
+            }
+            parent.find(".download-csv").detach();
+
+            var csvRows = [];
+            var keys = d3.keys(data[0]).join(',');
+            csvRows.push(keys);
+            for (var i = 0, l = data.length; i < l; ++i) {
+                if (data[i] instanceof Array) {
+                    csvRows.push(data[i].join(','));   // unquoted CSV row
+                } else {
+                    csvRows.push(d3.values(data[i]).join(','));   // unquoted CSV row
+                }
+
+            }
+            var csvString = csvRows.join("\r\n");
+
+            var a = $('<a style="text-decoration: none; cursor: pointer; padding-left: 5px; color: black" title="Download CSV" class="download-csv"><span class="glyphicon glyphicon-download-alt" aria-hidden="true" ></span></a>')
+                .attr("href", 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString))
+                .attr("target", "_blank")
+                .attr("download", fileName + ".csv");
+            parent.append(a);
+
+        }
+    }
 	
 	var module = {
 		mapHistogram: mapHistogram,
 		mapConceptData: mapConceptData,
+        map30DayDataToSeries : map30DayDataToSeries,
 		mapMonthYearDataToSeries: mapMonthYearDataToSeries,
 		mapMonthYearDataToSeriesByYear: mapMonthYearDataToSeriesByYear,
 		dataframeToArray: dataframeToArray,
 		normalizeDataframe: normalizeDataframe,
-        normalizeArray: normalizeArray
+        normalizeArray: normalizeArray,
+        generateCSVDownload: generateCSVDownload
 	};
 
 	return module;

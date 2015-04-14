@@ -35,6 +35,7 @@ require.config({
         'heracles_common' : 'heracles-common',
         "datatables": "../../lib/datatables/jquery.datatables",
         "datatables-colvis": "../../lib/datatables/jquery.datatables.colvis.min",
+        'tabletools' : "../../lib/tabletools/js/dataTables.tableTools",
         "colorbrewer" : "../../lib/colorbrewer/colorbrewer"
     },
     priority: [

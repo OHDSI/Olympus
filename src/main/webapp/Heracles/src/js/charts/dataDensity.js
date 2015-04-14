@@ -57,12 +57,13 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         colors: d3.scale.category10()
                     });
                 }
+                common.generateCSVDownload($("#totalrecords"), result.totalRecords, "totalRecords");
 
                 var recordsPerPerson = common.normalizeArray(result.recordsPerPerson, true);
                 if (!recordsPerPerson.empty) {
                     // convert yyyymm to date
                     recordsPerPerson.xCalendarMonth.forEach(function (d, i, ar) {
-                        ar[i] = new Date(Math.floor(d / 100), (d % 100) - 1, 1)
+                        ar[i] = new Date(Math.floor(d / 100), (d % 100) - 1, 1);
                     });
 
                     // convert data-frame structure to array of objects
@@ -94,6 +95,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         colors: d3.scale.category10()
                     });
                 }
+                common.generateCSVDownload($("#recordsperperson"), result.recordsPerPerson, "recordsPerPerson");
 
                 var conceptsData = common.normalizeArray(result.conceptsPerPerson, true);
                 if (!conceptsData.empty) {
@@ -118,6 +120,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: 'Concepts per Person'
                     });
                 }
+                common.generateCSVDownload($("#conceptsperperson"), result.conceptsPerPerson, "conceptsPerPerson");
 
                 $('#spinner-modal').modal('hide');
             }).error(function (result) {

@@ -1,20 +1,6 @@
 <div class="chart-template">
     <h3 class="cohort-name-header">{{cohort.name}}</h3>
 
-    <div class="row ">
-        <div class="col-sm-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Number of Persons by Duration from Cohort Start to Cohort End</h3>
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <div id="personsByDurationFromStartToEnd" class="chartcontainer"></div>
-                </div>
-            </div>
-        </div>
-
-    </div>
     <div class="row">
         <div class="col-sm-12">
             <div id="panelPrevalenceByMonth" class="panel panel-default">
@@ -39,5 +25,94 @@
             </div>
         </div>
     </div>
+
+    <div class="row ">
+
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Persons in cohort from start to end
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="personinCohortFromStartToEnd" class="chartcontainer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Number of persons by duration from cohort start to cohort end
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div id="personsByDurationFromStartToEnd" class="chartcontainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row equal">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Age at Index
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="ageAtIndex" class="chartcontainer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Distribution of age at cohort start by cohort start year
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="distributionAgeCohortStartByCohortStartYear" class="chartcontainer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Distribution of age at cohort start by gender
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="distributionAgeCohortStartByGender" class="chartcontainer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
 
 </div>

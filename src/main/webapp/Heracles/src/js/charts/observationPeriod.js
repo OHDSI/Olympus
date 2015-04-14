@@ -43,6 +43,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: "Age"
                     });
                 }
+                common.generateCSVDownload($("#agebygender"), result.ageByGender, "agebygender");
 
                 // age at first obs
                 var ageAtFirstData = common.normalizeArray(result.ageAtFirst);
@@ -62,18 +63,19 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: 'People'
                     });
                 }
+                common.generateCSVDownload($("#ageatfirstobservation"), result.ageAtFirst, "ageatfirstobservation");
 
                 // observation length
                 if (result.observationLength && result.observationLength.length > 0 && result.observationLengthStats) {
-                    var histData = {};
-                    histData.data = (common.normalizeArray(result.observationLength));
-                    histData.intervalSize = +result.observationLengthStats[0].intervalSize;
-                    histData.min = +result.observationLengthStats[0].minValue;
-                    histData.max = +result.observationLengthStats[0].maxValue;
-                    histData.intervals = Math.round((histData.max - histData.min + 1) / histData.intervalSize) + histData.intervalSize ;
+                    var histData2 = {};
+                    histData2.data = (common.normalizeArray(result.observationLength));
+                    histData2.intervalSize = +result.observationLengthStats[0].intervalSize;
+                    histData2.min = +result.observationLengthStats[0].minValue;
+                    histData2.max = +result.observationLengthStats[0].maxValue;
+                    histData2.intervals = Math.round((histData2.max - histData2.min + 1) / histData2.intervalSize) + histData2.intervalSize ;
                     d3.selectAll("#observationlength svg").remove();
-                    if (!histData.data.empty) {
-                        var observationLengthData = common.mapHistogram(histData);
+                    if (!histData2.data.empty) {
+                        var observationLengthData = common.mapHistogram(histData2);
                         var observationLengthXLabel = 'Days';
                         if (observationLengthData.length > 0) {
                             if (observationLengthData[observationLengthData.length - 1].x - observationLengthData[0].x > 1000) {
@@ -91,6 +93,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         });
                     }
                 }
+                common.generateCSVDownload($("#observationlength"), result.observationLength, "observationlength");
 
                 // cumulative observation
                 d3.selectAll("#cumulativeobservation svg").remove();
@@ -124,7 +127,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: 'Percent of Population'
                     });
                 }
-
+                common.generateCSVDownload($("#cumulativeobservation"), result.cumulativeObservation, "cumulativeobservation");
 
                 // observation period length by gender
                 var obsPeriodByGenderData = common.normalizeArray(result.durationByGender);
@@ -171,6 +174,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: opgDataYlabel
                     });
                 }
+                common.generateCSVDownload($("#opbygender"), result.durationByGender, "durationByGender");
 
                 // observation period length by age
                 d3.selectAll("#opbyage svg").remove();
@@ -217,24 +221,26 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: opaDataYlabel
                     });
                 }
+                common.generateCSVDownload($("#opbyage"), result.durationByAgeDecile, "durationByAgeDecile");
 
                 // observed by year
                 var obsByYearData = common.normalizeArray(result.personsWithContinuousObservationsByYear);
                 if (!obsByYearData.empty && result.personsWithContinuousObservationsByYearStats) {
-                    var histData = {};
-                    histData.data = obsByYearData;
-                    histData.intervalSize = +result.personsWithContinuousObservationsByYearStats[0].intervalSize;
-                    histData.min = +result.personsWithContinuousObservationsByYearStats[0].minValue;
-                    histData.max = +result.personsWithContinuousObservationsByYearStats[0].maxValue;
-                    histData.intervals = Math.round((histData.max - histData.min + histData.intervalSize) / histData.intervalSize) + histData.intervalSize ;
+                    var histData3 = {};
+                    histData3.data = obsByYearData;
+                    histData3.intervalSize = +result.personsWithContinuousObservationsByYearStats[0].intervalSize;
+                    histData3.min = +result.personsWithContinuousObservationsByYearStats[0].minValue;
+                    histData3.max = +result.personsWithContinuousObservationsByYearStats[0].maxValue;
+                    histData3.intervals = Math.round((histData3.max - histData3.min + histData3.intervalSize) / histData3.intervalSize) + histData3.intervalSize ;
                     d3.selectAll("#oppeoplebyyear svg").remove();
                     var observationLengthByYearHistogram = new jnj_chart.histogram();
-                    observationLengthByYearHistogram.render(common.mapHistogram(histData), "#oppeoplebyyear", 460, 195, {
+                    observationLengthByYearHistogram.render(common.mapHistogram(histData3), "#oppeoplebyyear", 460, 195, {
                         xFormat: d3.format('d'),
                         xLabel: 'Year',
                         yLabel: 'People'
                     });
                 }
+                common.generateCSVDownload($("#oppeoplebyyear"), result.personsWithContinuousObservationsByYear, "personsWithContinuousObservationsByYear");
 
                 // observed by month
                 var obsByMonthData = common.normalizeArray(result.observedByMonth);
@@ -257,6 +263,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: "People"
                     });
                 }
+                common.generateCSVDownload($("#oppeoplebymonthsingle"), result.observedByMonth, "observedByMonth");
 
                 // obs period per person
                 var personPeriodData = common.normalizeArray(result.observationPeriodsPerPerson);
@@ -272,6 +279,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         }
                     });
                 }
+                common.generateCSVDownload($("#opperperson"), result.observationPeriodsPerPerson, "observationPeriodsPerPerson");
                 $('#spinner-modal').modal('hide');
             }).error(function (result) {
                 $('#spinner-modal').modal('hide');

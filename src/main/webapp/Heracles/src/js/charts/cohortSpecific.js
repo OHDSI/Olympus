@@ -37,6 +37,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                     colorBasedOnIndex : true
                 });
             }
+            common.generateCSVDownload($("#personsByDurationFromStartToEnd"), data.personsByDurationFromStartToEnd, "personsByDurationFromStartToEnd");
 
             // prevalence by month
             d3.selectAll("#prevalenceByMonth svg").remove();
@@ -61,6 +62,102 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                     yLabel: "Prevalence per 1000 People"
                 });
             }
+            common.generateCSVDownload($("#prevalenceByMonth"), data.prevalenceByMonth, "prevalenceByMonth");
+
+            // age at index
+            var ageAtIndexDistribution = common.normalizeArray(data.ageAtIndexDistribution);
+            if (!ageAtIndexDistribution.empty) {
+                var boxplot = new jnj_chart.boxplot();
+                var agData = ageAtIndexDistribution.category
+                    .map(function (d, i) {
+                        var item = {
+                            Category: ageAtIndexDistribution.category[i],
+                            min: ageAtIndexDistribution.minValue[i],
+                            LIF: ageAtIndexDistribution.p10Value[i],
+                            q1: ageAtIndexDistribution.p25Value[i],
+                            median: ageAtIndexDistribution.medianValue[i],
+                            q3: ageAtIndexDistribution.p75Value[i],
+                            UIF: ageAtIndexDistribution.p90Value[i],
+                            max: ageAtIndexDistribution.maxValue[i]
+                        };
+                        return item;
+                    }, ageAtIndexDistribution);
+                boxplot.render(agData, "#ageAtIndex", 235, 210, {
+                    xLabel: "Gender",
+                    yLabel: "Age"
+                });
+            }
+            common.generateCSVDownload($("#ageAtIndex"), data.ageAtIndexDistribution, "ageAtIndexDistribution");
+
+            // distributionAgeCohortStartByCohortStartYear
+            var distributionAgeCohortStartByCohortStartYear = common.normalizeArray(data.distributionAgeCohortStartByCohortStartYear);
+            if (!distributionAgeCohortStartByCohortStartYear.empty) {
+                var boxplotCsy = new jnj_chart.boxplot();
+                var csyData = distributionAgeCohortStartByCohortStartYear.category
+                    .map(function (d, i) {
+                        var item = {
+                            Category: this.category[i],
+                            min: this.minValue[i],
+                            LIF: this.p10Value[i],
+                            q1: this.p25Value[i],
+                            median: this.medianValue[i],
+                            q3: this.p75Value[i],
+                            UIF: this.p90Value[i],
+                            max: this.maxValue[i]
+                        };
+                        return item;
+                    }, distributionAgeCohortStartByCohortStartYear);
+                boxplotCsy.render(csyData, "#distributionAgeCohortStartByCohortStartYear", 235, 210, {
+                    xLabel: "Cohort Start Year",
+                    yLabel: "Age"
+                });
+            }
+            common.generateCSVDownload($("#distributionAgeCohortStartByCohortStartYear"), data.distributionAgeCohortStartByCohortStartYear, "distributionAgeCohortStartByCohortStartYear");
+
+            // distributionAgeCohortStartByGender
+            var distributionAgeCohortStartByGender = common.normalizeArray(data.distributionAgeCohortStartByGender);
+            if (!distributionAgeCohortStartByGender.empty) {
+                var boxplotBg = new jnj_chart.boxplot();
+                var bgData = distributionAgeCohortStartByGender.category
+                    .map(function (d, i) {
+                        var item = {
+                            Category: this.category[i],
+                            min: this.minValue[i],
+                            LIF: this.p10Value[i],
+                            q1: this.p25Value[i],
+                            median: this.medianValue[i],
+                            q3: this.p75Value[i],
+                            UIF: this.p90Value[i],
+                            max: this.maxValue[i]
+                        };
+                        return item;
+                    }, distributionAgeCohortStartByGender);
+                boxplotBg.render(bgData, "#distributionAgeCohortStartByGender", 235, 210, {
+                    xLabel: "Gender",
+                    yLabel: "Age"
+                });
+            }
+            common.generateCSVDownload($("#distributionAgeCohortStartByGender"), data.distributionAgeCohortStartByGender, "distributionAgeCohortStartByGender");
+
+            // persons in cohort from start to end
+            var personsInCohortFromCohortStartToEnd = common.normalizeArray(data.personsInCohortFromCohortStartToEnd);
+            if (!personsInCohortFromCohortStartToEnd.empty) {
+                var byMonthSeries = common.map30DayDataToSeries(personsInCohortFromCohortStartToEnd, {
+                    dateField: 'monthYear',
+                    yValue: 'countValue',
+                    yPercent: 'percentValue'
+                });
+                d3.selectAll("#personinCohortFromStartToEnd svg").remove();
+                var observationByMonthSingle = new jnj_chart.line();
+                observationByMonthSingle.render(byMonthSeries, "#personinCohortFromStartToEnd", 900, 250, {
+                    xScale: d3.time.scale().domain(d3.extent(byMonthSeries[0].values, function (d) {
+                        return d.xValue;
+                    })),
+                    xLabel: "30 Day Increments",
+                    yLabel: "People"
+                });
+            }
+            common.generateCSVDownload($("#personinCohortFromStartToEnd"), data.personsInCohortFromCohortStartToEnd, "personsInCohortFromCohortStartToEnd");
 
             // render trellis
             d3.selectAll("#trellisLinePlot svg").remove();
@@ -133,6 +230,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
 
                 });
             }
+            common.generateCSVDownload($("#trellisLinePlot"), data.numPersonsByCohortStartByGenderByAge, "numPersonsByCohortStartByGenderByAge");
 
             $('#spinner-modal').modal('hide');
         })

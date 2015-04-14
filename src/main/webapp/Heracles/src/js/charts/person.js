@@ -33,6 +33,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                 }
 
             });
+            common.generateCSVDownload($("#genderPie"), result.gender, "gender");
 
             d3.selectAll("#raceTypePie svg").remove();
             var raceDonut = new jnj_chart.donut();
@@ -47,6 +48,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                     .domain(result.race)
                     .range(colorbrewer.Paired[10])
             });
+            common.generateCSVDownload($("#raceTypePie"), result.race, "race");
 
             d3.selectAll("#ethnicityTypePie svg").remove();
             raceDonut = new jnj_chart.donut();
@@ -61,6 +63,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                     .domain(result.ethnicity)
                     .range(colorbrewer.Paired[10])
             });
+            common.generateCSVDownload($("#ethnicityTypePie"), result.ethnicity, "ethnicity");
 
             d3.selectAll("#birthyearhist svg").remove();
             if (result.yearOfBirth.length > 0 && result.yearOfBirthStats.length > 0) {
@@ -77,6 +80,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                     yLabel: 'People'
                 });
             }
+            common.generateCSVDownload($("#birthyearhist"), result.yearOfBirth, "yearOfBirth");
 
             $('#spinner-modal').modal('hide');
         }).error(function (result) {

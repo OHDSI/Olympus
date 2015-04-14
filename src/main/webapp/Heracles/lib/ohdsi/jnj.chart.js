@@ -316,8 +316,13 @@
                     .style("text-anchor", "middle")
                     .text(options.xLabel);
 
-                var bbox = xAxisLabel.node().getBBox();
-                xAxisLabelHeight = bbox.height;
+                var bboxNode = xAxisLabel.node();
+                if (bboxNode) {
+                    var bbox = bboxNode.getBBox();
+                    if (bbox) {
+                        xAxisLabelHeight = bbox.height;
+                    }
+                }
             }
 
             if (options.yLabel) {
@@ -332,9 +337,14 @@
                     .style("text-anchor", "middle")
                     .text(options.yLabel);
 
-                var bbox = yAxisLabel.node().getBBox();
-                yAxisLabelWidth = 1.5 * bbox.width; // width is calculated as 1.5 * box height due to rotation anomolies that cause the y axis label to appear shifted.
-            }
+                var bboxNode = yAxisLabel.node();
+                if (bboxNode) {
+                    var bbox = bboxNode.getBBox();
+                    if (bbox) {
+                        yAxisLabelWidth = 1.5 * bbox.width; // width is calculated as 1.5 * box height due to rotation anomolies that cause the y axis label to appear shifted.
+                    }
+                }
+             }
 
             // calculate an intial width and height that does not take into account the tick text dimensions
             var width = w - options.margin.left - options.margin.right - yAxisLabelWidth;
@@ -371,22 +381,26 @@
             var tempXAxis = chart.append("g").attr("class", "axis");
             tempXAxis.call(xAxis);
 
-            // update width & height based on temp xaxis dimension and remove
-            var xAxisHeight = Math.round(tempXAxis.node().getBBox().height);
-            var xAxisWidth = Math.round(tempXAxis.node().getBBox().width);
-            height = height - xAxisHeight;
-            width = width - Math.max(0, (xAxisWidth - width)); // trim width if xAxisWidth bleeds over the allocated width.
-            tempXAxis.remove();
 
+            if (tempXAxis.node() && tempXAxis.node().getBBox()) {
+                // update width & height based on temp xaxis dimension and remove
+                var xAxisHeight = Math.round(tempXAxis.node().getBBox().height);
+                var xAxisWidth = Math.round(tempXAxis.node().getBBox().width);
+                height = height - xAxisHeight;
+                width = width - Math.max(0, (xAxisWidth - width)); // trim width if xAxisWidth bleeds over the allocated width.
+                tempXAxis.remove();
 
+            }
             // create temporary y axis
             var tempYAxis = chart.append("g").attr("class", "axis");
             tempYAxis.call(yAxis);
 
-            // update height based on temp xaxis dimension and remove
-            var yAxisWidth = Math.round(tempYAxis.node().getBBox().width);
-            width = width - yAxisWidth;
-            tempYAxis.remove();
+            if (tempYAxis.node() && tempYAxis.node().getBBox()) {
+                // update height based on temp xaxis dimension and remove
+                var yAxisWidth = Math.round(tempYAxis.node().getBBox().width);
+                width = width - yAxisWidth;
+                tempYAxis.remove();
+            }
 
             if (options.boxplot) {
                 height -= 12; // boxplot takes up 12 vertical space
@@ -491,8 +505,10 @@
                     .style("text-anchor", "middle")
                     .text(options.xLabel);
 
-                var bbox = xAxisLabel.node().getBBox();
-                options.margin.bottom += bbox.height + 5;
+                if (xAxisLabel.node()) {
+                    var bbox = xAxisLabel.node().getBBox();
+                    options.margin.bottom += bbox.height + 5;
+                }
             }
 
             if (options.yLabel) {
@@ -507,8 +523,10 @@
                     .style("text-anchor", "middle")
                     .text(options.yLabel);
 
-                var bbox = yAxisLabel.node().getBBox();
-                options.margin.left += bbox.width + 5;
+                if (yAxisLabel.node()) {
+                    var bbox = yAxisLabel.node().getBBox();
+                    options.margin.left += bbox.width + 5;
+                }
             }
 
             options.margin.left += options.tickPadding;

@@ -1,5 +1,93 @@
 <div class="chart-template">
     <h3 class="cohort-name-header">{{cohort.name}}</h3>
 
-    <p>TODO visits</p>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Visit Prevalence
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="active"><a href="#visit-treemap-panel"  role="tab" data-toggle="tab">Treemap</a>
+                            </li>
+                            <li><a href="#visit-table-panel" role="tab" data-toggle="tab">Table</a>
+                            </li>
+                        </ul>
+                        <div id='content' class="tab-content">
+                            <div class="tab-pane active" role="tabpanel" id="visit-treemap-panel">
+                                <div id="treemap_container">
+                                    <div class="treemap_zoomtarget"></div>
+                                </div>
+                                <div class="treemap_legend">Box Size: Prevalence, Color: Records per Person (Blue to Green = Low to High), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom</div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="visit-table-panel">
+                                <table id="visit_table" class="display">
+                                    <thead>
+                                    <tr>
+                                        <th>Concept Id</th>
+                                        <th>Visit Type</th>
+                                        <th>Person Count</th>
+                                        <th>Prevalence</th>
+                                        <th>Records per Person</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="reportVisitOccurrencesDrilldown" class="hidden reportDrilldown">
+        <div id="visitDrilldownTitle" class="reportTitle"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="panelVisitPrevalence" class="panel panel-default">
+                    <div class="panel-heading">
+                        Visit Prevalence
+                    </div>
+                    <div class="panel-body">
+                        <div class="drilldown" id="trellisLinePlot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="panelVisitOccurrencePrevalenceByMonth" class="panel panel-default">
+                    <div class="panel-heading">
+                        Visit Prevalence by Month
+                    </div>
+                    <div class="panel-body">
+                        <div class="drilldown" id="visitPrevalenceByMonth"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row equal">
+            <div class="col-sm-6">
+                <div id="panelVisitDurationByType" class="panel panel-default">
+                    <div class="panel-heading">
+                        Visit Duration by Type
+                    </div>
+                    <div class="panel-body">
+                        <div class="drilldown" id="visitDurationByType"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div id="panelAgeAtFirstOccurrence" class="panel panel-default">
+                    <div class="panel-heading">
+                        Age at First Occurrence
+                    </div>
+                    <div class="panel-body">
+                        <div class="drilldown" id="ageAtFirstOccurrence"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
