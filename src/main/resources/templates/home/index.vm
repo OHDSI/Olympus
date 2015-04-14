@@ -21,15 +21,18 @@ body {
         <div class="col-md-12">
 	        <div class="tab-content">
 	            <div class="tab-pane active" id="main">
-	            	<div class="row" style="margin-top:20%">
+	            	<div class="row" style="margin-top:15%">
 						<div class="col-md-10 col-md-offset-1">
 							<div class="jumbotron">
-								<h2 style="font-family: 'Julius Sans One', sans-serif;font-size:60px">$appName</h2>
-								<p class="sub-text">$appMessage</p>
+								<h2 style="font-family: 'Julius Sans One', sans-serif;font-size:60px">$appName <p class="sub-text">$appMessage</p></h2>
+								#if (!$webapi.isRunning())
+									The WebAPI server isn't running. Visit the <a href="/webapi/config.html">Configuration</a> page to start it.
+								#end
 							</div>
 						</div>
 						<div class="col-md-1"></div>
 					</div>
+
 					#if ($webapi.isRunning() && $req.userPrincipal)
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
