@@ -24,7 +24,7 @@ $(document).ready(function() {
 	  	return true;
 	});
 	
-	$('#apps').click('show', function(e) {
+	$('#apps, .launch-apps-link').click('show', function(e) {
 		//alert('hello'+e.target);
 	    paneID = $(e.target).attr('href');
 	    src = $(paneID).attr('data-src');

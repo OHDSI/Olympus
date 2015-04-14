@@ -91,19 +91,6 @@ body {
 									</div>
 								</div>
 								#end
-								#if($req.isUserInRole("JOB_VIEWER"))
-								<div class="col-sm-4 launch-link-row" type="jobviewer" >
-									<div class="row">
-										<div class="col-xs-7 col-sm-5 col-md-4">
-											<img src="/img/acropolis-Cropped-shadow.png" style="height:80px; width: auto;"/>
-										</div>
-										<div class="col-xs-8 col-sm-7 col-md-8 launch-app-names">
-											<label class="launcher-header">Job Viewer</label>
-											<label class="launcher-subheader">View some jobs</label>
-										</div>
-									</div>
-								</div>
-								#end
 							</div>
 						</div>
 						#end
