@@ -25,7 +25,7 @@ body {
       
       
 <form class="form-signin" role="form" action="/login" method="post">
-<h2 class="form-signin-heading" style="font-family: 'Julius Sans One', sans-serif;font-size:60px">Olympus</h2>
+<h2 class="form-signin-heading" style="font-family: 'Julius Sans One', sans-serif;font-size:60px; black 5px 3px 3px">Olympus</h2>
     <input type="hidden" name="$_csrf.parameterName" value="$_csrf.token"/>
 
         <label for="username" class="sr-only">Username</label>
