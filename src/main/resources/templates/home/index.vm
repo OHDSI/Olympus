@@ -154,6 +154,11 @@ body {
 	            <div class="tab-pane" id="athena" data-src="http://localhost:20000/Athena/index.html">
 	                <iframe src="" frameborder="0" webkitallowfullscreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowFullScreen" style="overflow:hidden;height:2500;width:100%" height="2500" width="100%"></iframe>
 	            </div>
+	            
+	            	            
+	            <div class="tab-pane" id="jobviewer" data-src="http://localhost:20000/JobViewer/index.html">
+	                <iframe src="" frameborder="0" webkitallowfullscreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowFullScreen" style="overflow:hidden;height:2500;width:100%" height="2500" width="100%"></iframe>
+	            </div>
 	        </div>
         </div>
     </div>
