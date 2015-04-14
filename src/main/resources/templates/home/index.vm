@@ -42,10 +42,10 @@ body {
 								 #if($req.isUserInRole("CIRCE"))
 								<div class="col-sm-4 launch-link-row" type="circe">
 									<div class="row">
-										<div class="col-sm-4">
+										<div class="col-xs-7 col-sm-5 col-md-4">
 											<img src="/img/circe-Cropped-shadow.png" style="height:80px; width: auto;"/>
 										</div>
-										<div class="col-sm-8">
+										<div class="col-xs-8 col-sm-7 col-md-8 launch-app-names">
 											<label class="launcher-header">Circe</label>
 											<label class="launcher-subheader">Create some cohorts</label>
 										</div>
@@ -55,10 +55,10 @@ body {
 								#if($req.isUserInRole("HERMES"))
 								<div class="col-sm-4 launch-link-row" type="hermes">
 									<div class="row">
-										<div class="col-sm-4">
+										<div class="col-xs-7 col-sm-5 col-md-4">
 											<img src="/img/hermes-Cropped-shadow.png" style="height:80px; width: auto;"/>
 										</div>
-										<div class="col-sm-8">
+										<div class="col-xs-8 col-sm-7 col-md-8  launch-app-names">
 											<label class="launcher-header">Hermes</label>
 											<label class="launcher-subheader">Search some vocab</label>
 										</div>
@@ -68,10 +68,10 @@ body {
 								#if($req.isUserInRole("HERACLES"))
 								<div class="col-sm-4 launch-link-row" type="heracles">
 																		<div class="row">
-										<div class="col-sm-4">
+										<div class="col-xs-7 col-sm-5 col-md-4">
 											<img src="/img/heracles-Cropped-shadow.png" style="height:80px; width: auto;"/>
 										</div>
-										<div class="col-sm-8">
+										<div class="col-xs-8 col-sm-7 col-md-8 launch-app-names">
 											<label class="launcher-header">Heracles</label>
 											<label class="launcher-subheader">Analyze some cohorts</label>
 										</div>
@@ -79,12 +79,12 @@ body {
 								</div>
 								#end
 								#if($req.isUserInRole("CALYPSO"))
-								<div class="col-sm-4 launch-link-row" type="calypso" style="margin-top:10px">
+								<div class="col-sm-4 launch-link-row" type="calypso" >
 									<div class="row">
-										<div class="col-sm-4">
+										<div class="col-xs-7 col-sm-5 col-md-4">
 											<img src="/img/calypso-Cropped-shadow.png" style="height:80px; width: auto;"/>
 										</div>
-										<div class="col-sm-8">
+										<div class="col-xs-8 col-sm-7 col-md-8 launch-app-names">
 											<label class="launcher-header">Calypso</label>
 											<label class="launcher-subheader">Do some feasibility</label>
 										</div>
@@ -92,12 +92,12 @@ body {
 								</div>
 								#end
 								#if($req.isUserInRole("JOB_VIEWER"))
-								<div class="col-sm-4 launch-link-row" type="jobviewer" style="margin-top:10px">
+								<div class="col-sm-4 launch-link-row" type="jobviewer" >
 									<div class="row">
-										<div class="col-sm-4">
+										<div class="col-xs-7 col-sm-5 col-md-4">
 											<img src="/img/acropolis-Cropped-shadow.png" style="height:80px; width: auto;"/>
 										</div>
-										<div class="col-sm-8">
+										<div class="col-xs-8 col-sm-7 col-md-8 launch-app-names">
 											<label class="launcher-header">Job Viewer</label>
 											<label class="launcher-subheader">View some jobs</label>
 										</div>
