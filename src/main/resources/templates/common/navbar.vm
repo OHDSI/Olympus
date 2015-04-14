@@ -19,7 +19,7 @@
 			#if ($webapi.isRunning() && $req.userPrincipal && $activeLink == "index")
 				 #if($req.isUserInRole("JOB_VIEWER")) <li><a class="launch-apps-link" href="#jobviewer" data-toggle="tab" id="jobviewer-link">Job Viewer</a></li> #end
 			    <li class="dropdown">
-			      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Apps<span class="caret"></span></a>
+			      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="apps-label">Apps<span class="caret"></span></a>
 			      <ul class="dropdown-menu" role="menu" id="apps">
 			      	#if($req.isUserInRole("ACHILLES"))<li><a href="#achilles" data-toggle="tab" id="achilles-link">Achilles</a></li>#end
 		        	#if($req.isUserInRole("HERACLES"))<li><a href="#heracles" data-toggle="tab" id="heracles-link">Heracles</a></li>#end

@@ -31,6 +31,7 @@ $(document).ready(function() {
 	    // if the iframe hasn't already been loaded once
 	    if($(paneID+" iframe").attr("src")=="")
 	    {
+	    	$("#apps-label").html($(e.target).text() + ' <span class="caret"></span>');
 	        $(paneID+" iframe").attr("src",src);
 	    }
 	    
