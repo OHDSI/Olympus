@@ -1,6 +1,6 @@
 var ohdsi_services = [
 	{
 		name: 'Public',
-		url: 'https://nlp01.regenstrief.org:8443/WebAPI/'
+		url: 'http://localhost:20000/WebAPI/'
 	}
 ];
