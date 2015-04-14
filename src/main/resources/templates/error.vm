@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <!-- we don't use the common template here because SpringBoot is expecting it to be at /error -->
 <html lang="$htmlLang">
+
 	<head>
 		<title>Error</title>
 		#parse( "common/styles.vm" )
 	</head>
 	<body>
+		
+<style type="text/css">
+
+
+body {
+  background: url(/img/zeus.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+</style>
 		<div class="container">
 			<h1>Oops!</h1>
 			<div class="well">Something bad happened. Go <a href="/index.html">home.</a></div>
