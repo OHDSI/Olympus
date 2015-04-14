@@ -39,32 +39,20 @@ body {
     border-radius: 8px;
     margin: 4px;
 							">
-								 #if($req.isUserInRole("CIRCE"))
-								<div class="col-sm-4 launch-link-row" type="circe">
+								#if($req.isUserInRole("ACHILLES"))
+								<div class="col-sm-4 launch-link-row" type="achilles">
 									<div class="row">
 										<div class="col-xs-7 col-sm-5 col-md-4">
-											<img src="/img/circe-Cropped-shadow.png" style="height:80px; width: auto;"/>
+											<img src="/img/achilles-cropped-rounded.png" style="height:80px; width: auto;"/>
 										</div>
 										<div class="col-xs-8 col-sm-7 col-md-8 launch-app-names">
-											<label class="launcher-header">Circe</label>
-											<label class="launcher-subheader">Create some cohorts</label>
+											<label class="launcher-header">Achilles</label>
+											<label class="launcher-subheader">Visualize your data</label>
 										</div>
 									</div>
 								</div>
 								#end
-								#if($req.isUserInRole("HERMES"))
-								<div class="col-sm-4 launch-link-row" type="hermes">
-									<div class="row">
-										<div class="col-xs-7 col-sm-5 col-md-4">
-											<img src="/img/hermes-Cropped-shadow.png" style="height:80px; width: auto;"/>
-										</div>
-										<div class="col-xs-8 col-sm-7 col-md-8  launch-app-names">
-											<label class="launcher-header">Hermes</label>
-											<label class="launcher-subheader">Search some vocab</label>
-										</div>
-									</div>
-								</div>
-								#end
+								
 								#if($req.isUserInRole("HERACLES"))
 								<div class="col-sm-4 launch-link-row" type="heracles">
 																		<div class="row">
@@ -78,6 +66,7 @@ body {
 									</div>
 								</div>
 								#end
+								
 								#if($req.isUserInRole("CALYPSO"))
 								<div class="col-sm-4 launch-link-row" type="calypso" >
 									<div class="row">
@@ -91,10 +80,65 @@ body {
 									</div>
 								</div>
 								#end
+								
+								#if($req.isUserInRole("HERMES"))
+								<div class="col-sm-4 launch-link-row" type="hermes">
+									<div class="row">
+										<div class="col-xs-7 col-sm-5 col-md-4">
+											<img src="/img/hermes-Cropped-shadow.png" style="height:80px; width: auto;"/>
+										</div>
+										<div class="col-xs-8 col-sm-7 col-md-8  launch-app-names">
+											<label class="launcher-header">Hermes</label>
+											<label class="launcher-subheader">Search some vocab</label>
+										</div>
+									</div>
+								</div>
+								#end
+								
+								 #if($req.isUserInRole("CIRCE"))
+								<div class="col-sm-4 launch-link-row" type="circe">
+									<div class="row">
+										<div class="col-xs-7 col-sm-5 col-md-4">
+											<img src="/img/circe-Cropped-shadow.png" style="height:80px; width: auto;"/>
+										</div>
+										<div class="col-xs-8 col-sm-7 col-md-8 launch-app-names">
+											<label class="launcher-header">Circe</label>
+											<label class="launcher-subheader">Create some cohorts</label>
+										</div>
+									</div>
+								</div>
+								#end
+
+								#if($req.isUserInRole("ATHENA"))
+								<div class="col-sm-4 launch-link-row" type="athena">
+									<div class="row">
+										<div class="col-xs-7 col-sm-5 col-md-4">
+											<img src="/img/athena-cropped-shadow.png" style="height:80px; width: auto;"/>
+										</div>
+										<div class="col-xs-8 col-sm-7 col-md-8  launch-app-names">
+											<label class="launcher-header">Athena</label>
+											<label class="launcher-subheader">Automate your terms</label>
+										</div>
+									</div>
+								</div>
+								#end
+
 							</div>
 						</div>
 						#end
 					</div>
+	            </div>
+	            
+	            <div class="tab-pane" id="achilles" data-src="http://localhost:20000/Achilles/index.html">
+	                <iframe src="" frameborder="0" webkitallowfullscreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowFullScreen" style="overflow:hidden;height:2500;width:100%" height="2500" width="100%"></iframe>
+	            </div>
+	            
+	            <div class="tab-pane" id="heracles" data-src="http://localhost:20000/Heracles/index.html">
+	                <iframe src="" frameborder="0" webkitallowfullscreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowFullScreen" style="overflow:hidden;height:2500;width:100%" height="2500" width="100%"></iframe>
+	            </div>
+
+	            <div class="tab-pane" id="calypso" data-src="http://localhost:20000/Calypso/index.html">
+	                <iframe src="" frameborder="0" webkitallowfullscreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowFullScreen" style="overflow:hidden;height:2500;width:100%" height="2500" width="100%"></iframe>
 	            </div>
 
 	            <div class="tab-pane" id="hermes" data-src="http://localhost:20000/Hermes/index.html">
@@ -105,14 +149,9 @@ body {
 	                <iframe src="" frameborder="0" webkitallowfullscreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowFullScreen" style="overflow:hidden;height:2500;width:100%" height="2500" width="100%"></iframe>
 	            </div>
 	
-	            <div class="tab-pane" id="heracles" data-src="http://localhost:20000/Heracles/index.html">
-	                <iframe src="" frameborder="0" webkitallowfullscreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowFullScreen" style="overflow:hidden;height:2500;width:100%" height="2500" width="100%"></iframe>
-	            </div>
 
-	            <div class="tab-pane" id="jobviewer" data-src="http://localhost:20000/JobViewer/index.html">
-	                <iframe src="" frameborder="0" webkitallowfullscreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowFullScreen" style="overflow:hidden;height:2500;width:100%" height="2500" width="100%"></iframe>
-	            </div>
-	            <div class="tab-pane" id="calypso" data-src="http://localhost:20000/Calypso/index.html">
+	            
+	            <div class="tab-pane" id="athena" data-src="http://localhost:20000/Athena/index.html">
 	                <iframe src="" frameborder="0" webkitallowfullscreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowFullScreen" style="overflow:hidden;height:2500;width:100%" height="2500" width="100%"></iframe>
 	            </div>
 	        </div>
