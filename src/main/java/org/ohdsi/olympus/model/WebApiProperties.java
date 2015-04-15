@@ -26,6 +26,7 @@ public class WebApiProperties {
         dialectOptions = new HashMap<String, String>();
         dialectOptions.put("oracle", "oracle");
         dialectOptions.put("sql server", "sql server");
+        dialectOptions.put("sql server with integrated security", "sql server");
         dialectOptions.put("postgresql", "postgresql");
     }
 
@@ -36,21 +37,24 @@ public class WebApiProperties {
     @NotNull
     @Size(max = 25, min = 1)
     private String jdbcIpAddress;
-    
+    /* sqlserver integrated security
     @NotNull
-    @Size(max = 10, min = 1)
+    @Size(max = 10, min = 1)*/
     private String jdbcPort;
     
+    /* sqlserver integrated security
     @NotNull
-    @Size(max = 25, min = 1)
+    @Size(max = 25, min = 1)*/
     private String cdmDataSourceSid;
     
+    /* sqlserver integrated security
     @NotNull
-    @Size(max = 25, min = 1)
+    @Size(max = 25, min = 1)*/
     private String jdbcUser;
     
+    /* sqlserver integrated security
     @NotNull
-    @Size(max = 25, min = 1)
+    @Size(max = 25, min = 1)*/
     private String jdbcPass;
     
     @NotNull
@@ -64,7 +68,7 @@ public class WebApiProperties {
     @NotNull
     @Size(max = 25, min = 1)
     private String cohortSchema;
-    
+
     @Size(max = 25, min = 0)
     private String flywayDataSourceSid;
     
@@ -73,8 +77,7 @@ public class WebApiProperties {
     
     @Size(max = 25, min = 0)
     private String flywayJdbcPass;
-    
-    //default to OHDSI schema
+
     @Size(max = 100, min = 0)
     private String flywaySchemas;
 

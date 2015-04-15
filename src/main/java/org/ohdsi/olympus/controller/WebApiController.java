@@ -16,6 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,6 +57,14 @@ public class WebApiController {
     
     @Autowired
     private MainController mainController;
+    
+    @Autowired
+    private Validator webApiPropertiesValidator;
+    
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(this.webApiPropertiesValidator);
+    }
     
     @RequestMapping(value = "config")
     public ModelAndView handleConfigurationRequest(String errorMsg) throws Exception {

@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.runner.Runner;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.ohdsi.olympus.controller.validator.WebApiPropertiesValidator;
 import org.ohdsi.olympus.model.WebApiPropertiesRepository;
 import org.ohdsi.olympus.model.WebApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.util.Assert;
+import org.springframework.validation.Validator;
 
 /**
  *
@@ -39,6 +41,12 @@ public class WebApiConfig {
     
     @Autowired
     private ContextHandlerCollection contextHandlerCollection;
+    
+    @Bean
+    public Validator webApiPropertiesValidator(Validator validator){
+        WebApiPropertiesValidator v = new WebApiPropertiesValidator(validator);
+        return v;
+    }
     
     @Bean
     public WebAppContext webApiContext(final File baseDir) throws Exception {

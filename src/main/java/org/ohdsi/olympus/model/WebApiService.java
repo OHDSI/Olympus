@@ -63,10 +63,7 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
         String driverClassName;
         String jdbcUrl;
         String flywayJdbcUrl;
-        String flywayUser = StringUtils.isEmpty(props.getFlywayJdbcUser()) ? props.getJdbcUser() : props.getFlywayJdbcUser();
-        String flywayPass = StringUtils.isEmpty(props.getFlywayJdbcPass()) ? props.getJdbcPass() : props.getFlywayJdbcPass();
-        String flywaySchemas = StringUtils.isEmpty(props.getFlywaySchemas()) ? props.getOhdsiSchema() : props
-                .getFlywaySchemas();
+
         if ("oracle".equals(dialect)) {
             driverClassName = "oracle.jdbc.OracleDriver";
             flywayLocations = "classpath:db/migration/oracle";
@@ -83,6 +80,10 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
                 "jdbc:postgresql://%s:%s/%s", props.getJdbcIpAddress(), props.getJdbcPort(), props.getFlywayDataSourceSid());
         } else {
             //sql server
+            boolean isIntegratedSecurityOption = false;
+            if ("sqlserver integrated security".equals(dialect)) {
+                isIntegratedSecurityOption = true;
+            }
             driverClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
             flywayLocations = "classpath:db/migration/sqlserver";
             jdbcUrl = String.format("jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), props.getJdbcPort(),
@@ -90,7 +91,17 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
             flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayDataSourceSid()) ? jdbcUrl : String.format(
                 "jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), props.getJdbcPort(),
                 props.getFlywayDataSourceSid());
+            if (isIntegratedSecurityOption) {
+                jdbcUrl = String.format("jdbc:sqlserver://%s", props.getJdbcIpAddress());
+                flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayJdbcUser()) ? jdbcUrl : String.format(
+                    "jdbc:sqlserver://%s", props.getJdbcIpAddress());
+            }
         }
+        String flywayUser = StringUtils.isEmpty(props.getFlywayJdbcUser()) ? props.getJdbcUser() : props.getFlywayJdbcUser();
+        String flywayPass = StringUtils.isEmpty(props.getFlywayJdbcPass()) ? props.getJdbcPass() : props.getFlywayJdbcPass();
+        String flywaySchemas = StringUtils.isEmpty(props.getFlywaySchemas()) ? props.getOhdsiSchema() : props
+                .getFlywaySchemas();
+        
         setProperty("datasource.driverClassName", driverClassName);
         setProperty("datasource.url", jdbcUrl);
         setProperty("datasource.username", props.getJdbcUser());
