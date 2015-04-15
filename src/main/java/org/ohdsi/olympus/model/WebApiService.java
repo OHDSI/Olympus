@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.ohdsi.olympus.model.WebApiProperties.DIALECT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerInitializedEvent;
 import org.springframework.context.ApplicationListener;
@@ -64,14 +65,14 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
         String jdbcUrl;
         String flywayJdbcUrl;
 
-        if ("oracle".equals(dialect)) {
+        if (DIALECT.ORACLE.toString().equals(dialect)) {
             driverClassName = "oracle.jdbc.OracleDriver";
             flywayLocations = "classpath:db/migration/oracle";
             jdbcUrl = String.format("jdbc:oracle:thin:@%s:%s:%s", props.getJdbcIpAddress(), props.getJdbcPort(),
                 props.getCdmDataSourceSid());
             flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayDataSourceSid()) ? jdbcUrl : String.format(
                 "jdbc:oracle:thin:@%s:%s:%s", props.getJdbcIpAddress(), props.getJdbcPort(), props.getFlywayDataSourceSid());
-        } else if ("postgresql".equals(dialect)) {
+        } else if (DIALECT.POSTGRESQL.toString().equals(dialect)) {
             driverClassName = "org.postgresql.Driver";
             flywayLocations = "classpath:db/migration/postgresql";
             jdbcUrl = String.format("jdbc:postgresql://%s:%s/%s", props.getJdbcIpAddress(), props.getJdbcPort(),
@@ -81,7 +82,7 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
         } else {
             //sql server
             boolean isIntegratedSecurityOption = false;
-            if ("sqlserver integrated security".equals(dialect)) {
+            if (DIALECT.SQLSERVERINTSECURITY.toString().equals(dialect)) {
                 isIntegratedSecurityOption = true;
             }
             driverClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";

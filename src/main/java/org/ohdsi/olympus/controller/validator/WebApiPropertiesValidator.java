@@ -12,12 +12,13 @@
  */
 package org.ohdsi.olympus.controller.validator;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ohdsi.olympus.model.WebApiProperties;
+import org.ohdsi.olympus.model.WebApiProperties.DIALECT;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
 
 /**
  *
@@ -27,31 +28,65 @@ public class WebApiPropertiesValidator implements Validator {
     private static final Log log = LogFactory.getLog(WebApiProperties.class);
     
     private Validator validator;
-
+    
     public WebApiPropertiesValidator(Validator validator) {
         this.validator = validator;
     }
-
+    
     /* (non-Jsdoc)
      * @see org.springframework.validation.Validator#supports(java.lang.Class)
      */
     @Override
     public boolean supports(Class<?> clazz) {
-        if(clazz.equals(WebApiProperties.class)){
+        if (WebApiProperties.class.equals(clazz)) {
             return true;
         }
         return false;
     }
-
+    
     /* (non-Jsdoc)
      * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
      */
     @Override
     public void validate(Object target, Errors errors) {
-        if(this.validator != null){
+        if (this.validator != null) {
             this.validator.validate(target, errors);
         }
+        
         log.debug("custom validation");
+        WebApiProperties props = (WebApiProperties) target;
+        String dialect = props.getCdmDialect();
+        
+        boolean isIntegratedSecurityOption = false;
+        if (DIALECT.SQLSERVERINTSECURITY.toString().equals(dialect)) {
+            isIntegratedSecurityOption = true;
+        }
+        
+        if (!isIntegratedSecurityOption) {
+            if (StringUtils.isEmpty(props.getJdbcUser())) {
+                errors.rejectValue("jdbcUser", "config.jdbcUser", "CDM Username is required");
+            } else if (props.getJdbcUser().length() > 25) {
+                errors.rejectValue("jdbcUser", "config.jdbcUser", "CDM Username length must be <= 25");
+            }
+            if (StringUtils.isEmpty(props.getJdbcPass())) {
+                errors.rejectValue("jdbcPass", "config.jdbcPass", "CDM Password is required");
+            } else if (props.getJdbcPass().length() > 25) {
+                errors.rejectValue("jdbcPass", "config.jdbcPass", "CDM Password length must be <= 25");
+            }
+            if (StringUtils.isEmpty(props.getCdmDataSourceSid())) {
+                errors.rejectValue("cdmDataSourceSid", "config.cdmDataSourceSid",
+                    "CDM DataSource SID/Service Name is required");
+            } else if (props.getCdmDataSourceSid().length() > 25) {
+                errors.rejectValue("cdmDataSourceSid", "config.cdmDataSourceSid",
+                    "CDM DataSource SID/Service Name length must be <= 25");
+            }
+            if (StringUtils.isEmpty(props.getJdbcPort())) {
+                errors.rejectValue("jdbcPort", "config.jdbcPort", "CDM DataSource Port is required");
+            } else if (props.getJdbcPort().length() > 10) {
+                errors.rejectValue("jdbcPort", "config.jdbcPort", "CDM DataSource length must be <= 10");
+            }
+        }
+        
     }
     
 }

@@ -61,12 +61,12 @@ public class WebApiController {
     @Autowired
     private Validator webApiPropertiesValidator;
     
-    @InitBinder
+    @InitBinder(value=CONFIG_MODEL_ATTR)
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(this.webApiPropertiesValidator);
     }
     
-    @RequestMapping(value = "config")
+    @RequestMapping(value = CONFIG_MODEL_ATTR)
     public ModelAndView handleConfigurationRequest(String errorMsg) throws Exception {
         log.debug("Get config");
         ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
@@ -85,8 +85,8 @@ public class WebApiController {
         
     }
     
-    @RequestMapping(value = "config", method = RequestMethod.POST)
-    public ModelAndView handleConfigurationSubmission(@Valid @ModelAttribute("config") WebApiProperties props,
+    @RequestMapping(value = CONFIG_MODEL_ATTR, method = RequestMethod.POST)
+    public ModelAndView handleConfigurationSubmission(@Valid @ModelAttribute(CONFIG_MODEL_ATTR) WebApiProperties props,
                                                       BindingResult result) throws Exception {
         if (result.hasErrors()) {
             log.info("Has Errors: " + result);

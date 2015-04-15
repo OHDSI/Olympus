@@ -20,16 +20,20 @@ public class WebApiProperties {
     @Id
     private int id = 1;
     
+    public enum DIALECT {
+        ORACLE, POSTGRESQL, SQLSERVER, SQLSERVERINTSECURITY
+    }
+    
     @Transient
     private static Map<String, String> dialectOptions;
     static {
         dialectOptions = new HashMap<String, String>();
-        dialectOptions.put("oracle", "oracle");
-        dialectOptions.put("sql server", "sql server");
-        dialectOptions.put("sql server with integrated security", "sql server");
-        dialectOptions.put("postgresql", "postgresql");
+        dialectOptions.put(DIALECT.ORACLE.toString(), DIALECT.ORACLE.toString());
+        dialectOptions.put(DIALECT.SQLSERVER.toString(), DIALECT.SQLSERVER.toString());
+        dialectOptions.put(DIALECT.SQLSERVERINTSECURITY.toString(), DIALECT.SQLSERVERINTSECURITY.toString());
+        dialectOptions.put(DIALECT.POSTGRESQL.toString(), DIALECT.POSTGRESQL.toString());
     }
-
+    
     @NotNull
     @Size(max = 25, min = 1)
     private String cdmDialect;
@@ -37,6 +41,7 @@ public class WebApiProperties {
     @NotNull
     @Size(max = 25, min = 1)
     private String jdbcIpAddress;
+    
     /* sqlserver integrated security
     @NotNull
     @Size(max = 10, min = 1)*/
@@ -68,7 +73,7 @@ public class WebApiProperties {
     @NotNull
     @Size(max = 25, min = 1)
     private String cohortSchema;
-
+    
     @Size(max = 25, min = 0)
     private String flywayDataSourceSid;
     
@@ -77,10 +82,9 @@ public class WebApiProperties {
     
     @Size(max = 25, min = 0)
     private String flywayJdbcPass;
-
+    
     @Size(max = 100, min = 0)
     private String flywaySchemas;
-
     
     /**
      * @return the id
@@ -88,7 +92,6 @@ public class WebApiProperties {
     public int getId() {
         return id;
     }
-
     
     /**
      * @param id the id to set
@@ -96,7 +99,6 @@ public class WebApiProperties {
     public void setId(int id) {
         this.id = id;
     }
-
     
     /**
      * @return the dialectOptions
@@ -104,7 +106,6 @@ public class WebApiProperties {
     public static Map<String, String> getDialectOptions() {
         return dialectOptions;
     }
-
     
     /**
      * @param dialectOptions the dialectOptions to set
@@ -112,7 +113,6 @@ public class WebApiProperties {
     public static void setDialectOptions(Map<String, String> dialectOptions) {
         WebApiProperties.dialectOptions = dialectOptions;
     }
-
     
     /**
      * @return the cdmDialect
@@ -120,7 +120,6 @@ public class WebApiProperties {
     public String getCdmDialect() {
         return cdmDialect;
     }
-
     
     /**
      * @param cdmDialect the cdmDialect to set
@@ -128,7 +127,6 @@ public class WebApiProperties {
     public void setCdmDialect(String cdmDialect) {
         this.cdmDialect = cdmDialect;
     }
-
     
     /**
      * @return the jdbcIpAddress
@@ -136,7 +134,6 @@ public class WebApiProperties {
     public String getJdbcIpAddress() {
         return jdbcIpAddress;
     }
-
     
     /**
      * @param jdbcIpAddress the jdbcIpAddress to set
@@ -144,7 +141,6 @@ public class WebApiProperties {
     public void setJdbcIpAddress(String jdbcIpAddress) {
         this.jdbcIpAddress = jdbcIpAddress;
     }
-
     
     /**
      * @return the jdbcPort
@@ -152,7 +148,6 @@ public class WebApiProperties {
     public String getJdbcPort() {
         return jdbcPort;
     }
-
     
     /**
      * @param jdbcPort the jdbcPort to set
@@ -160,7 +155,6 @@ public class WebApiProperties {
     public void setJdbcPort(String jdbcPort) {
         this.jdbcPort = jdbcPort;
     }
-
     
     /**
      * @return the cdmDataSourceSid
@@ -168,7 +162,6 @@ public class WebApiProperties {
     public String getCdmDataSourceSid() {
         return cdmDataSourceSid;
     }
-
     
     /**
      * @param cdmDataSourceSid the cdmDataSourceSid to set
@@ -176,7 +169,6 @@ public class WebApiProperties {
     public void setCdmDataSourceSid(String cdmDataSourceSid) {
         this.cdmDataSourceSid = cdmDataSourceSid;
     }
-
     
     /**
      * @return the jdbcUser
@@ -184,7 +176,6 @@ public class WebApiProperties {
     public String getJdbcUser() {
         return jdbcUser;
     }
-
     
     /**
      * @param jdbcUser the jdbcUser to set
@@ -192,7 +183,6 @@ public class WebApiProperties {
     public void setJdbcUser(String jdbcUser) {
         this.jdbcUser = jdbcUser;
     }
-
     
     /**
      * @return the jdbcPass
@@ -200,7 +190,6 @@ public class WebApiProperties {
     public String getJdbcPass() {
         return jdbcPass;
     }
-
     
     /**
      * @param jdbcPass the jdbcPass to set
@@ -208,7 +197,6 @@ public class WebApiProperties {
     public void setJdbcPass(String jdbcPass) {
         this.jdbcPass = jdbcPass;
     }
-
     
     /**
      * @return the cdmSchema
@@ -216,7 +204,6 @@ public class WebApiProperties {
     public String getCdmSchema() {
         return cdmSchema;
     }
-
     
     /**
      * @param cdmSchema the cdmSchema to set
@@ -224,7 +211,6 @@ public class WebApiProperties {
     public void setCdmSchema(String cdmSchema) {
         this.cdmSchema = cdmSchema;
     }
-
     
     /**
      * @return the ohdsiSchema
@@ -232,7 +218,6 @@ public class WebApiProperties {
     public String getOhdsiSchema() {
         return ohdsiSchema;
     }
-
     
     /**
      * @param ohdsiSchema the ohdsiSchema to set
@@ -240,7 +225,6 @@ public class WebApiProperties {
     public void setOhdsiSchema(String ohdsiSchema) {
         this.ohdsiSchema = ohdsiSchema;
     }
-
     
     /**
      * @return the cohortSchema
@@ -248,7 +232,6 @@ public class WebApiProperties {
     public String getCohortSchema() {
         return cohortSchema;
     }
-
     
     /**
      * @param cohortSchema the cohortSchema to set
@@ -256,7 +239,6 @@ public class WebApiProperties {
     public void setCohortSchema(String cohortSchema) {
         this.cohortSchema = cohortSchema;
     }
-
     
     /**
      * @return the flywayDataSourceSid
@@ -264,7 +246,6 @@ public class WebApiProperties {
     public String getFlywayDataSourceSid() {
         return flywayDataSourceSid;
     }
-
     
     /**
      * @param flywayDataSourceSid the flywayDataSourceSid to set
@@ -272,7 +253,6 @@ public class WebApiProperties {
     public void setFlywayDataSourceSid(String flywayDataSourceSid) {
         this.flywayDataSourceSid = flywayDataSourceSid;
     }
-
     
     /**
      * @return the flywayJdbcUser
@@ -280,7 +260,6 @@ public class WebApiProperties {
     public String getFlywayJdbcUser() {
         return flywayJdbcUser;
     }
-
     
     /**
      * @param flywayJdbcUser the flywayJdbcUser to set
@@ -288,7 +267,6 @@ public class WebApiProperties {
     public void setFlywayJdbcUser(String flywayJdbcUser) {
         this.flywayJdbcUser = flywayJdbcUser;
     }
-
     
     /**
      * @return the flywayJdbcPass
@@ -296,7 +274,6 @@ public class WebApiProperties {
     public String getFlywayJdbcPass() {
         return flywayJdbcPass;
     }
-
     
     /**
      * @param flywayJdbcPass the flywayJdbcPass to set
@@ -304,7 +281,6 @@ public class WebApiProperties {
     public void setFlywayJdbcPass(String flywayJdbcPass) {
         this.flywayJdbcPass = flywayJdbcPass;
     }
-
     
     /**
      * @return the flywaySchemas
@@ -312,7 +288,6 @@ public class WebApiProperties {
     public String getFlywaySchemas() {
         return flywaySchemas;
     }
-
     
     /**
      * @param flywaySchemas the flywaySchemas to set
