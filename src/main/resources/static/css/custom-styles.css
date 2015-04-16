@@ -194,3 +194,41 @@ a {
 .launch-app-names {
 	padding-left: 20px;
 }
+
+
+@media (min-width: 1200px) {
+  .container {
+    width: 1100px;
+  }
+}
+
+
+
+
+@media (min-width: 1400px) {
+  .container {
+    width: 1300px;
+  }
+}
+
+
+@media (min-width: 1800px) {
+  .container {
+    width: 1700px;
+  }
+}
+
+
+@media (min-width: 2000px) {
+  .container {
+    width: 1900px;
+  }
+}
+
+
+@media (min-width: 2400px) {
+  .container {
+    width: 2300px;
+  }
+}
+

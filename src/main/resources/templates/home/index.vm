@@ -46,10 +46,10 @@ body {
 								<div class="col-sm-4 launch-link-row" type="achilles">
 									<div class="row">
 										<div class="col-xs-7 col-sm-5 col-md-4">
-											<img src="/img/achilles-cropped-rounded.png" style="height:80px; width: auto;"/>
+											<img src="/img/achilles-cropped-rounded.png" style="height:80px; width: auto; float:right"/>
 										</div>
 										<div class="col-xs-8 col-sm-7 col-md-8 launch-app-names">
-											<label class="launcher-header">Achilles</label>
+											<label class="launcher-header">Achilles</label><br />
 											<label class="launcher-subheader">Visualize your data</label>
 										</div>
 									</div>
@@ -60,10 +60,10 @@ body {
 								<div class="col-sm-4 launch-link-row" type="heracles">
 																		<div class="row">
 										<div class="col-xs-7 col-sm-5 col-md-4">
-											<img src="/img/heracles-Cropped-shadow.png" style="height:80px; width: auto;"/>
+											<img src="/img/heracles-Cropped-shadow.png" style="height:80px; width: auto; float:right"/>
 										</div>
 										<div class="col-xs-8 col-sm-7 col-md-8 launch-app-names">
-											<label class="launcher-header">Heracles</label>
+											<label class="launcher-header">Heracles</label><br />
 											<label class="launcher-subheader">Analyze some cohorts</label>
 										</div>
 									</div>
@@ -74,10 +74,10 @@ body {
 								<div class="col-sm-4 launch-link-row" type="calypso" >
 									<div class="row">
 										<div class="col-xs-7 col-sm-5 col-md-4">
-											<img src="/img/calypso-Cropped-shadow.png" style="height:80px; width: auto;"/>
+											<img src="/img/calypso-Cropped-shadow.png" style="height:80px; width: auto; float:right"/>
 										</div>
 										<div class="col-xs-8 col-sm-7 col-md-8 launch-app-names">
-											<label class="launcher-header">Calypso</label>
+											<label class="launcher-header">Calypso</label><br />
 											<label class="launcher-subheader">Do some feasibility</label>
 										</div>
 									</div>
@@ -88,10 +88,10 @@ body {
 								<div class="col-sm-4 launch-link-row" type="hermes">
 									<div class="row">
 										<div class="col-xs-7 col-sm-5 col-md-4">
-											<img src="/img/hermes-Cropped-shadow.png" style="height:80px; width: auto;"/>
+											<img src="/img/hermes-Cropped-shadow.png" style="height:80px; width: auto; float:right"/>
 										</div>
 										<div class="col-xs-8 col-sm-7 col-md-8  launch-app-names">
-											<label class="launcher-header">Hermes</label>
+											<label class="launcher-header">Hermes</label><br />
 											<label class="launcher-subheader">Search some vocab</label>
 										</div>
 									</div>
@@ -102,10 +102,10 @@ body {
 								<div class="col-sm-4 launch-link-row" type="circe">
 									<div class="row">
 										<div class="col-xs-7 col-sm-5 col-md-4">
-											<img src="/img/circe-Cropped-shadow.png" style="height:80px; width: auto;"/>
+											<img src="/img/circe-Cropped-shadow.png" style="height:80px; width: auto;  float:right"/>
 										</div>
 										<div class="col-xs-8 col-sm-7 col-md-8 launch-app-names">
-											<label class="launcher-header">Circe</label>
+											<label class="launcher-header">Circe</label><br />
 											<label class="launcher-subheader">Create some cohorts</label>
 										</div>
 									</div>
@@ -116,10 +116,10 @@ body {
 								<div class="col-sm-4 launch-link-row" type="athena">
 									<div class="row">
 										<div class="col-xs-7 col-sm-5 col-md-4">
-											<img src="/img/athena-cropped-shadow.png" style="height:80px; width: auto;"/>
+											<img src="/img/athena-cropped-shadow.png" style="height:80px; width: auto; float:right"/>
 										</div>
 										<div class="col-xs-8 col-sm-7 col-md-8  launch-app-names">
-											<label class="launcher-header">Athena</label>
+											<label class="launcher-header">Athena</label><br />
 											<label class="launcher-subheader">Automate your terms</label>
 										</div>
 									</div>
