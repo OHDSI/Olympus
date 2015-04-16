@@ -71,13 +71,6 @@ public class WebApiController {
         log.debug("Get config");
         ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
         modelAndView.addObject(CONFIG_MODEL_ATTR, this.webApi.getProperties());
-        if (this.webApi.isConfigured()) {
-            if (this.webApi.isRunning()) {
-                modelAndView.addObject("msg", "WebApi is currently running");
-            } else {
-                modelAndView.addObject("webapi", true);
-            }
-        }
         if (errorMsg != null) {
             modelAndView.addObject("errorMsg", errorMsg);
         }
@@ -107,13 +100,6 @@ public class WebApiController {
         ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
         modelAndView.addObject(CONFIG_MODEL_ATTR, props);
         modelAndView.addObject("msg", msg);
-        if (this.webApi.isConfigured()) {
-            if (this.webApi.isRunning()) {
-                modelAndView.addObject("msg", "WebApi is currently running");
-            } else {
-                modelAndView.addObject("webapi", true);
-            }
-        }
         return modelAndView;
     }
     

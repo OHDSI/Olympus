@@ -10,7 +10,9 @@
         #if(${msg})
         <div class="alert alert-success" role="alert">$msg</div>
         #end
-        #if(${webapi})
+        #if(${webapi.isRunning()})
+        <div class="alert alert-success" role="alert">WebApi is running</div>
+        #elseif(${webapi.isConfigured()})
         <div class="container">
 			<form method="POST" action="/webapi/request-start" id="frmLaunchWebApi">
 				<div class="form-group pull-right">
