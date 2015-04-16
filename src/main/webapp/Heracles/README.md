@@ -37,8 +37,6 @@ If you wish to add/modify configuration using Grunt, you can install the followi
 <br/>`npm install -g grunt-cli`
 * Install grunt dependencies (under the root directory)
 <br/>`sh installGruntDependencies.sh`
-* (optional) If you're pointing to a different WebAPI than the default (localhost:8080/WebAPI), do the following
-<br/>update the `web_api_url` property in package.json
 * Run grunt to kick off the default tasks
 <br/>`grunt`
 * (optional) Run watch to keep minified files up to date

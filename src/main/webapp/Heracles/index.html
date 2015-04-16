@@ -9,7 +9,7 @@
 
 <div class="container">
     <!-- Header and app info -->
-    <div class="row page-one">
+    <div id="header" class="row page-one">
         <div class="col-md-12">
             <div class="row " style="margin-top:10px">
                 <div class="col-md-1"></div>
@@ -29,8 +29,25 @@
             <div id="cohort-search" class="row ">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <div id="cohorts-typeahead" class="heracles-typeahead">
-                        <input id="cohorts" type="text" placeholder="Search Cohorts" class="form-control large-input typeahead" focus/>
+                    <div class="row">
+                        <div class="col-xs-11" style="padding-right:0px; margin-right: 0px">
+                            <div id="cohorts-typeahead" class="heracles-typeahead">
+                                <input id="cohorts" type="text" placeholder="Search Cohorts"
+                                       class="form-control large-input typeahead" focus/>
+                            </div>
+                        </div>
+                        <div class="col-xs-1" style="padding-left:0px; margin-left: 0px">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                                        data-toggle="dropdown" aria-expanded="true" style="height: 50px">
+                                    <span class="glyphicon glyphicon-cog" aria-hidden="true"
+                                          style="font-size: 25px"></span>
+                                </button>
+                                <ul class="dropdown-menu webpai-dropdown" role="menu" aria-labelledby="dropdownMenu1">
+                                    <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li> -->
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                     <div align="center" class="heracles-link">
                         <a href="viewer.html">Switch to <b>view</b> Heracles Analyses</a>
@@ -46,9 +63,9 @@
     <!-- Cohort Explorer -->
     <div>
         <div class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" style="width:200px">
-            <a class="navmenu-brand visible-md visible-lg" href="index.html" style="font-weight: bold">OHDSI Heracles</a>
+            <a class="navmenu-brand visible-md visible-lg" ng-click="goBack($event)" style="font-weight: bold">OHDSI Heracles</a>
             <ul class="nav navmenu-nav" style="border-bottom:1px solid #898989;">
-                <li><a href="index.html"  style="font-size:16px">&laquo;Back</a></li>
+                <li><a ng-click="goBack($event)" style="font-size:16px">&laquo;Back</a></li>
                 <li><a ng-click="refreshCohort($event)" style="font-size:16px">Refresh</a></li>
                 <li><a ng-href="viewer.html?cohortId={{cohort.cohortDefinition.id}}" >Heracles Viewer</a></li>
             </ul>
@@ -127,17 +144,20 @@
             </div>
 
             <div class="col-md-12">
-                <h4>Run Cohort Analyses ({{analysisCount}})</h4>
+                <span>
+                    <label style="font-size:120%">Run Cohort Analyses ({{analysisCount}})</label>
+                     <span style="float:right">
+                        <div class="btn-group btn-group-xs" style="margin-right:15px">
+                            <button type="button" class="btn btn-default auto-filter-check-list-select" filter-key="cohort-analyses" id="select-filter-button" >Select all</button>
+                            <button type="button" class="btn btn-default auto-filter-check-list-clear" filter-key="cohort-analyses" id="deselect-filter-button">Deselect all</button>
+                        </div>
+                    </span>
+                    </span>
                             <span class="toggle-filter-span" filter-key="cohort-analyses">
                                  <input id="auto-filter-input" placeholder="Type to filter..." type="text" class="form-control auto-filter-check-list-input" style="margin-top:8px" filter-key="cohort-analyses"/>
-                                 <div class="multiselect-wrapper" filter-key="cohort-analyses">
+
+                                <div class="multiselect-wrapper" filter-key="cohort-analyses">
                                      <div id="auto-filter-div" class="multiselect form-control" style="margin:3px;height:270px;overflow-y:auto;width:100%;" filter-key="cohort-analyses">
-                                        <span style="float:right">
-                                            <div class="btn-group btn-group-xs" style="margin-right:15px">
-                                                <button type="button" class="btn btn-default auto-filter-check-list-select" filter-key="cohort-analyses" id="select-filter-button" >Select all</button>
-                                                <button type="button" class="btn btn-default auto-filter-check-list-clear" filter-key="cohort-analyses" id="deselect-filter-button">Deselect all</button>
-                                            </div>
-                                        </span>
                                          <div ng-repeat="(k, v) in cohort.analysesMap">
                                              <label class="toggle-parent-label" key="{{k}}" ng-click="parentAnalysesClick($event)">
                                                  <input type="checkbox" class="toggle-checkbox-parent-item" filter-key="cohort-analyses"
@@ -146,7 +166,7 @@
                                              </label>
                                              <div ng-repeat="item in v">
                                                  <label class="toggle-child-label {{item.class}}" title="Analysis ID#: {{item.analysisId}}">
-                                                     <input type="checkbox" class="toggle-checkbox-item" ng-click="analysisClick()"
+                                                     <input type="checkbox" class="toggle-checkbox-item" ng-click="analysisClick()" ran="{{item.lastUpdateTimeFormatted}}"
                                                             style="margin:2px" filter-key="cohort-analyses" value="{{item.analysisName}}" analysis-id="{{item.analysisId}}" parent="{{k}}" />
                                                      {{item.analysisName}}
                                                      <span ng-show="item.lastUpdateTimeFormatted != null" class="last-update-time"> (Last Run {{item.lastUpdateTimeFormatted}})</span>
@@ -197,7 +217,7 @@
 
             <div class="col-md-12">
                 <label>Small Cell Count: <span style="color:#aaa"> (Cell size to exclude)</span></label><br/>
-                <input type="number" value="1" id="smallCellCount" />
+                <input type="number" value="5" id="smallCellCount" />
                 <br/>
             </div>
 
@@ -208,29 +228,52 @@
                 <label><input type="checkbox" id="cohortPeriodOnly"/> Cohort Period Only <span style="color:#aaa">(Limit to inside the cohort period)</span></label>
             </div>
             <div class="col-sm-12">
-                <button class="btn btn-lg btn-heracles analyses-button pull-right" filter-key="cohort-analyses" ng-click="submitJob($event)" data-loading-text="...">Begin Analysis</button>
+                <button id="btnSubmitJob" class="btn btn-lg btn-heracles analyses-button pull-right" filter-key="cohort-analyses" ng-click="submitJob($event)" data-loading-text="...">Begin Analysis</button>
             </div>
             <div class="col-sm-12" style="padding:10px">&nbsp;</div>
         </div>
 </div>
-        <div class="row">
-            <div class="modal fade" id="jobStatusModal" tabindex="-1" role="dialog" aria-labelledby="jobStatusModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="jobStatusModalLabel">{{job.label}}</h4>
-                        </div>
-                        <div class="modal-body">
-                            {{job.message}}
+
+<div class="row">
+    <div class="modal fade" id="jobStatusModal" tabindex="-1" role="dialog" aria-labelledby="jobStatusModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="jobStatusModalLabel">{{job.label}}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{job.message}}</p>
 
                         <span ng-show="job.job_link != null">
                             <br /><br />
                             <a href="{{job.job_link}}" target="_blank">Click here to view Job Status</a>
                         </span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+            <div class="modal fade" id="alreadyRanJobsModal" tabindex="-1" role="dialog" aria-labelledby="alreadyRanJobsModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="alreadyRanJobsModalLabel">Selected Jobs Previously Ran</h4>
+                        </div>
+                        <div class="modal-body">
+                            <b>Oops.</b> {{selectJobMessage}}
+
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-success" ng-click="runOnlyNewJobs()">Yes, remove previously run jobs from my selection</button>
+                            <button type="button" class="btn btn-primary" ng-click="runAllJobs()">No, run all selected jobs</button>
                         </div>
                     </div>
                 </div>

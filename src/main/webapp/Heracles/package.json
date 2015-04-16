@@ -13,6 +13,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/OHDSI/Heracles"
-  },
-  "web_api_url": "http://localhost:20000/WebAPI"
+  }
 }

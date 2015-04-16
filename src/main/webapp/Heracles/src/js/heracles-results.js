@@ -1,11 +1,11 @@
 // configure angular
-require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_common',
+require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_common', 'monster',
         '../js/charts/dashboard', '../js/charts/person', '../js/charts/conditions', '../js/charts/drugExposures',
         '../js/charts/conditionEras', '../js/charts/drugEras', '../js/charts/cohortSpecific',
         '../js/charts/observations', '../js/charts/observationPeriod', '../js/charts/dataDensity',
         '../js/charts/death', '../js/charts/procedures', '../js/charts/visits', '../js/charts/measurements',
         '../js/charts/heraclesHeel'],
-    function (angular, $, b, HeraclesD3, j, heraclesCommon,
+    function (angular, $, b, HeraclesD3, j, heraclesCommon, monster,
               DashboardRenderer, PersonRenderer, ConditionRenderer, DrugExposureRenderer,
               ConditionErasRenderer, DrugErasRenderer, CohortSpecificRenderer,
               ObservationsRenderer, ObservationPeriodRenderer, DataDensityRenderer,
@@ -151,6 +151,10 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
                     var param = $.urlParam('cohortId');
                     if (param && param !== '') {
+                        var lastWebApi = monster.get('last-webapi');
+                        if (lastWebApi) {
+                            setSelectedWebApiUrl(+lastWebApi);
+                        }
                         $http.get(getWebApiUrl() + '/cohortdefinition/' + param).
                             success(function(data, status, headers, config) {
                                 if (data) {
