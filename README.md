@@ -31,21 +31,17 @@ OLYMPUS is a project as part of the Observational Health Data Sciences and Infor
 
 
 ##### Building & Packaging
+Olympus : By default, all vendor jdbc drivers are dependencies.  If you wish to package with a single or subset, consider the vendor-specific db profiles `mvn clean package -Polympus-oracle` or package will all drivers `mvn clean package` . The default requires all dependencies to be accessible in an artifact repository.
+
+Olympus packages the following applications.  If you wish to build Olympus and change the applications, consider the following.
 
 WebAPI (package using defaults `mvn clean package`)
 - Add WebAPI.war to Olympus/src/main/webapp/WEB-INF/applications/
 
-Hermes
-- clone github repo, edit js/config.js (Local,'http://localhost:20000/WebAPI')
-- cp to Olympus/src/main/webapp/Hermes
+Hermes, Circe, Heracles, Calypso, JobViewer
+- clone github repos, edit js config files that specify WebAPI location. ('http://localhost:20000/WebAPI')
+- copy each application to Olympus/src/main/webapp/ (e.g. webapp/Hermes, webapp/Heracles, etc.)
 
-Circe
-- cp to Olympus/src/main/webapp/Circe, edit js/config.js
-
-Heracles
-- edit Heracles.config.js
-
-Olympus : package with target db profile `mvn clean package -Polympus-oracle` or package will all drivers `-Polympus-comprehensive`
 
 ##### Running Olympus
 `java -XX:MaxPermSize=128m -jar Olympus-XXX-exec.war`
