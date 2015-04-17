@@ -32,8 +32,24 @@
             <div id="cohort-search" class="row ">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <div id="cohorts-viewer-typeahead" class="heracles-typeahead">
-                        <input id="cohorts" type="text" placeholder="Search Cohorts" class="form-control large-input typeahead" />
+                    <div class="row">
+                        <div class="col-xs-11" style="padding-right:0px; margin-right: 0px">
+                            <div id="cohorts-viewer-typeahead" class="heracles-typeahead">
+                                <input id="cohorts" type="text" placeholder="Search Cohorts" class="form-control large-input typeahead" />
+                            </div>
+                        </div>
+                        <div class="col-xs-1" style="padding-left:0px; margin-left: 0px">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                                        data-toggle="dropdown" aria-expanded="true" style="height: 50px">
+                                    <span class="glyphicon glyphicon-cog" aria-hidden="true"
+                                          style="font-size: 25px"></span>
+                                </button>
+                                <ul class="dropdown-menu webpai-dropdown" role="menu" aria-labelledby="dropdownMenu1">
+                                    <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li> -->
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                     <div align="center" class="heracles-link">
                         <a href="index.html">Switch to <b>run</b> Heracles Analyses</a>

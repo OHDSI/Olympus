@@ -242,10 +242,12 @@ define(['jquery', 'd3', 'jnj_chart', 'ohdsi_common'], function (jquery, d3, jnj_
 
     HeraclesD3.renderOHDSIDefaults = function(data) {
 
+        // reset
+        d3.selectAll("#gender_dist svg").remove();
+        d3.selectAll("#age_dist svg").remove();
 
         // gender
         if (data.genderDistribution) {
-            d3.selectAll("#gender_dist svg").remove();
             var genderDonut = new jnj_chart.donut();
             genderDonut.render(common.mapConceptData(data.genderDistribution), "#gender_dist", 260, 100, {
                 colors: d3.scale.ordinal()
@@ -269,7 +271,6 @@ define(['jquery', 'd3', 'jnj_chart', 'ohdsi_common'], function (jquery, d3, jnj_
                 histData.min = 0;
                 histData.max = 100;
                 histData.intervals = 100;
-                d3.selectAll("#age_dist svg").remove();
                 var ageAtFirstObservationData = common.mapHistogram(histData);
                 var ageAtFirstObservationHistogram = new jnj_chart.histogram();
                 ageAtFirstObservationHistogram.render(ageAtFirstObservationData, "#age_dist", 460, 195, {
