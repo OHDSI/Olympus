@@ -35,8 +35,6 @@
 					url: "http://localhost:20000/achilles/" + "data?dataSourceFolder="+self.datasource().folder + "&file=dashboard.json",//"data/" + self.datasource().folder + "/dashboard.json",
 					contentType: "application/json; charset=utf-8",
 				}).done(function (result) {
-					console.log(common);
-					console.log(result);
 					result.SUMMARY = common.dataframeToArray(result.SUMMARY);
 					result.SUMMARY.forEach(function (d, i, ar) {
 						if (!isNaN(d.ATTRIBUTE_VALUE))
@@ -599,7 +597,6 @@
 						$('#dropdown-datasources').append('<li onclick="setDatasource(' + i + ');">' + root.datasources[i].name + '</li>');
 					}
 					viewModel.datasource(viewModel.datasources[0]);
-					alert(viewModel.datasource().folder);
 					app.run('#/' + viewModel.datasource().folder + '/dashboard');
 				});
 
