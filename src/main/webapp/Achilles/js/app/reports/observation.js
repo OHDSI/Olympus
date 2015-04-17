@@ -26,7 +26,7 @@
 
 					$.ajax({
 						type: "GET",
-						url: 'data/' + page_vm.datasource().folder + '/observations/observation_' + concept_id + '.json',
+						url: "http://localhost:20000/achilles/" + "data?dataSourceFolder="+ page_vm.datasource().folder + "/observations" + "&file=" + "observation_" + concept_id + ".json",//'data/' + page_vm.datasource().folder + '/observations/observation_' + concept_id + '.json',
 						success: function (data) {
 							// age at first diagnosis visualization
 							var ageAtFirstOccurrence = new jnj_chart.boxplot();
@@ -340,7 +340,7 @@
 
 					$.ajax({
 						type: "GET",
-						url: 'data/' + folder + '/observation_treemap.json',
+						url: "http://localhost:20000/achilles/" + "data?dataSourceFolder="+folder + "&file=observation_treemap.json",//'data/' + folder + '/observation_treemap.json',
 						contentType: "application/json; charset=utf-8",
 						success: function (data) {
 							var normalizedData = common.normalizeDataframe(data);

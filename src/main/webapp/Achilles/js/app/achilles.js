@@ -32,9 +32,11 @@
 			self.loadDashboard = function () {
 				$.ajax({
 					type: "GET",
-					url: "data/" + self.datasource().folder + "/dashboard.json",
+					url: "http://localhost:20000/achilles/" + "data?dataSourceFolder="+self.datasource().folder + "&file=dashboard.json",//"data/" + self.datasource().folder + "/dashboard.json",
 					contentType: "application/json; charset=utf-8",
 				}).done(function (result) {
+					console.log(common);
+					console.log(result);
 					result.SUMMARY = common.dataframeToArray(result.SUMMARY);
 					result.SUMMARY.forEach(function (d, i, ar) {
 						if (!isNaN(d.ATTRIBUTE_VALUE))
@@ -47,7 +49,7 @@
 			self.loadObservationPeriods = function () {
 				$.ajax({
 					type: "GET",
-					url: "data/" + self.datasource().folder + '/observationperiod.json',
+					url: "http://localhost:20000/achilles/" + "data?dataSourceFolder="+self.datasource().folder + "&file=observationperiod.json",// "data/" + self.datasource().folder + '/observationperiod.json',
 					contentType: "application/json; charset=utf-8",
 				}).done(function (result) {
 					self.observationPeriodsData(result);
@@ -57,7 +59,7 @@
 			self.loadPerson = function () {
 				$.ajax({
 					type: "GET",
-					url: "data/" + self.datasource().folder + '/person.json',
+					url: "http://localhost:20000/achilles/" + "data?dataSourceFolder="+self.datasource().folder + "&file=person.json",//"data/" + self.datasource().folder + '/person.json',
 					contentType: "application/json; charset=utf-8",
 				}).done(function (result) {
 
@@ -73,7 +75,7 @@
 			self.loadConditions = function (folder) {
 				$.ajax({
 					type: "GET",
-					url: 'data/' + folder + '/treemap_path.json',
+					url: "http://localhost:20000/achilles/" + "data?dataSourceFolder="+folder + "&file=treemap_path.json",//'data/' + folder + '/treemap_path.json',
 					contentType: "application/json; charset=utf-8",
 					success: function (data) {
 						self.conditionsData(data);
@@ -588,7 +590,7 @@
 				$.ajax({
 					cache: false,
 					type: "GET",
-					url: 'data/datasources.json',
+					url: "http://localhost:20000/achilles/" + "datasources",//'data/datasources.json',
 					contentType: "application/json; charset=utf-8"
 				}).done(function (root) {
 					viewModel.datasources = root.datasources;
@@ -597,6 +599,7 @@
 						$('#dropdown-datasources').append('<li onclick="setDatasource(' + i + ');">' + root.datasources[i].name + '</li>');
 					}
 					viewModel.datasource(viewModel.datasources[0]);
+					alert(viewModel.datasource().folder);
 					app.run('#/' + viewModel.datasource().folder + '/dashboard');
 				});
 

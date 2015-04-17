@@ -7,7 +7,7 @@
 
 					$.ajax({
 						type: "GET",
-						url: 'data/' + folder + '/achillesheel.json',
+						url: "http://localhost:20000/achilles/" + "data?dataSourceFolder="+ folder + "&file=achillesheel.json",//'data/' + folder + '/achillesheel.json',
 						contentType: "application/json; charset=utf-8",
 						success: function (data) {
 							table_data = [];

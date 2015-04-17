@@ -151,4 +151,12 @@ define(["d3"], function (d3) {
 	};
 
 	return module;
-});
+}/*,
+['olympus'], function () {
+	var config = {};
+	
+	config.achillesApiRoot = "http://localhost:20000/achilles/";
+	
+	return config;
+	
+}*/);

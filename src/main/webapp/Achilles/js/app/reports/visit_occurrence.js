@@ -26,7 +26,7 @@
 
 					$.ajax({
 						type: "GET",
-						url: 'data/' + page_vm.datasource().folder + '/visits/visit_' + concept_id + '.json',
+						url: "http://localhost:20000/achilles/" + "data?dataSourceFolder="+ page_vm.datasource().folder + "/visits" + "&file=" + "visit_" + concept_id + ".json",//'data/' + page_vm.datasource().folder + '/visits/visit_' + concept_id + '.json',
 						success: function (data) {
 
 							// render trellis
@@ -176,7 +176,7 @@
 
 					$.ajax({
 						type: "GET",
-						url: 'data/' + folder + '/visit_treemap.json',
+						url: "http://localhost:20000/achilles/" + "data?dataSourceFolder="+folder + "&file=visit_treemap.json",//'data/' + folder + '/visit_treemap.json',
 						contentType: "application/json; charset=utf-8",
 						success: function (data) {
 							data = common.normalizeDataframe(data);

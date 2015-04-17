@@ -53,7 +53,7 @@
 
 					$.ajax({
 						type: "GET",
-						url: 'data/' + page_vm.datasource().folder + '/conditioneras/condition_' + concept_id + '.json',
+						url: "http://localhost:20000/achilles/" + "data?dataSourceFolder="+ page_vm.datasource().folder + "/conditioneras" + "&file=" + "condition_" + concept_id + ".json",//'data/' + page_vm.datasource().folder + '/conditioneras/condition_' + concept_id + '.json',
 						success: function (data) {
 							// age at first diagnosis visualization
 							boxplot_helper(data.AGE_AT_FIRST_DIAGNOSIS,'#conditioneras_age_at_first_diagnosis',500,300,'Gender','Age at First Diagnosis');
@@ -164,7 +164,7 @@
 
 					$.ajax({
 						type: "GET",
-						url: 'data/' + folder + '/conditionera_treemap.json',
+						url: "http://localhost:20000/achilles/" + "data?dataSourceFolder="+ folder + "&file=conditionera_treemap.json",//'data/' + folder + '/conditionera_treemap.json',
 						contentType: "application/json; charset=utf-8",
 						success: function (data) {
 							var normalizedData = common.normalizeDataframe(data);

@@ -8,7 +8,7 @@
 
 			$.ajax({
 				type: "GET",
-				url: "data/" + folder + "/death.json",
+				url: "http://localhost:20000/achilles/" + "data?dataSourceFolder="+folder + "&file=death.json",//"data/" + folder + "/death.json",
 				contentType: "application/json; charset=utf-8",
 			}).done(function (result) {
 

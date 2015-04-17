@@ -55,7 +55,7 @@
 
 					$.ajax({
 						type: "GET",
-						url: 'data/' + page_vm.datasource().folder + '/drugeras/drug_' + concept_id + '.json',
+						url: "http://localhost:20000/achilles/" + "data?dataSourceFolder="+ page_vm.datasource().folder + "/drugeras" + "&file=" + "drug_" + concept_id + ".json",//'data/' + page_vm.datasource().folder + '/drugeras/drug_' + concept_id + '.json',
 						success: function (data) {
 
 							// boxplots
@@ -167,7 +167,7 @@
 
 					$.ajax({
 						type: "GET",
-						url: 'data/' + folder + '/drugera_treemap.json',
+						url: "http://localhost:20000/achilles/" + "data?dataSourceFolder="+ folder + "&file=drugera_treemap.json",//'data/' + folder + '/drugera_treemap.json',
 						contentType: "application/json; charset=utf-8",
 						success: function (data) {
 							var normalizedData = common.normalizeDataframe(data);

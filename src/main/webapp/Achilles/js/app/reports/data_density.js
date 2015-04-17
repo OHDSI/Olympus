@@ -9,7 +9,7 @@
 
 			$.ajax({
 				type: "GET",
-				url: "data/" + folder + "/datadensity.json",
+				url: "http://localhost:20000/achilles/" + "data?dataSourceFolder="+folder + "&file=datadensity.json",//"data/" + folder + "/datadensity.json",
 				contentType: "application/json; charset=utf-8",
 			}).done(function (result) {
 				
