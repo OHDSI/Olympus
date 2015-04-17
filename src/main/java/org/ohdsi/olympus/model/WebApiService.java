@@ -64,7 +64,7 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
         String driverClassName;
         String jdbcUrl;
         String flywayJdbcUrl;
-
+        
         if (DIALECT.ORACLE.toString().equals(dialect)) {
             driverClassName = "oracle.jdbc.OracleDriver";
             flywayLocations = "classpath:db/migration/oracle";
@@ -103,20 +103,23 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
         String flywaySchemas = StringUtils.isEmpty(props.getFlywaySchemas()) ? props.getOhdsiSchema() : props
                 .getFlywaySchemas();
         
-        setProperty("datasource.driverClassName", driverClassName);
-        setProperty("datasource.url", jdbcUrl);
-        setProperty("datasource.username", props.getJdbcUser());
-        setProperty("datasource.password", props.getJdbcPass());
-        setProperty("flyway.datasource.driverClassName", driverClassName);
-        setProperty("flyway.datasource.url", flywayJdbcUrl);
-        setProperty("flyway.datasource.username", flywayUser);
-        setProperty("flyway.datasource.password", flywayPass);
-        setProperty("flyway.schemas", flywaySchemas);
-        setProperty("flyway.locations", flywayLocations);
-        setProperty("datasource.dialect", props.getCdmDialect());
-        setProperty("datasource.cdm.schema", props.getCdmSchema());
-        setProperty("datasource.ohdsi.schema", props.getOhdsiSchema());
-        setProperty("datasource.cohort.schema", props.getCohortSchema());
+        setProperty(WebApiProperties.PROP_DATASOURCE_DRIVERCLASSNAME, driverClassName);
+        setProperty(WebApiProperties.PROP_DATASOURCE_URL, jdbcUrl);
+        setProperty(WebApiProperties.PROP_DATASOURCE_USERNAME, props.getJdbcUser());
+        setProperty(WebApiProperties.PROP_DATASOURCE_PASSWORD, props.getJdbcPass());
+        setProperty(WebApiProperties.PROP_FLYWAY_DATASOURCE_DRIVERCLASSNAME, driverClassName);
+        setProperty(WebApiProperties.PROP_FLYWAY_DATASOURCE_URL, flywayJdbcUrl);
+        setProperty(WebApiProperties.PROP_FLYWAY_DATASOURCE_USERNAME, flywayUser);
+        setProperty(WebApiProperties.PROP_FLYWAY_DATASOURCE_PASSWORD, flywayPass);
+        setProperty(WebApiProperties.PROP_FLYWAY_SCHEMAS, flywaySchemas);
+        setProperty(WebApiProperties.PROP_FLYWAY_LOCATIONS, flywayLocations);
+        setProperty(WebApiProperties.PROP_DATASOURCE_DIALECT, props.getCdmDialect());
+        setProperty(WebApiProperties.PROP_DATASOURCE_CDM_SCHEMA, props.getCdmSchema());
+        setProperty(WebApiProperties.PROP_DATASOURCE_OHDSI_SCHEMA, props.getOhdsiSchema());
+        setProperty(WebApiProperties.PROP_DATASOURCE_COHORT_SCHEMA, props.getCohortSchema());
+        
+        //application-specific
+        setProperty(WebApiProperties.PROP_ACHILLES_DATA_DIR, props.getAchillesDataDir());
     }
     
     private static void setProperty(String key, String value) {

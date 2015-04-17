@@ -36,7 +36,7 @@
 				<li class="dropdown">
 			      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin<span class="caret"></span></a>
 			      <ul class="dropdown-menu" role="menu" id="admin">
-			      	<li><a href="/webapi/config">WebAPI Configuration</a></li>
+			      	<li><a href="/webapi/config">Configuration</a></li>
 			      	<li><a href="/user/create">Create User</a></li>
 			      	<li><a href="/user">Users</a></li>
 			      </ul>

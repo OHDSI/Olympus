@@ -150,6 +150,17 @@
                 </div>
   </div>
 </div>  
+</div>
+
+<div><h2>Application-specific Configuration</h2>#*<label class="col-sm-3 control-label"></label>*#
+				#springBind("config.achillesDataDir")
+                <div class="form-group #if(${status.error})has-error#end">
+                    <label for="achillesDataDir" class="col-sm-3 control-label">Achilles Data Dir</label>
+                    <div class="col-sm-9">
+                    	#springFormInput("config.achillesDataDir" 'class="form-control" placeholder="/var/achilles/data"')
+                    	#springShowErrors("<br/>" "")
+                    </div>
+                </div>
 </div>              
                 <div class="form-group pull-right">
                 	<input type="hidden" name="$_csrf.parameterName" value="$_csrf.token"/>

@@ -17,6 +17,36 @@ public class WebApiProperties {
     
     public static final int ID = 1;
     
+    public static final String PROP_ACHILLES_DATA_DIR = "achilles.data.dir";
+    
+    public static final String PROP_DATASOURCE_DRIVERCLASSNAME = "datasource.driverClassName";
+    
+    public static final String PROP_DATASOURCE_URL = "datasource.url";
+    
+    public static final String PROP_DATASOURCE_USERNAME = "datasource.username";
+    
+    public static final String PROP_DATASOURCE_PASSWORD = "datasource.password";
+    
+    public static final String PROP_FLYWAY_DATASOURCE_DRIVERCLASSNAME = "flyway.datasource.driverClassName";
+    
+    public static final String PROP_FLYWAY_DATASOURCE_URL = "flyway.datasource.url";
+    
+    public static final String PROP_FLYWAY_DATASOURCE_USERNAME = "flyway.datasource.username";
+    
+    public static final String PROP_FLYWAY_DATASOURCE_PASSWORD = "flyway.datasource.password";
+    
+    public static final String PROP_FLYWAY_SCHEMAS = "flyway.schemas";
+    
+    public static final String PROP_FLYWAY_LOCATIONS = "flyway.locations";
+    
+    public static final String PROP_DATASOURCE_DIALECT = "datasource.dialect";
+    
+    public static final String PROP_DATASOURCE_CDM_SCHEMA = "datasource.cdm.schema";
+    
+    public static final String PROP_DATASOURCE_OHDSI_SCHEMA = "datasource.ohdsi.schema";
+    
+    public static final String PROP_DATASOURCE_COHORT_SCHEMA = "datasource.cohort.schema";
+    
     @Id
     private int id = 1;
     
@@ -85,6 +115,9 @@ public class WebApiProperties {
     
     @Size(max = 100, min = 0)
     private String flywaySchemas;
+    
+    @Size(max = 250, min = 0)
+    private String achillesDataDir;
     
     /**
      * @return the id
@@ -294,6 +327,20 @@ public class WebApiProperties {
      */
     public void setFlywaySchemas(String flywaySchemas) {
         this.flywaySchemas = flywaySchemas;
+    }
+    
+    /**
+     * @return the achillesDataDir
+     */
+    public String getAchillesDataDir() {
+        return achillesDataDir;
+    }
+    
+    /**
+     * @param achillesDataDir the achillesDataDir to set
+     */
+    public void setAchillesDataDir(String achillesDataDir) {
+        this.achillesDataDir = achillesDataDir;
     }
     
 }

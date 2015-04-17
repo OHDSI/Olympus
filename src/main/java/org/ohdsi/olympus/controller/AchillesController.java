@@ -7,7 +7,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.springframework.beans.factory.annotation.Value;
+import org.ohdsi.olympus.model.WebApiProperties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,46 +25,48 @@ public class AchillesController {
     
     private static final Log log = LogFactory.getLog(AchillesController.class);
     
-    @Value("${achilles.data.dir}")
-    private String dataDir;
+    @Autowired
+    private Environment env;
     
     @RequestMapping(value = "datasources", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public HttpEntity<JSONObject> datasource() {
-        String fileLocation = dataDir + File.separator + "datasources.json";
+        final String fileLocation = this.env.getProperty(WebApiProperties.PROP_ACHILLES_DATA_DIR) + File.separator
+                + "datasources.json";
         return new ResponseEntity<JSONObject>(toJson(fileLocation), HttpStatus.OK);
     }
     
     @RequestMapping(value = "data", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public HttpEntity<JSONObject> datasource(@RequestParam("dataSourceFolder") String dataSourceFolder,
-                                             @RequestParam("file") String file) {
-        JSONParser parser = new JSONParser();
+    public HttpEntity<JSONObject> datasource(@RequestParam("dataSourceFolder") final String dataSourceFolder,
+                                             @RequestParam("file") final String file) {
+        final JSONParser parser = new JSONParser();
         JSONObject jsonObject = null;
         try {
-            String fileLocation = dataDir + File.separator + dataSourceFolder + File.separator + file;
+            final String fileLocation = this.env.getProperty(WebApiProperties.PROP_ACHILLES_DATA_DIR) + File.separator
+                    + dataSourceFolder + File.separator + file;
             log.debug("Attempting to parse datasources.json from : " + fileLocation);
-            FileReader fr = new FileReader(fileLocation);
-            Object obj = parser.parse(fr);
+            final FileReader fr = new FileReader(fileLocation);
+            final Object obj = parser.parse(fr);
             jsonObject = (JSONObject) obj;
             fr.close();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             log.error("Error returning datasources.json", e);
             throw new RuntimeException(e);
         }
         return new ResponseEntity<JSONObject>(jsonObject, HttpStatus.OK);
     }
     
-    private JSONObject toJson(String fileLocation) {
+    private JSONObject toJson(final String fileLocation) {
         JSONObject jsonObject = null;
         try {
-            JSONParser parser = new JSONParser();
+            final JSONParser parser = new JSONParser();
             log.debug("Attempting to parse datasources.json from : " + fileLocation);
-            FileReader fr = new FileReader(fileLocation);
-            Object obj = parser.parse(fr);
+            final FileReader fr = new FileReader(fileLocation);
+            final Object obj = parser.parse(fr);
             jsonObject = (JSONObject) obj;
             fr.close();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             log.error("Error returning datasources.json", e);
             throw new RuntimeException(e);
         }

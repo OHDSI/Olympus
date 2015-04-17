@@ -37,6 +37,7 @@ cdm_dialect VARCHAR(25) NOT NULL,
 cdm_schema VARCHAR(25) NOT NULL,
 ohdsi_schema VARCHAR(25) NOT NULL,
 cohort_schema VARCHAR(25) NOT NULL,
+achilles_data_dir VARCHAR(250),
 created DATE default CURRENT_TIMESTAMP(),
 PRIMARY KEY (id));
 --PUBLIC.
