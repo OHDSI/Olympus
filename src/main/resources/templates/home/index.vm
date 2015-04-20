@@ -26,14 +26,17 @@ body {
 							<div class="jumbotron">
 								<h2 style="font-family: 'Julius Sans One', sans-serif;font-size:60px">$appName <p class="sub-text">$appMessage</p></h2>
 								#if (!$webapi.isRunning())
-									The WebAPI server isn't running. Visit the <a href="/webapi/config.html">Configuration</a> page to start it.
+									The Local WebAPI server isn't running. Visit the <a href="/webapi/config.html">Configuration</a> page to configure and/or start it.
+								#end
+								#if($webapi.hasRemotes())
+								    There are remote WebAPIs configured.  Applications that support toggling between WebAPIs will allow you to use these via the gear/settings.
 								#end
 							</div>
 						</div>
 						<div class="col-md-1"></div>
 					</div>
 
-					#if ($webapi.isRunning() && $req.userPrincipal)
+					#if ($req.userPrincipal && ($webapi.isRunning() || $webapi.hasRemotes()))
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
 							<div class="row" style="

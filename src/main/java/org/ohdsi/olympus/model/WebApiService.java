@@ -1,5 +1,8 @@
 package org.ohdsi.olympus.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PreDestroy;
 
 import org.apache.commons.lang.StringUtils;
@@ -14,6 +17,8 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerInitial
 import org.springframework.context.ApplicationListener;
 import org.springframework.util.Assert;
 
+import com.google.common.collect.Lists;
+
 /**
  *
  */
@@ -25,6 +30,8 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
     
     private final WebApiPropertiesRepository repo;
     
+    private final WebApiRemoteRepository remotesRepo;
+    
     private final boolean isWebApiLaunchEnabled;
     
     @Autowired
@@ -33,10 +40,16 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
     /**
      * @param ctx
      */
-    public WebApiService(final boolean isWebApiLaunchEnabled, final WebAppContext ctx, final WebApiPropertiesRepository repo) {
+    public WebApiService(final boolean isWebApiLaunchEnabled, final WebAppContext ctx,
+        final WebApiPropertiesRepository repo, final WebApiRemoteRepository remotesRepo) {
         this.context = ctx;
         this.repo = repo;
         this.isWebApiLaunchEnabled = isWebApiLaunchEnabled;
+        this.remotesRepo = remotesRepo;
+    }
+    
+    public boolean hasRemotes() {
+        return Lists.newArrayList(this.remotesRepo.findAll()).size() > 0;
     }
     
     /**
@@ -226,6 +239,27 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
     private void removeHandler() {
         log.info("Removing handler");
         this.contextHandlerCollection.removeHandler(this.context);
+    }
+    
+    /**
+     * Returns a list of Remote WebAPIs and Local (if configured), with Local first.
+     * 
+     * @return
+     */
+    public List<WebApiRemote> getWebApis() {
+        List<WebApiRemote> webApis = new ArrayList<WebApiRemote>();
+        if(isRunning()){
+            webApis.add(new WebApiRemote("Local", WebApiProperties.LOCAL_WEBAPI));
+        }
+        webApis.addAll(Lists.newArrayList(this.remotesRepo.findAll()));
+        return webApis;
+    }
+    
+    /**
+     * Return all Remote WebApis.
+     */
+    public List<WebApiRemote> getRemotes() {
+        return Lists.newArrayList(this.remotesRepo.findAll());
     }
     
 }

@@ -13,6 +13,7 @@ import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.ohdsi.olympus.controller.validator.WebApiPropertiesValidator;
 import org.ohdsi.olympus.model.WebApiPropertiesRepository;
+import org.ohdsi.olympus.model.WebApiRemoteRepository;
 import org.ohdsi.olympus.model.WebApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -84,8 +85,8 @@ public class WebApiConfig {
     
     @Bean
     public WebApiService webApi(@Value("${olympus.webapi.launch.enabled}") final boolean isWebApiLaunchEnabled,
-                                final WebAppContext ctx, final WebApiPropertiesRepository repo) {
-        return new WebApiService(isWebApiLaunchEnabled, ctx, repo);
+                                final WebAppContext ctx, final WebApiPropertiesRepository repo, final WebApiRemoteRepository remotesRepo) {
+        return new WebApiService(isWebApiLaunchEnabled, ctx, repo, remotesRepo);
     }
     
     /*if (container instanceof TomcatEmbeddedServletContainer) {

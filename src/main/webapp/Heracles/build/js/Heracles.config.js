@@ -20,7 +20,8 @@ var ohdsi_services;/* = [
 (function($) {
 $.ajax({
 	type: "GET",
-	url: "http://localhost:20000/webapi/remote",
+	url: "http://localhost:20000/webapi",
+	async: false,//synch requests trigger 'Synchronous XMLHttpRequest on the main thread is deprecated'. A better way? 
 	success: function (data) {
 		console.log(data);
 		ohdsi_services = data;
@@ -31,6 +32,7 @@ $.ajax({
 
 function getWebApiUrl() {
     if (!current_ohdsi_service) {
+    	console.log("accessing");
         current_ohdsi_service = ohdsi_services[0];
     }
     return current_ohdsi_service.url;

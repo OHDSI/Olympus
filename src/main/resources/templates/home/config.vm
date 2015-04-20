@@ -22,7 +22,8 @@
 			</form>
 		</div>
         #end
-        
+        <div class="container">
+              <h2>Remote WebAPIs</h2>
               <form class="form-horizontal" target="_self" enctype="application/x-www-form-urlencoded" action="/webapi/remote" method="post">
                #springBind("remote")
                
@@ -46,8 +47,10 @@
                 	<input type="hidden" name="$_csrf.parameterName" value="$_csrf.token"/>
                     <button id="submitRemote" class="btn btn-success" type="submit">Add Remote WebApi</button>
                 </div>
-            </form> 
-            #if(${remotes})
+            </form>
+       </div>
+            #if($webapi.hasRemotes())
+      <div class="container">
       <div class="table-responsive">          
       <table class="table">
         <thead>
@@ -65,7 +68,10 @@
         </tbody>
         </table>
        </div>
+       </div>
             #end      
+            <div class="container">
+            <h2>Local WebAPI</h2>
             <form class="form-horizontal" target="_self" enctype="application/x-www-form-urlencoded" action="/webapi/config" method="post">
                #springBind("config")
                
@@ -211,6 +217,7 @@
                     <button id="submitButton" class="btn btn-success" type="submit">Submit Properties</button>
                 </div>
             </form>
+            </div>
         </div>
     </div>
 </div>

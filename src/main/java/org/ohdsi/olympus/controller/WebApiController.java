@@ -1,6 +1,5 @@
 package org.ohdsi.olympus.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -22,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -35,7 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-@RequestMapping("/webapi/")
+@RequestMapping("/webapi")
 public class WebApiController {
     
     private static final Log log = LogFactory.getLog(WebApiController.class);
@@ -73,13 +73,13 @@ public class WebApiController {
     @Autowired
     private Validator webApiPropertiesValidator;
     
-    @ModelAttribute(value="remotes")
-    public Iterable<WebApiRemote> getRemotes() {
-        return this.remoteRepo.findAll();
+    @ModelAttribute(value = "remotes")
+    public List<WebApiRemote> getRemotes() {
+        return this.webApi.getRemotes();
     }
     
-    @ModelAttribute(value=CONFIG_MODEL_ATTR)
-    public WebApiProperties getWebApiProperties(){
+    @ModelAttribute(value = CONFIG_MODEL_ATTR)
+    public WebApiProperties getWebApiProperties() {
         return this.webApi.getProperties();
     }
     
@@ -88,21 +88,16 @@ public class WebApiController {
         binder.setValidator(this.webApiPropertiesValidator);
     }
     
-    @RequestMapping(value = "remote", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public HttpEntity<List<WebApiRemote>> remotes() {
-        
-        List<WebApiRemote> webApis = new ArrayList<WebApiRemote>();
-        webApis.add(new WebApiRemote("MyFirst", "http://bogus"));
-        webApis.add(new WebApiRemote("MySecond", "http://second"));
-        return new ResponseEntity<List<WebApiRemote>>(webApis, HttpStatus.OK);
+    public HttpEntity<List<WebApiRemote>> webApis() {
+        return new ResponseEntity<List<WebApiRemote>>(this.webApi.getWebApis(), HttpStatus.OK);
     }
     
-    @RequestMapping(value = CONFIG_MODEL_ATTR)
+    @RequestMapping(value = "/" + CONFIG_MODEL_ATTR)
     public ModelAndView handleConfigurationRequest(String errorMsg) throws Exception {
         log.debug("Get config");
         ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
-//        modelAndView.addObject(CONFIG_MODEL_ATTR, getWebApiProperties());
         modelAndView.addObject(REMOTE_MODEL_ATTR, new WebApiRemote());
         if (errorMsg != null) {
             modelAndView.addObject("errorMsg", errorMsg);
@@ -110,14 +105,22 @@ public class WebApiController {
         return modelAndView;
     }
     
-    @RequestMapping(value = REMOTE_MODEL_ATTR, method = RequestMethod.POST)
+    @RequestMapping(value = "/" + REMOTE_MODEL_ATTR, method = RequestMethod.POST)
     public ModelAndView handleConfigurationSubmission(@Valid @ModelAttribute(REMOTE_MODEL_ATTR) WebApiRemote remote,
                                                       BindingResult result) throws Exception {
-        if (result.hasErrors()) {
-            log.info("Has Errors: " + result);
+        if (result.hasErrors() || isDuplicate(remote, getRemotes()) || remote.getName().equalsIgnoreCase("local")) {
             ModelAndView view = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
             view.addObject(CONFIG_MODEL_ATTR, getWebApiProperties());
             view.addObject(REMOTE_MODEL_ATTR, remote);
+            if (!result.hasErrors()) {
+                //duplicate or "local" reserved name
+                if (remote.getName().equalsIgnoreCase("local")) {
+                    result.addError(new FieldError("remote", "name", "'Local' is reserved"));
+                } else {
+                    result.addError(new FieldError("remote", "name", "Name must be unique"));
+                }
+            }
+            log.info("Has Errors: " + result);
             view.addObject("errors", result);
             return view;
         }
@@ -126,7 +129,6 @@ public class WebApiController {
         remote = this.remoteRepo.save(remote);
         String msg = "Saved WebApi Remote";
         log.info(msg);
-    
         
         ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
         modelAndView.addObject(CONFIG_MODEL_ATTR, getWebApiProperties());
@@ -136,7 +138,7 @@ public class WebApiController {
         return modelAndView;
     }
     
-    @RequestMapping(value = CONFIG_MODEL_ATTR, method = RequestMethod.POST)
+    @RequestMapping(value = "/" + CONFIG_MODEL_ATTR, method = RequestMethod.POST)
     public ModelAndView handleConfigurationSubmission(@Valid @ModelAttribute(CONFIG_MODEL_ATTR) WebApiProperties props,
                                                       BindingResult result) throws Exception {
         if (result.hasErrors()) {
@@ -163,7 +165,7 @@ public class WebApiController {
         return modelAndView;
     }
     
-    @RequestMapping(value = "request-start", method = RequestMethod.POST)
+    @RequestMapping(value = "/request-start", method = RequestMethod.POST)
     public ModelAndView handleStartSubmission() throws Exception {
         String errorMsg = null;
         try {
@@ -181,17 +183,26 @@ public class WebApiController {
         
     }
     
-    @RequestMapping(value = "stop", method = RequestMethod.POST)
+    @RequestMapping(value = "/stop", method = RequestMethod.POST)
     public ResponseEntity stop() throws Exception {
         this.webApi.stop();
         return new ResponseEntity<String>("WebApi stopped", HttpStatus.OK);
     }
     
-    @RequestMapping(value = "start", method = RequestMethod.POST)
+    @RequestMapping(value = "/start", method = RequestMethod.POST)
     public ResponseEntity start() throws Exception {
         
         this.webApi.start();
         return new ResponseEntity<String>("WebApi started", HttpStatus.OK);
+    }
+    
+    private boolean isDuplicate(WebApiRemote remote, Iterable<WebApiRemote> remotes) {
+        for (WebApiRemote r : remotes) {
+            if (remote.getName().equalsIgnoreCase(r.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
     /*    @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

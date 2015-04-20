@@ -16,7 +16,7 @@
 			<ul class="nav navbar-nav">
 				<li #if ($activeLink == "index") class="active" #end><a href="/index.html">Home</a></li>
 
-			#if ($webapi.isRunning() && $req.userPrincipal && $activeLink == "index")
+			#if ($req.userPrincipal && $activeLink == "index" && ($webapi.isRunning() || $webapi.hasRemotes()))
 				 #if($req.isUserInRole("JOB_VIEWER")) <li><a class="launch-apps-link" href="#jobviewer" data-toggle="tab" id="jobviewer-link">Job Viewer</a></li> #end
 			    <li class="dropdown">
 			      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="apps-label">Apps<span class="caret"></span></a>
