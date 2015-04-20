@@ -53,7 +53,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
                 $scope.refreshCommonData = function(){
                     if ($scope.active === "dashboard" || $scope.active === "person") {
-                        $.getJSON(getWebApiUrl() + "/cohortresults/" + $scope.cohort.id + "/raw/person/population", function (data) {
+                        $.getJSON(getWebApiUrl() + "cohortresults/" + $scope.cohort.id + "/raw/person/population", function (data) {
                             var summary = {};
                             $.each(data, function () {
                                 if (this.ATTRIBUTE_NAME.toLowerCase() === "source name") {
@@ -155,7 +155,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                         if (lastWebApi) {
                             setSelectedWebApiUrl(+lastWebApi);
                         }
-                        $http.get(getWebApiUrl() + '/cohortdefinition/' + param).
+                        $http.get(getWebApiUrl() + 'cohortdefinition/' + param).
                             success(function(data, status, headers, config) {
                                 if (data) {
                                     $scope.setupAndDisplayCohort(data, false);

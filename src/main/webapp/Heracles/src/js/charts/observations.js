@@ -9,7 +9,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             d3.selectAll("svg").remove();
 
             var id = cohort.id;
-            this.baseUrl = getWebApiUrl() + '/cohortresults/' + id;
+            this.baseUrl = getWebApiUrl() + 'cohortresults/' + id;
 
             var threshold;
             var datatable;
@@ -245,26 +245,26 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             var obsValueDist = common.normalizeArray(data.observationValueDistribution);
                             if (!obsValueDist.empty) {
                                 var observationValues = new jnj_chart.boxplot();
-                                bpseries = [];
-                                bpdata = common.normalizeDataframe(obsValueDist);
+                                var obpseries = [];
+                                obpdata = common.normalizeDataframe(obsValueDist);
 
-                                bpseries = bpdata.category.map(function (d, i) {
+                                obpseries = obpdata.category.map(function (d, i) {
                                     var item =
                                     {
-                                        Category: bpdata.category[i],
-                                        min: bpdata.minValue[i],
-                                        max: bpdata.maxValue[i],
-                                        median: bpdata.medianValue[i],
-                                        LIF: bpdata.p10Value[i],
-                                        q1: bpdata.p25Value[i],
-                                        q3: bpdata.p75Value[i],
-                                        UIF: bpdata.p90Value[i]
+                                        Category: obpdata.category[i],
+                                        min: obpdata.minValue[i],
+                                        max: obpdata.maxValue[i],
+                                        median: obpdata.medianValue[i],
+                                        LIF: obpdata.p10Value[i],
+                                        q1: obpdata.p25Value[i],
+                                        q3: obpdata.p75Value[i],
+                                        UIF: obpdata.p90Value[i]
                                     };
                                     return item;
-                                }, bpdata);
+                                }, obpdata);
 
-                                observationValues.render(bpseries, "#observationValues", 500, 300, {
-                                    yMax: d3.max(bpdata.p90Value) || bpdata.p90Value, // handle when dataframe is not array of values
+                                observationValues.render(obpseries, "#observationValues", 500, 300, {
+                                    yMax: d3.max(obpdata.p90Value) || obpdata.p90Value, // handle when dataframe is not array of values
                                     xLabel: 'Unit',
                                     yLabel: 'Observation Value'
                                 });

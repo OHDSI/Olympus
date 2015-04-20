@@ -48,9 +48,9 @@ module.exports = function(grunt) {
                     'build/css/<%= pkg.name %>.min.css' : ['src/css/heracles.css']
                 }
             }
-        },
-        initwebapi : {
         }
+        //initwebapi : {
+        //}
     });
 
 
@@ -60,21 +60,21 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-    // reads the web api property and loads into the config
-    grunt.registerTask("initwebapi", "Initializes the web api configuration", function() {
-        grunt.log.writeln('The webapi property is: ' + grunt.config('pkg.web_api_url') + '. Set this in your package.json before running this task.');
-        var out = 'build/js/' + grunt.config('pkg.name') + '.config.js';
-
-        var contents = "function getWebApiUrl() { " +
-            "return '" + grunt.config('pkg.web_api_url')  + "';" +
-            " }";
-
-        grunt.file.write( out, contents );
-    });
+    //// reads the web api property and loads into the config
+    //grunt.registerTask("initwebapi", "Initializes the web api configuration", function() {
+    //    grunt.log.writeln('The webapi property is: ' + grunt.config('pkg.web_api_url') + '. Set this in your package.json before running this task.');
+    //    var out = 'build/js/' + grunt.config('pkg.name') + '.config.js';
+    //
+    //    var contents = "function getWebApiUrl() { " +
+    //        "return '" + grunt.config('pkg.web_api_url')  + "';" +
+    //        " }";
+    //
+    //    grunt.file.write( out, contents );
+    //});
 
 
     // Default task(s).
-    grunt.registerTask('default', ['jshint', 'cssmin', 'initwebapi']);
+    grunt.registerTask('default', ['jshint', 'cssmin']);
 
 
 };

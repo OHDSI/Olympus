@@ -1,10 +1,8 @@
-
-
 var current_ohdsi_service;
-var ohdsi_services;/* = [
+var ohdsi_services;/*Olympus = [
     {
         name: 'Local',    
-        url: 'http://localhost:20000/WebAPI'
+        url: 'http://localhost:8080/WebAPI/'
     },
     //{
     //    name: 'Public',
@@ -12,11 +10,14 @@ var ohdsi_services;/* = [
     //},
     {
         name: 'Public',
-        url: 'http://api.ohdsi.org:80/WebAPI'
+        url: 'http://api.ohdsi.org:80/WebAPI/'
     }
+    //{
+    //    name: 'NLP01',
+    //    url: 'https://nlp01.regenstrief.org:8443/WebAPI'
+    //}
 ];*/
-
-//
+//Olympus
 (function($) {
 $.ajax({
 	type: "GET",
@@ -30,9 +31,9 @@ $.ajax({
 })(jQuery);
 //
 
+
 function getWebApiUrl() {
     if (!current_ohdsi_service) {
-    	console.log("accessing");
         current_ohdsi_service = ohdsi_services[0];
     }
     return current_ohdsi_service.url;
@@ -57,4 +58,8 @@ function setSelectedWebApiUrl(idx) {
         current_ohdsi_service = ohdsi_services[idx];
     }
     console.log('webapi reset to ' + current_ohdsi_service.name);
+}
+
+function getAllOhdsiServices() {
+    return ohdsi_services;
 }

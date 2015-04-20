@@ -9,7 +9,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
 
     CohortSpecificRenderer.render = function(cohort) {
         var id = cohort.id;
-        this.baseUrl = getWebApiUrl() + '/cohortresults/' + id;
+        this.baseUrl = getWebApiUrl() + 'cohortresults/' + id;
         d3.selectAll("svg").remove();
 
         $('#loading-text').text("Querying Database...");
@@ -142,15 +142,15 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
             // persons in cohort from start to end
             var personsInCohortFromCohortStartToEnd = common.normalizeArray(data.personsInCohortFromCohortStartToEnd);
             if (!personsInCohortFromCohortStartToEnd.empty) {
-                var byMonthSeries = common.map30DayDataToSeries(personsInCohortFromCohortStartToEnd, {
+                var personsInCohortFromCohortStartToEndSeries = common.map30DayDataToSeries(personsInCohortFromCohortStartToEnd, {
                     dateField: 'monthYear',
                     yValue: 'countValue',
                     yPercent: 'percentValue'
                 });
                 d3.selectAll("#personinCohortFromStartToEnd svg").remove();
                 var observationByMonthSingle = new jnj_chart.line();
-                observationByMonthSingle.render(byMonthSeries, "#personinCohortFromStartToEnd", 900, 250, {
-                    xScale: d3.time.scale().domain(d3.extent(byMonthSeries[0].values, function (d) {
+                observationByMonthSingle.render(personsInCohortFromCohortStartToEndSeries, "#personinCohortFromStartToEnd", 900, 250, {
+                    xScale: d3.time.scale().domain(d3.extent(personsInCohortFromCohortStartToEndSeries[0].values, function (d) {
                         return d.xValue;
                     })),
                     xLabel: "30 Day Increments",

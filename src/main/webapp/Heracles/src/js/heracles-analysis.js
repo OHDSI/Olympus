@@ -181,7 +181,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     if (lastWebApi) {
                         setSelectedWebApiUrl(+lastWebApi);
                     }
-                    $http.get(getWebApiUrl() + "/cohortanalysis/" + datum.id + "/summary")
+                    $http.get(getWebApiUrl() + "cohortanalysis/" + datum.id + "/summary")
                         .success(function(data, status, headers, config) {
                             $scope.cohort = data;
 
@@ -240,11 +240,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     if ($scope.selected) {
                         link.text("Refreshing...");
                         link.prop('disabled', true);
-                        $("input:checkbox").prop("checked", false);
-                        $(".toggle-filter-input").val("");
-                        $("#auto-filter-input").val("");
-                        $("#auto-filter-div").find("label").show();
-                        $scope.analysisCount = 0;
+                        $scope.refreshUI();
                         $scope.showCohort($scope.selected);
                         setTimeout(function() {
                             link.text("Refresh");
@@ -252,6 +248,14 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                         }, 1500);
                     }
                 };
+
+                $scope.refreshUI = function() {
+                    $("input:checkbox").prop("checked", false);
+                    $(".toggle-filter-input").val("");
+                    $("#auto-filter-input").val("");
+                    $("#auto-filter-div").find("label").show();
+                    $scope.analysisCount = 0;
+                }
 
                 $scope.selectVizPack = function($event, vizType) {
                     var checked = $(".viz-pack-checkbox[viz-type='" + vizType + "'").is(":checked");
@@ -331,7 +335,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
                 $scope.runOnlyNewJobs = function() {
                     if ($scope.selectedJob.newJobs) {
-                        if ($scope.selectedJob.newJobs.length == 0) {
+                        if ($scope.selectedJob.newJobs.length === 0) {
                             $scope.selectedJob = {};
                             $("#alreadyRanJobsModal").modal("hide");
 
@@ -405,9 +409,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     var btn = $("#btnSubmitJob");
                     btn.button('loading');
                     var d = new Date(),
-                        jobName = (d.getMonth() + 1) + '-' + d.getDate() + '-' + d.getFullYear()
-                            + '_' + d.getHours() + d.getMinutes() + '_'
-                            + ($scope.cohort.cohortDefinition.name.split(' ').join('_'));
+                        jobName = (d.getMonth() + 1) + '-' + d.getDate() + '-' + d.getFullYear() + '_' + d.getHours() + d.getMinutes() + '_' + ($scope.cohort.cohortDefinition.name.split(' ').join('_'));
                     $scope.jobName = jobName;
                     $scope.job.job_link = null;
                     $scope.job.label = "Submitting...";
@@ -447,7 +449,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     console.log("Submitting to cohort analysis service:");
                     console.log(cohortJob);
 
-                    $http.post(getWebApiUrl() + "/cohortanalysis", cohortJob).
+                    $http.post(getWebApiUrl() + "cohortanalysis", cohortJob).
                         success(function(data, status, headers, config) {
                             btn.button('reset');
                             showJobResultModal(true, data, status, headers, config);
@@ -465,7 +467,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                        $scope.job.label = "Success";
                        $scope.job.message = "Your job, " + $scope.jobName + ", was submitted successfully!";
                         if (data.jobInstance) {
-                            $scope.job.job_link = getWebApiUrl() + "/job/" + data.jobInstance.instanceId +
+                            $scope.job.job_link = getWebApiUrl() + "job/" + data.jobInstance.instanceId +
                                 "/execution/" + data.executionId;
                         }
                     } else {
@@ -481,6 +483,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                 $scope.goBack = function (evt) {
                     $("#cohort-explorer-main").slideUp("fast", function () {
                         $("#header").slideDown('fast', function () {
+                            $scope.refreshUI();
                             $("#cohorts")
                                 .val("")
                                 .focus();

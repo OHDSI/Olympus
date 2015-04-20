@@ -9,7 +9,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
 
     DashboardRenderer.render = function(cohort) {
         var id = cohort.id;
-        this.baseUrl = getWebApiUrl() + '/cohortresults/' + id;
+        this.baseUrl = getWebApiUrl() + 'cohortresults/' + id;
         d3.selectAll("svg").remove();
 
         $('#loading-text').text("Querying Database...");
