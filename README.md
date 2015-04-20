@@ -7,11 +7,11 @@ OLYMPUS (OHDSI Loaded on Your Computers to Perform Ultimate Science) is a packag
 
 OLYMPUS is a project as part of the Observational Health Data Sciences and Informatics (OHDSI, http://ohdsi.org) collaboration.
 
-##### Planned Features
+##### Features
 * Unified installation of the WebAPI server and a set of OHDSI applications
 * A dashboard for app launching
 * A configuration page for setting up WebAPI
-* A job server for managing long-running jobs
+* A job viewer 
 * Security
 
 ##### Technology
@@ -21,14 +21,12 @@ OLYMPUS is a project as part of the Observational Health Data Sciences and Infor
 * HTML5 / JS
 
 ##### System Requirements
-* JRE >= 1.7 (Java 8 recommended due to a known issue with Java 7 when connected to VPNs)
+* JRE >= 1.7 (Java 8 recommended due to a known issue with Java 7 when connected to VPNs & perm gen exhaustion)
 
 ##### Dependencies
 * OMOP V5 CDM running an OHDSI supported dialect
 
 ##### Getting Started
-* TODO
-
 
 ##### Building & Packaging
 Olympus : By default, all vendor jdbc drivers are dependencies.  If you wish to package with a single or subset, consider the vendor-specific db profiles `mvn clean package -Polympus-oracle` or package will all drivers `mvn clean package` . The default requires all dependencies to be accessible in an artifact repository.
@@ -39,16 +37,17 @@ WebAPI (package using defaults `mvn clean package`)
 - Add WebAPI.war to Olympus/src/main/webapp/WEB-INF/applications/
 
 Hermes, Circe, Heracles, Calypso, JobViewer
-- clone github repos, edit js config files that specify WebAPI location. ('http://localhost:20000/WebAPI')
+- clone github repos
 - copy each application to Olympus/src/main/webapp/ (e.g. webapp/Hermes, webapp/Heracles, etc.)
-
+- edit js config files that specify WebAPI location. (GET 'http://localhost:20000/webapi' endpoint to return array of available WebApis)
+- See the history/log of changes made to an application after cloning/copying `git log --stat -- src/main/webapp/Achilles` .  Check out changes in a commit `git show 360b14`.
 
 ##### Running Olympus
 `java -XX:MaxPermSize=128m -jar Olympus-XXX-exec.war`
+-XX:MaxPermSize only needed prior to jre 8
 
-
-##### Getting involved
-* Biweekly calls, call-in information on the Wiki
+##### TODO
+Consider maven war plugin web resources to contain modified application files (e.g. Hermes config.js, etc. and src/main/webapp/Hermes would contain unmodified source.  Likely easier to do upgrades/diffs.
 	
 ##### License
 Apache
