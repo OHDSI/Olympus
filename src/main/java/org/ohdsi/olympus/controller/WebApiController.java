@@ -1,5 +1,8 @@
 package org.ohdsi.olympus.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
@@ -8,10 +11,13 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.ohdsi.olympus.model.WebApiProperties;
 import org.ohdsi.olympus.model.WebApiPropertiesRepository;
+import org.ohdsi.olympus.model.WebApiRemote;
+import org.ohdsi.olympus.model.WebApiRemoteRepository;
 import org.ohdsi.olympus.model.WebApiService;
 import org.ohdsi.olympus.view.factory.CommonTemplateFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,6 +28,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -34,6 +41,8 @@ public class WebApiController {
     private static final Log log = LogFactory.getLog(WebApiController.class);
     
     private static final String CONFIG_MODEL_ATTR = "config";
+    
+    private static final String REMOTE_MODEL_ATTR = "remote";
     
     private static final String CONFIGURATION_TEMPLATE_NAME = "home/config";
     
@@ -53,6 +62,9 @@ public class WebApiController {
     private WebApiPropertiesRepository repo;
     
     @Autowired
+    private WebApiRemoteRepository remoteRepo;
+    
+    @Autowired
     private CommonTemplateFactory templateFactory;
     
     @Autowired
@@ -61,21 +73,67 @@ public class WebApiController {
     @Autowired
     private Validator webApiPropertiesValidator;
     
-    @InitBinder(value=CONFIG_MODEL_ATTR)
+    @ModelAttribute(value="remotes")
+    public Iterable<WebApiRemote> getRemotes() {
+        return this.remoteRepo.findAll();
+    }
+    
+    @ModelAttribute(value=CONFIG_MODEL_ATTR)
+    public WebApiProperties getWebApiProperties(){
+        return this.webApi.getProperties();
+    }
+    
+    @InitBinder(value = CONFIG_MODEL_ATTR)
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(this.webApiPropertiesValidator);
+    }
+    
+    @RequestMapping(value = "remote", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public HttpEntity<List<WebApiRemote>> remotes() {
+        
+        List<WebApiRemote> webApis = new ArrayList<WebApiRemote>();
+        webApis.add(new WebApiRemote("MyFirst", "http://bogus"));
+        webApis.add(new WebApiRemote("MySecond", "http://second"));
+        return new ResponseEntity<List<WebApiRemote>>(webApis, HttpStatus.OK);
     }
     
     @RequestMapping(value = CONFIG_MODEL_ATTR)
     public ModelAndView handleConfigurationRequest(String errorMsg) throws Exception {
         log.debug("Get config");
         ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
-        modelAndView.addObject(CONFIG_MODEL_ATTR, this.webApi.getProperties());
+//        modelAndView.addObject(CONFIG_MODEL_ATTR, getWebApiProperties());
+        modelAndView.addObject(REMOTE_MODEL_ATTR, new WebApiRemote());
         if (errorMsg != null) {
             modelAndView.addObject("errorMsg", errorMsg);
         }
         return modelAndView;
+    }
+    
+    @RequestMapping(value = REMOTE_MODEL_ATTR, method = RequestMethod.POST)
+    public ModelAndView handleConfigurationSubmission(@Valid @ModelAttribute(REMOTE_MODEL_ATTR) WebApiRemote remote,
+                                                      BindingResult result) throws Exception {
+        if (result.hasErrors()) {
+            log.info("Has Errors: " + result);
+            ModelAndView view = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
+            view.addObject(CONFIG_MODEL_ATTR, getWebApiProperties());
+            view.addObject(REMOTE_MODEL_ATTR, remote);
+            view.addObject("errors", result);
+            return view;
+        }
         
+        log.debug("Saving WebApi Remote");
+        remote = this.remoteRepo.save(remote);
+        String msg = "Saved WebApi Remote";
+        log.info(msg);
+    
+        
+        ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
+        modelAndView.addObject(CONFIG_MODEL_ATTR, getWebApiProperties());
+        modelAndView.addObject(REMOTE_MODEL_ATTR, new WebApiRemote());
+        modelAndView.addObject("remotes", getRemotes());
+        modelAndView.addObject("msg", msg);
+        return modelAndView;
     }
     
     @RequestMapping(value = CONFIG_MODEL_ATTR, method = RequestMethod.POST)
@@ -85,6 +143,7 @@ public class WebApiController {
             log.info("Has Errors: " + result);
             ModelAndView view = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
             view.addObject(CONFIG_MODEL_ATTR, props);
+            view.addObject(REMOTE_MODEL_ATTR, new WebApiRemote());
             view.addObject("errors", result);
             return view;
         }
@@ -99,6 +158,7 @@ public class WebApiController {
         
         ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
         modelAndView.addObject(CONFIG_MODEL_ATTR, props);
+        modelAndView.addObject(REMOTE_MODEL_ATTR, new WebApiRemote());
         modelAndView.addObject("msg", msg);
         return modelAndView;
     }
@@ -114,9 +174,9 @@ public class WebApiController {
             log.error(errorMsg, e);
         }
         if (errorMsg != null) {
-        	return handleConfigurationRequest(errorMsg);
+            return handleConfigurationRequest(errorMsg);
         } else {
-        	return mainController.handleIndexRequest();
+            return mainController.handleIndexRequest();
         }
         
     }

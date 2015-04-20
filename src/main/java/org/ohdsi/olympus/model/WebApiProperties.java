@@ -48,7 +48,7 @@ public class WebApiProperties {
     public static final String PROP_DATASOURCE_COHORT_SCHEMA = "datasource.cohort.schema";
     
     @Id
-    private int id = 1;
+    private int id = ID;
     
     public enum DIALECT {
         ORACLE, POSTGRESQL, SQLSERVER, SQLSERVERINTSECURITY

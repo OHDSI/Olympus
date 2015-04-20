@@ -1,5 +1,7 @@
+
+
 var current_ohdsi_service;
-var ohdsi_services = [
+var ohdsi_services;/* = [
     {
         name: 'Local',    
         url: 'http://localhost:20000/WebAPI'
@@ -12,7 +14,20 @@ var ohdsi_services = [
         name: 'Public',
         url: 'http://api.ohdsi.org:80/WebAPI'
     }
-];
+];*/
+
+//
+(function($) {
+$.ajax({
+	type: "GET",
+	url: "http://localhost:20000/webapi/remote",
+	success: function (data) {
+		console.log(data);
+		ohdsi_services = data;
+		}
+	});
+})(jQuery);
+//
 
 function getWebApiUrl() {
     if (!current_ohdsi_service) {
