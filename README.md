@@ -42,6 +42,10 @@ Hermes, Circe, Heracles, Calypso, JobViewer
 - edit js config files that specify WebAPI location. (GET 'http://localhost:20000/webapi' endpoint to return array of available WebApis)
 - See the history/log of changes made to an application after cloning/copying `git log --stat -- src/main/webapp/Achilles` .  Check out changes in a commit `git show 360b14`.
 
+Summary of changes:
+* Heracles: 1) Heracles.config.js - set ohdsi_services to array returned by Olympus. 2.) Add jquery.js import into index.html
+* Achilles (Web) - `git show 360b14` - 1.) Change ajax calls from referencing local 'data/X.json' to call Olympus endpoint that returns the json, read from a file location defined in Olympus (default /var/achilles/data).
+
 ##### Running Olympus
 `java -XX:MaxPermSize=128m -jar Olympus-XXX-exec.war`
 -XX:MaxPermSize only needed prior to jre 8
