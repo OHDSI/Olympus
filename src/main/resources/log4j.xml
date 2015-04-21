@@ -11,7 +11,7 @@
 	<logger name="org.ohdsi">
 		<level value="debug" />
 	</logger>
-	<logger name="org.springframework.security">
+	<logger name="org.springframework.security.web.access.ExceptionTranslationFilter">
 		<level value="debug" />
 	</logger>
 	<root>
