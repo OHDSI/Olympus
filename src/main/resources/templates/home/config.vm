@@ -31,7 +31,7 @@
                 <div class="form-group #if(${status.error})has-error#end">
                     <label for="cdmJdbc" class="col-sm-3 control-label">Remote Name</label>
                     <div class="col-sm-9">
-                    	#springFormInput("remote.name" "class='form-control' placeholder='public WebApi'")
+                    	#springFormInput("remote.name" "class='form-control' placeholder='Public WebAPI'")
 						#springShowErrors("<br/>" "")
                     </div>
                 </div>      
@@ -39,7 +39,7 @@
                 <div class="form-group #if(${status.error})has-error#end">
                     <label for="cdmJdbc" class="col-sm-3 control-label">Remote Url</label>
                     <div class="col-sm-9">
-                    	#springFormInput("remote.url" "class='form-control' placeholder='http://webapi.ohdsi.org'")
+                    	#springFormInput("remote.url" "class='form-control' placeholder='http://api.ohdsi.org/WebAPI'")
 						#springShowErrors("<br/>" "")
                     </div>
                 </div>    
@@ -77,7 +77,7 @@
                
                #springBind("config.cdmDialect")
                 <div class="form-group #if(${status.error})has-error#end">
-                    <label for="cdmJdbc" class="col-sm-3 control-label">CDM DataSource Dialect</label>
+                    <label for="cdmJdbc" class="col-sm-3 control-label">SQL Dialect</label>
                     <div class="col-sm-9">
                     	#springFormSingleSelect("config.cdmDialect", $config.dialectOptions)
                     	#springShowErrors("<br/>" "")
@@ -96,7 +96,7 @@
                 
                 #springBind("config.jdbcIpAddress")
                 <div class="form-group #if(${status.error})has-error#end">
-                    <label for="cdmJdbc" class="col-sm-3 control-label">CDM DataSource IP Address</label>
+                    <label for="cdmJdbc" class="col-sm-3 control-label">Host Server</label>
                     <div class="col-sm-9">
                     	#springFormInput("config.jdbcIpAddress" "class='form-control'")
 						#springShowErrors("<br/>" "")
@@ -104,7 +104,7 @@
                 </div>
 				#springBind("config.jdbcPort")
                 <div class="form-group #if(${status.error})has-error#end">
-                    <label for="cdmJdbc" class="col-sm-3 control-label">CDM DataSource Port</label>
+                    <label for="cdmJdbc" class="col-sm-3 control-label">Host Port</label>
                     <div class="col-sm-9">
                     	#springFormInput("config.jdbcPort" "class='form-control'")
 						#springShowErrors("<br/>" "")
@@ -112,7 +112,7 @@
                 </div>            
 				#springBind("config.cdmDataSourceSid")
                 <div class="form-group #if(${status.error})has-error#end">
-                    <label for="cdmJdbc" class="col-sm-3 control-label">CDM DataSource SID/Service Name</label>
+                    <label for="cdmJdbc" class="col-sm-3 control-label">SID/Service Name</label>
                     <div class="col-sm-9">
                     	#springFormInput("config.cdmDataSourceSid" "class='form-control'")
 						#springShowErrors("<br/>" "")
@@ -120,7 +120,7 @@
                 </div>      
                 #springBind("config.jdbcUser")
                 <div class="form-group #if(${status.error})has-error#end">
-                    <label for="cdmUsername" class="col-sm-3 control-label">CDM Username</label>
+                    <label for="cdmUsername" class="col-sm-3 control-label">Username</label>
                     <div class="col-sm-9">
                     	#springFormInput("config.jdbcUser" 'class="form-control" placeholder="Username" required')
                     	#springShowErrors("<br/>" "")
@@ -128,7 +128,7 @@
                 </div>
                 #springBind("config.jdbcPass")
                 <div class="form-group #if(${status.error})has-error#end">
-                    <label for="cdmPassword" class="col-sm-3 control-label">CDM Password</label>
+                    <label for="cdmPassword" class="col-sm-3 control-label">Password</label>
                     <div class="col-sm-9">
                     	#springFormPasswordInput("config.jdbcPass" 'class="form-control" placeholder="Password"')
                     	#springShowErrors("<br/>" "")
@@ -139,23 +139,23 @@
                 <div class="form-group #if(${status.error})has-error#end">
                     <label for="cdmSchema" class="col-sm-3 control-label">CDM Schema</label>
                     <div class="col-sm-9">
-                    	#springFormInput("config.cdmSchema" 'class="form-control" placeholder="CDM schema"')
+                    	#springFormInput("config.cdmSchema" 'class="form-control" placeholder="CDM"')
                     	#springShowErrors("<br/>" "")
                     </div>
                 </div>
                 #springBind("config.ohdsiSchema")
                 <div class="form-group #if(${status.error})has-error#end">
-                    <label for="cdmResultsSchema" class="col-sm-3 control-label">CDM Results Schema</label>
+                    <label for="cdmResultsSchema" class="col-sm-3 control-label">Results Schema</label>
                     <div class="col-sm-9">
-                        #springFormInput("config.ohdsiSchema" 'class="form-control" placeholder="Ohdsi/Results Schema"')
+                        #springFormInput("config.ohdsiSchema" 'class="form-control" placeholder="OHDSI"')
                         #springShowErrors("<br/>" "")
                     </div>
                 </div>
                 #springBind("config.cohortSchema")
                 <div class="form-group #if(${status.error})has-error#end">
-                    <label for="cdmCohortSchema" class="col-sm-3 control-label">CDM Cohort Schema</label>
+                    <label for="cdmCohortSchema" class="col-sm-3 control-label">Cohort Schema</label>
                     <div class="col-sm-9">
-                        #springFormInput("config.cohortSchema" 'class="form-control" placeholder="Cohort Schema"')
+                        #springFormInput("config.cohortSchema" 'class="form-control" placeholder="CDM"')
                         #springShowErrors("<br/>" "")
                     </div>
                 </div>
@@ -214,7 +214,7 @@
 </div>              
                 <div class="form-group pull-right">
                 	<input type="hidden" name="$_csrf.parameterName" value="$_csrf.token"/>
-                    <button id="submitButton" class="btn btn-success" type="submit">Submit Properties</button>
+                    <button id="submitButton" class="btn btn-success" type="submit">Save Configuration</button>
                 </div>
             </form>
             </div>
