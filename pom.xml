@@ -9,7 +9,7 @@
 	<version>1.0.0-SNAPSHOT</version>
 
 	<name>Olympus</name>
-	<description>This is the launcher for the OHDSI suite of apps.</description>
+	<description>The OHDSI Application Launcher</description>
 	<url>http://www.ohdsi.org/</url>
 
 	<properties>
@@ -25,9 +25,7 @@
 
 		<!-- App specific properties -->
 		<application.name>Olympus</application.name>
-		<application.message>This is the launcher for the suite of apps
-			developed for use with the OMOP Common Data Model (CDM). Begin by
-			selecting an application.</application.message>
+		<application.message>The OHDSI Application Launcher</application.message>
 		<html.lang>en-US</html.lang>
 	</properties>
 	<build>

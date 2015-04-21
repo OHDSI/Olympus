@@ -34,9 +34,9 @@ $(document).ready(function() {
 	    	var lbl = $(e.target).text().trim();
 	    	// Job viewer is it's own thing
 	    	if ("Job Viewer" === lbl) {
-	    		lbl = "Apps";
+	    		lbl = "Applications";
 	    	}
-	    	$("#apps-label").html(lbl+ ' <span class="caret"></span>');
+	    	//$("#apps-label").html(lbl+ ' <span class="caret"></span>');
 	        $(paneID+" iframe").attr("src",src);
 	    }
 	    

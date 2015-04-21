@@ -18,7 +18,7 @@
  	#springBind("form.username")
     <div class="form-group #if(${status.error})has-error#end">
         <label class="col-sm-3 control-label" for="username">Username</label>
-        <div class="col-sm-9">
+        <div class="col-sm-6">
         #springFormInput("form.username" "class='form-control'")
         #springShowErrors("<br/>" "")
         </div>
@@ -26,7 +26,7 @@
      #springBind("form.password")
     <div class="form-group #if(${status.error})has-error#end">
         <label class="col-sm-3 control-label" for="password">Password</label>
-        <div class="col-sm-9">
+        <div class="col-sm-6">
         #springFormPasswordInput("form.password" "class='form-control'")
         #springShowErrors("<br/>" "")
         </div>
@@ -36,7 +36,7 @@
     <div class="form-group #if(${status.error})has-error#end">
          <label class="col-sm-3 control-label" for="roles">Roles</label>
         <div class="col-sm-9">
- 	<select multiple="multiple" name="roles">
+ 	<select multiple="multiple" name="roles" style="height:180px;">
 		#foreach($option in $roles)
 			<option value="${option}"
 			#foreach($item in $form.roles)
