@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -53,22 +55,35 @@ public class WebApiProperties {
     private int id = ID;
     
     public enum DIALECT {
-        ORACLE, POSTGRESQL, SQLSERVER, SQLSERVERINTSECURITY
+        ORACLE, POSTGRESQL, SQLSERVER, SQLSERVERINTSECURITY;
+        
+        private String value;
+        
+        static {
+            ORACLE.value = "oracle";
+            POSTGRESQL.value = "postgres";
+            SQLSERVER.value = "sql server";
+            SQLSERVERINTSECURITY.value = "sql server";
+        }
+        
+        public String getValue() {
+            return value;
+        }
     }
     
     @Transient
-    private static Map<String, String> dialectOptions;
+    private static Map<DIALECT, DIALECT> dialectOptions;
     static {
-        dialectOptions = new HashMap<String, String>();
-        dialectOptions.put(DIALECT.ORACLE.toString(), DIALECT.ORACLE.toString());
-        dialectOptions.put(DIALECT.SQLSERVER.toString(), DIALECT.SQLSERVER.toString());
-        dialectOptions.put(DIALECT.SQLSERVERINTSECURITY.toString(), DIALECT.SQLSERVERINTSECURITY.toString());
-        dialectOptions.put(DIALECT.POSTGRESQL.toString(), DIALECT.POSTGRESQL.toString());
+        dialectOptions = new HashMap<DIALECT, DIALECT>();
+        dialectOptions.put(DIALECT.ORACLE, DIALECT.ORACLE);
+        dialectOptions.put(DIALECT.SQLSERVER, DIALECT.SQLSERVER);
+        dialectOptions.put(DIALECT.SQLSERVERINTSECURITY, DIALECT.SQLSERVERINTSECURITY);
+        dialectOptions.put(DIALECT.POSTGRESQL, DIALECT.POSTGRESQL);
     }
-    
-    @NotNull
-    @Size(max = 25, min = 1)
-    private String cdmDialect;
+
+    //requires custom validation
+    @Enumerated(EnumType.STRING)
+    private DIALECT cdmDialect;
     
     @NotNull
     @Size(max = 25, min = 1)
@@ -138,28 +153,28 @@ public class WebApiProperties {
     /**
      * @return the dialectOptions
      */
-    public static Map<String, String> getDialectOptions() {
+    public static Map<DIALECT, DIALECT> getDialectOptions() {
         return dialectOptions;
     }
     
     /**
      * @param dialectOptions the dialectOptions to set
      */
-    public static void setDialectOptions(Map<String, String> dialectOptions) {
+    public static void setDialectOptions(Map<DIALECT, DIALECT> dialectOptions) {
         WebApiProperties.dialectOptions = dialectOptions;
     }
     
     /**
      * @return the cdmDialect
      */
-    public String getCdmDialect() {
+    public DIALECT getCdmDialect() {
         return cdmDialect;
     }
     
     /**
      * @param cdmDialect the cdmDialect to set
      */
-    public void setCdmDialect(String cdmDialect) {
+    public void setCdmDialect(DIALECT cdmDialect) {
         this.cdmDialect = cdmDialect;
     }
     

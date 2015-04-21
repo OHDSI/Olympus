@@ -72,20 +72,20 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
      * @param props
      */
     public static void setSystemProperties(final WebApiProperties props) {
-        String dialect = props.getCdmDialect();
+        DIALECT dialect = props.getCdmDialect();
         String flywayLocations;
         String driverClassName;
         String jdbcUrl;
         String flywayJdbcUrl;
         
-        if (DIALECT.ORACLE.toString().equals(dialect)) {
+        if (DIALECT.ORACLE.equals(dialect)) {
             driverClassName = "oracle.jdbc.OracleDriver";
             flywayLocations = "classpath:db/migration/oracle";
             jdbcUrl = String.format("jdbc:oracle:thin:@%s:%s:%s", props.getJdbcIpAddress(), props.getJdbcPort(),
                 props.getCdmDataSourceSid());
             flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayDataSourceSid()) ? jdbcUrl : String.format(
                 "jdbc:oracle:thin:@%s:%s:%s", props.getJdbcIpAddress(), props.getJdbcPort(), props.getFlywayDataSourceSid());
-        } else if (DIALECT.POSTGRESQL.toString().equals(dialect)) {
+        } else if (DIALECT.POSTGRESQL.equals(dialect)) {
             driverClassName = "org.postgresql.Driver";
             flywayLocations = "classpath:db/migration/postgresql";
             jdbcUrl = String.format("jdbc:postgresql://%s:%s/%s", props.getJdbcIpAddress(), props.getJdbcPort(),
@@ -95,7 +95,7 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
         } else {
             //sql server
             boolean isIntegratedSecurityOption = false;
-            if (DIALECT.SQLSERVERINTSECURITY.toString().equals(dialect)) {
+            if (DIALECT.SQLSERVERINTSECURITY.equals(dialect)) {
                 isIntegratedSecurityOption = true;
             }
             driverClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -126,7 +126,7 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
         setProperty(WebApiProperties.PROP_FLYWAY_DATASOURCE_PASSWORD, flywayPass);
         setProperty(WebApiProperties.PROP_FLYWAY_SCHEMAS, flywaySchemas);
         setProperty(WebApiProperties.PROP_FLYWAY_LOCATIONS, flywayLocations);
-        setProperty(WebApiProperties.PROP_DATASOURCE_DIALECT, props.getCdmDialect());
+        setProperty(WebApiProperties.PROP_DATASOURCE_DIALECT, props.getCdmDialect().getValue());
         setProperty(WebApiProperties.PROP_DATASOURCE_CDM_SCHEMA, props.getCdmSchema());
         setProperty(WebApiProperties.PROP_DATASOURCE_OHDSI_SCHEMA, props.getOhdsiSchema());
         setProperty(WebApiProperties.PROP_DATASOURCE_COHORT_SCHEMA, props.getCohortSchema());

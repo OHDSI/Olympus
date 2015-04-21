@@ -55,10 +55,10 @@ public class WebApiPropertiesValidator implements Validator {
         
         log.debug("custom validation");
         WebApiProperties props = (WebApiProperties) target;
-        String dialect = props.getCdmDialect();
+        DIALECT dialect = props.getCdmDialect();
         
         boolean isIntegratedSecurityOption = false;
-        if (DIALECT.SQLSERVERINTSECURITY.toString().equals(dialect)||DIALECT.SQLSERVER.toString().equals(dialect)) {
+        if (DIALECT.SQLSERVERINTSECURITY.equals(dialect)||DIALECT.SQLSERVER.equals(dialect)) {
             isIntegratedSecurityOption = true;
         }
 
