@@ -1,3 +1,5 @@
+body { padding-top: 70px; }
+
 .inputField
 {
 	background-color: #eee;
@@ -30,4 +32,63 @@ img.spin {
     to {
         -webkit-transform: rotate(359deg);
     }
+}
+
+#topnavigation .input-group {
+	margin-top: 8px;
+}
+
+#topnavigation .glyphicon-cog {
+	color: #4AC3FF;
+}
+
+#topnavigation .glyphicon-cog.warning {
+	color: rgb(255, 68, 0);
+}
+
+.service-name {
+	font-weight: bold;
+}
+
+.service-name .glyphicon-ok-sign {
+	color: #4AC3FF;
+}
+
+.service-name .glyphicon-ok-sign.warning {
+	color: rgb(255, 68, 0);
+}
+
+.warning {
+	color: rgb(255, 68, 0);
+}
+
+.service-info {
+	color: #888;
+	font-size: .8em;
+}
+
+tr .glyphicon-ok-sign {
+	color: #ccc;
+	cursor: pointer;
+}
+
+tr.selected .glyphicon-ok-sign {
+	color: #4AC3FF;
+}
+
+.glyphicon-ok-sign.selected {
+	color: #4AC3FF;
+}
+
+.glyphicon-ok {
+	cursor: pointer;
+	color: #ccc;
+}
+
+.glyphicon-ok.selected {
+	color: #4AC3FF;
+}
+
+.active .glyphicon {
+	color: #4AC3FF;
 }

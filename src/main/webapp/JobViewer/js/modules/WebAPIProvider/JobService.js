@@ -13,14 +13,14 @@ define(function (require, exports) {
 	
 	function getJobNames() {
 		var promise = $.ajax({
-			url: config.webAPIRoot + 'job'
+			url: ohdsi_service + 'job'
 		});
 		return promise;
 	}
 	
 	function getJobExecutions() {
 		var promise = $.ajax({
-			url: config.webAPIRoot + 'job/execution?comprehensivePage=true'
+			url: ohdsi_service + 'job/execution?comprehensivePage=true'
 		});
 		return promise;
 	}

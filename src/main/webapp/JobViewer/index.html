@@ -10,40 +10,44 @@
 <link rel="stylesheet" href="css/ohdsi.boostrap.css" />
 <link rel="stylesheet" href="css/ohdsi.css" />
 
+<!-- Random Bootstrap needs jquery exception - revisit require.js 2 and dependencies -->
+<script src="js/jquery-1.11.1.min.js"></script>
+
 <script src="js/require.js"></script>
 <script src="js/main.js"></script>
 </head>
 
 <body>
-	<table>
-		<tr>
-			<td style="padding: 3px"><img src="images/ohdsi_logo.png"
-				alt="OHDSI"></td>
-			<td style="padding: 3px">
-				<div
-					style="font-family: Arial; font-size: 18px; color: #777; line-height: 18px">JobViewer</div>
-			</td>
-		</tr>
-	</table>
-<!-- 
-	<div id="wrapper" class="container">
-		<div id="table1" class="container">
-			<table id="jobNames" class="display" cellspacing="0" width="100%">
-				<thead>
-					<tr>
-						<th>NAME</th>
-					</tr>
-				</thead>
 
-				<tfoot>
-					<tr>
-						<th>NAME</th>
-					</tr>
-				</tfoot>
-			</table>
+	<nav id="topnavigation" class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<a class="navbar-brand" href="#">
+				<img class="" src="images/ohdsi_logo.png">JobViewer</a>
+			<div class="input-group">
+				<input type="text" class="form-control" id="querytext" placeholder="Search">
+				<div class="input-group-btn">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+						<span id="configuration-cog" class="glyphicon glyphicon-cog"></span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-right webapi-dropdown" role="menu">
+					<!-- 
+						<li>
+							<a href="#" data-bind="click: $root.updateService">
+								<div class="service-name">
+									<span data-bind="text: name"></span>
+									<span data-bind="visible: url == $root.ohdsi_service(), css: { warning: version == 'unknown' }" class="glyphicon glyphicon-ok-sign"></span>
+								</div>
+								<div class="service-info" data-bind="text:'Vocabulary ' + version + ' (' + dialect + ')'"></div>
+							</a>
+						</li>
+					-->
+					</ul>
+				</div>
+			</div>
 		</div>
--->
-		<div id="table2" class="container">
+	</nav>
+ 
+		<div id="tblJobExecutions" class="container">
 			<table id="jobExecutions" class="display" cellspacing="0"
 				width="100%">
 				<thead>
@@ -57,16 +61,10 @@
 						<th>JobParameters</th>
 					</tr>
 				</thead>
-
-<!-- 				<tfoot> -->
-<!-- 					<tr> -->
-<!-- 						<th>Pages</th> -->
-<!-- 						<th>ExecutionId</th> -->
-<!-- 					</tr> -->
-<!-- 				</tfoot> -->
 			</table>
 		</div>
-	</div>
+
+
 </body>
 
 </html>
