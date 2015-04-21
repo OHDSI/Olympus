@@ -17,7 +17,7 @@ public class WebApiProperties {
     
     public static final int ID = 1;
     
-    public static final String LOCAL_WEBAPI = "http://localhost:20000/WebAPI";
+    public static final String LOCAL_WEBAPI = "http://localhost:20000/WebAPI/";
     
     public static final String PROP_ACHILLES_DATA_DIR = "achilles.data.dir";
     
