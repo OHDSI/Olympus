@@ -137,7 +137,7 @@
                 
                 #springBind("config.cdmSchema")
                 <div class="form-group #if(${status.error})has-error#end">
-                    <label for="cdmSchema" class="col-sm-3 control-label">CDM Schema</label>
+                    <label for="cdmSchema" class="col-sm-3 control-label">CDM Database Name / Schema</label>
                     <div class="col-sm-9">
                     	#springFormInput("config.cdmSchema" 'class="form-control" placeholder="CDM"')
                     	#springShowErrors("<br/>" "")
@@ -145,7 +145,7 @@
                 </div>
                 #springBind("config.ohdsiSchema")
                 <div class="form-group #if(${status.error})has-error#end">
-                    <label for="cdmResultsSchema" class="col-sm-3 control-label">Results Schema</label>
+                    <label for="cdmResultsSchema" class="col-sm-3 control-label">Results Database Name / Schema</label>
                     <div class="col-sm-9">
                         #springFormInput("config.ohdsiSchema" 'class="form-control" placeholder="OHDSI"')
                         #springShowErrors("<br/>" "")
@@ -153,7 +153,7 @@
                 </div>
                 #springBind("config.cohortSchema")
                 <div class="form-group #if(${status.error})has-error#end">
-                    <label for="cdmCohortSchema" class="col-sm-3 control-label">Cohort Schema</label>
+                    <label for="cdmCohortSchema" class="col-sm-3 control-label">Cohort Database Name / Schema</label>
                     <div class="col-sm-9">
                         #springFormInput("config.cohortSchema" 'class="form-control" placeholder="CDM"')
                         #springShowErrors("<br/>" "")

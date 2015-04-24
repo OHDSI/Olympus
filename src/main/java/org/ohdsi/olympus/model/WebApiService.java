@@ -77,6 +77,8 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
         String driverClassName;
         String jdbcUrl;
         String flywayJdbcUrl;
+        String jdbcPort;
+        String flywayJdbcPort;
         
         if (DIALECT.ORACLE.equals(dialect)) {
             driverClassName = "oracle.jdbc.OracleDriver";
@@ -98,18 +100,21 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
             if (DIALECT.SQLSERVERINTSECURITY.equals(dialect)) {
                 isIntegratedSecurityOption = true;
             }
+            jdbcPort = StringUtils.isEmpty(props.getJdbcPort()) ? "1433" : props.getJdbcPort();
+            
             driverClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
             flywayLocations = "classpath:db/migration/sqlserver";
-            jdbcUrl = String.format("jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), props.getJdbcPort(),
-                props.getCdmDataSourceSid());
+            jdbcUrl = String.format("jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), jdbcPort,
+                props.getCdmSchema());
             flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayDataSourceSid()) ? jdbcUrl : String.format(
-                "jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), props.getJdbcPort(),
-                props.getFlywayDataSourceSid());
+                "jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), jdbcPort,
+                props.getCdmSchema());
+/* Based on meeting Tuesday, I believe databaseName is used even with integrated security
             if (isIntegratedSecurityOption) {
                 jdbcUrl = String.format("jdbc:sqlserver://%s", props.getJdbcIpAddress());
                 flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayJdbcUser()) ? jdbcUrl : String.format(
                     "jdbc:sqlserver://%s", props.getJdbcIpAddress());
-            }
+            }*/
         }
         String flywayUser = StringUtils.isEmpty(props.getFlywayJdbcUser()) ? props.getJdbcUser() : props.getFlywayJdbcUser();
         String flywayPass = StringUtils.isEmpty(props.getFlywayJdbcPass()) ? props.getJdbcPass() : props.getFlywayJdbcPass();
