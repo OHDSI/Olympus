@@ -30,6 +30,9 @@ require(['jquery','bootstrap','datatables','jobService'], function ($,bs,dt,js) 
 
 $(document).ready(function() {
 	
+	$("#btnReload").click(function(){load();});
+
+	
     setTimeout(function() {
         $(".webapi-dropdown").empty();
 	$.each(ohdsi_services, function(i, service) {
