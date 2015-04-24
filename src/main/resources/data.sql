@@ -19,3 +19,6 @@ INSERT INTO authorities (username, authority)
 VALUES ('admin', 'ACHILLES');
 --INSERT INTO authorities (username, authority)
 --VALUES ('admin', 'WEBAPI');
+
+INSERT INTO webapi_remote (id, name, url)
+VALUES (1, 'Public WebAPI', 'http://api.ohdsi.org/WebAPI/');

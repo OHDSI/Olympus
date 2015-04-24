@@ -47,4 +47,8 @@ cohort_schema VARCHAR(25) NOT NULL,
 achilles_data_dir VARCHAR(250),
 created DATE default CURRENT_TIMESTAMP(),
 PRIMARY KEY (id));
---PUBLIC.
+
+--Start at 2 since we will insert the default public WebAPI
+ALTER TABLE webapi_remote AFTER COLUMN id RESTART WITH 2;
+
+
