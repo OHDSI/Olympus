@@ -28,10 +28,10 @@
 		        	#if($req.isUserInRole("ATHENA"))<li><a href="#athena" data-toggle="tab" id="athena-link">Athena</a></li>#end
 			      </ul>
 			    </li>
-			   
-			#end
 			
 			#if($req.isUserInRole("JOB_VIEWER")) <li><a class="launch-apps-link" href="#jobviewer" data-toggle="tab" id="jobviewer-link">Job Status</a></li> #end
+						   
+			#end
 			</ul>
 			
 			<ul class="nav navbar-nav navbar-right">
