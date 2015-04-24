@@ -88,6 +88,15 @@ public class WebApiPropertiesValidator implements Validator {
             }
         }
         
+        /* schema fields length.  validation not necessary
+        if(DIALECT.ORACLE.equals(dialect)){
+            //30
+        }else if(DIALECT.SQLSERVER.equals(dialect)){
+            //128
+        }else if (DIALECT.POSTGRESQL.equals(dialect)){
+            //63 length limit
+        }*/
+        
     }
     
 }

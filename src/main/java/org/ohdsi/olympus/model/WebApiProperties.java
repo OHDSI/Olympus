@@ -110,15 +110,15 @@ public class WebApiProperties {
     private String jdbcPass;
     
     @NotNull
-    @Size(max = 25, min = 1)
+    @Size(max = 250, min = 1)
     private String cdmSchema;
     
     @NotNull
-    @Size(max = 25, min = 1)
+    @Size(max = 250, min = 1)
     private String ohdsiSchema;
     
     @NotNull
-    @Size(max = 25, min = 1)
+    @Size(max = 250, min = 1)
     private String cohortSchema;
     
     @Size(max = 25, min = 0)
@@ -130,7 +130,7 @@ public class WebApiProperties {
     @Size(max = 25, min = 0)
     private String flywayJdbcPass;
     
-    @Size(max = 100, min = 0)
+    @Size(max = 250, min = 0)
     private String flywaySchemas;
     
     @Size(max = 250, min = 0)

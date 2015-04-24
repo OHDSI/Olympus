@@ -39,7 +39,7 @@
                 <div class="form-group #if(${status.error})has-error#end">
                     <label for="cdmJdbc" class="col-sm-3 control-label">Remote Url</label>
                     <div class="col-sm-9">
-                    	#springFormInput("remote.url" "class='form-control' placeholder='http://api.ohdsi.org/WebAPI'")
+                    	#springFormInput("remote.url" "class='form-control' placeholder='http://api.ohdsi.org/WebAPI/'")
 						#springShowErrors("<br/>" "")
                     </div>
                 </div>    
@@ -88,7 +88,7 @@
                 <div class="form-group #if(${status.error})has-error#end">
                     <label for="cdmJdbcDriverClassName" class="col-sm-3 control-label">CDM JDBC Driver Class Name</label>
                     <div class="col-sm-9">
-                    	#springFormInput("config.jdbcDriverClassName" "class='form-control' placeholder='e.g. com.microsoft.sqlserver.jdbc.SQLServerDriver' required maxlength='100'")
+                    	#springFormInput("config.jdbcDriverClassName" "class='form-control' placeholder='e.g. com.microsoft.sqlserver.jdbc.SQLServerDriver'")
 						#springShowErrors("<br/>" "")
                     </div>
                 </div>
@@ -122,7 +122,7 @@
                 <div class="form-group #if(${status.error})has-error#end">
                     <label for="cdmUsername" class="col-sm-3 control-label">Username</label>
                     <div class="col-sm-9">
-                    	#springFormInput("config.jdbcUser" 'class="form-control" placeholder="Username" required')
+                    	#springFormInput("config.jdbcUser" 'class="form-control"')
                     	#springShowErrors("<br/>" "")
                     </div>
                 </div>
