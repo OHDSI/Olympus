@@ -124,6 +124,9 @@ public class WebApiController {
             view.addObject("errors", result);
             return view;
         }
+        if(!remote.getUrl().endsWith("/")){
+            remote.setUrl(remote.getUrl().concat("/"));
+        }
         
         log.debug("Saving WebApi Remote");
         remote = this.remoteRepo.save(remote);
