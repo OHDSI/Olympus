@@ -366,6 +366,8 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                 };
 
                 $scope.submitJob = function($event) {
+                    window.scrollTo(0, 0);
+                    
                     if ($(".toggle-checkbox-item:checked").length === 0) {
                         $scope.message.text = "Please select at least one analyis to run.";
                         $scope.message.label = "Problem submitting analyses";

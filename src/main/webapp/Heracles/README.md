@@ -10,26 +10,46 @@ HERACLES is a project as part of the Observational Health Data Sciences and Info
 ##### Features
 * Select from existing COHORTs in CDM and choose a set of analyses to run
 * Focus on a particular concept group such as medications, conditions, or procedures
-* Visualize results through a series of reports similar to [ACHILLES](http://www.ohdsi.org/web/achilles/index.html#/SAMPLE/dashboard)
-
-
-##### Technology
-* HTML5
-* Javascript
-* jQuery
-* Bootstrap
-* AngularJS
+* Visualize results through a series of reports
 
 ##### System Requirements
-* 
+* Java 1.7 or higher
 
 ##### Dependencies
-* Have a version of the [OHDSI WebAPI](https://github.com/OHDSI/WebAPI) running.
+* None, if using the [OLYMPUS platform](https://github.com/OHDSI/OLYMPUS)
+* Otherwise (for custom implementations), the latest version of the [OHDSI WebAPI](https://github.com/OHDSI/WebAPI)
 
-##### Running Heracles
-*  Will be updated when released
+##### Installation
+*  Typical Installation
+	*  Install the [OLYMPUS platform](https://github.com/OHDSI/OLYMPUS) 
+*  For advanced users
+	*  Configure and build the OHDSI WebAPI for your environment
+	*  Download the Heracles repo
+	*  Edit the file build/js/Heracles.config.js to include the URL for your local WebAPI
+	*  Place Heracles files in a directory on a web server (such as Apache)
 
-###### For Developers
+
+##### Usage
+
+* See [Heracles documentation](http://www.ohdsi.org/web/wiki/doku.php?id=documentation:software:heracles) on the OHDSI Wiki
+
+##### License
+Apache 2.0
+
+##### Getting involved
+*  Join the Heracles WG calls.  Find more info on the [OHDSI Forums](http://forums.ohdsi.org/t/heracles-cohort-summarization-wg/307).
+
+
+##### For Developers Only
+
+
+**Technology**
+* HTML5 / JS / jQuery
+* Bootstrap
+* AngularJS
+* Grunt
+
+**Using Grunt**
 
 If you wish to add/modify configuration using Grunt, you can install the following.
 * Install [Node.js](http://nodejs.org/) if not yet installed
@@ -42,11 +62,4 @@ If you wish to add/modify configuration using Grunt, you can install the followi
 * (optional) Run watch to keep minified files up to date
 <br/>`grunt watch`
 
-##### Other Notes
-*
 
-##### Getting involved
-* 
-	
-##### License
-Apache
