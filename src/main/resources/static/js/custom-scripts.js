@@ -29,6 +29,11 @@ $(document).ready(function() {
 	  	return true;
 	});
 	
+	$('#btnLaunchWebApi').click(function() {
+		console.log("submitting");
+		$("#frmLaunchWebApi").submit();
+	});
+	
 	$('#apps, .launch-apps-link').click('show', function(e) {
 		//alert('hello'+e.target);
 	    paneID = $(e.target).attr('href');

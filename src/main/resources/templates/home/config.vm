@@ -29,15 +29,6 @@
         #end
         #if(${webapi.isRunning()})
         <div class="alert alert-success" role="alert">WebApi is running</div>
-        #elseif(${webapi.isConfigured()})
-        <div class="container">
-			<form method="POST" action="/webapi/request-start" id="frmLaunchWebApi">
-				<div class="form-group pull-right">
-					<input type="hidden" name="$_csrf.parameterName" value="$_csrf.token"/>
-			        <button type="submit" id="btnLaunchWebApi" class="btn btn-success">Launch WebApi</button>
-			    </div>
-			</form>
-		</div>
         #end
         <div class="container">
               <h2>Remote WebAPIs</h2>
@@ -229,11 +220,22 @@
                     </div>
                 </div>
 </div>              
-                <div class="form-group pull-right">
+                <div class="form-group text-right">
                 	<input type="hidden" name="$_csrf.parameterName" value="$_csrf.token"/>
-                    <button id="submitButton" class="btn btn-success" type="submit">Save Configuration</button>
+                    <button id="submitButton" class="btn btn-success" type="submit">Save</button>
+                    <button type="button" id="btnLaunchWebApi" class="btn btn-success">Launch</button>
                 </div>
             </form>
+        #if(${webapi.isConfigured()})
+        <div class="container">
+			<form method="POST" action="/webapi/request-start" id="frmLaunchWebApi">
+				<div class="form-group text-right">
+					<input type="hidden" name="$_csrf.parameterName" value="$_csrf.token"/>
+			        #*<button type="submit" id="btnLaunchWebApi" class="btn btn-success">Launch</button>*#
+			    </div>
+			</form>
+		</div>
+        #end
             </div>
         </div>
     </div>
