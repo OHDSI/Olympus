@@ -11,6 +11,13 @@
 	<name>Olympus</name>
 	<description>The OHDSI Application Launcher</description>
 	<url>http://www.ohdsi.org/</url>
+	
+	<scm>
+		<connection>scm:git:https://github.com/OHDSI/Olympus</connection>
+		<developerConnection>scm:git:https://github.com/OHDSI/Olympus</developerConnection>
+		<url>https://github.com/OHDSI/Olympus</url>
+		<tag>HEAD</tag>
+	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
