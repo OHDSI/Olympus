@@ -20,7 +20,7 @@ import org.springframework.util.Assert;
 import com.google.common.collect.Lists;
 
 /**
- *
+ * TODO
  */
 public class WebApiService implements ApplicationListener<EmbeddedServletContainerInitializedEvent> {
     
@@ -32,20 +32,26 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
     
     private final WebApiRemoteRepository remotesRepo;
     
+    private AppPropertiesRepository appPropertiesRepo;
+    
     private final boolean isWebApiLaunchEnabled;
     
     @Autowired
     private ContextHandlerCollection contextHandlerCollection;
     
     /**
+     * TODO add default constructor and skip constructor injection
+     * 
      * @param ctx
      */
     public WebApiService(final boolean isWebApiLaunchEnabled, final WebAppContext ctx,
-        final WebApiPropertiesRepository repo, final WebApiRemoteRepository remotesRepo) {
+        final WebApiPropertiesRepository repo, final WebApiRemoteRepository remotesRepo,
+        final AppPropertiesRepository appPropertiesRepository) {
         this.context = ctx;
         this.repo = repo;
         this.isWebApiLaunchEnabled = isWebApiLaunchEnabled;
         this.remotesRepo = remotesRepo;
+        this.appPropertiesRepo = appPropertiesRepository;
     }
     
     public boolean hasRemotes() {
@@ -107,14 +113,13 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
             jdbcUrl = String.format("jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), jdbcPort,
                 props.getCdmSchema());
             flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayDataSourceSid()) ? jdbcUrl : String.format(
-                "jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), jdbcPort,
-                props.getCdmSchema());
-/* Based on meeting Tuesday, I believe databaseName is used even with integrated security
-            if (isIntegratedSecurityOption) {
-                jdbcUrl = String.format("jdbc:sqlserver://%s", props.getJdbcIpAddress());
-                flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayJdbcUser()) ? jdbcUrl : String.format(
-                    "jdbc:sqlserver://%s", props.getJdbcIpAddress());
-            }*/
+                "jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), jdbcPort, props.getCdmSchema());
+            /* Based on meeting Tuesday, I believe databaseName is used even with integrated security
+                        if (isIntegratedSecurityOption) {
+                            jdbcUrl = String.format("jdbc:sqlserver://%s", props.getJdbcIpAddress());
+                            flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayJdbcUser()) ? jdbcUrl : String.format(
+                                "jdbc:sqlserver://%s", props.getJdbcIpAddress());
+                        }*/
         }
         String flywayUser = StringUtils.isEmpty(props.getFlywayJdbcUser()) ? props.getJdbcUser() : props.getFlywayJdbcUser();
         String flywayPass = StringUtils.isEmpty(props.getFlywayJdbcPass()) ? props.getJdbcPass() : props.getFlywayJdbcPass();
@@ -135,9 +140,11 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
         setProperty(WebApiProperties.PROP_DATASOURCE_CDM_SCHEMA, props.getCdmSchema());
         setProperty(WebApiProperties.PROP_DATASOURCE_OHDSI_SCHEMA, props.getOhdsiSchema());
         setProperty(WebApiProperties.PROP_DATASOURCE_COHORT_SCHEMA, props.getCohortSchema());
-        
+    }
+    
+    public static void setSystemProperties(final AppProperties props) {
         //application-specific
-        setProperty(WebApiProperties.PROP_ACHILLES_DATA_DIR, props.getAchillesDataDir());
+        setProperty(AppProperties.PROP_ACHILLES_DATA_DIR, props.getAchillesDataDir());
     }
     
     private static void setProperty(String key, String value) {
@@ -186,6 +193,7 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
     public void init() throws Exception {
         if (isConfigured()) {
             setSystemProperties(getProperties());
+            setSystemProperties(getAppProperties());
             if (this.isWebApiLaunchEnabled) {
                 start();
             } else {
@@ -241,6 +249,18 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
         }
     }
     
+    public WebApiRemote saveRemote(WebApiRemote remote) {
+        return this.remotesRepo.save(remote);
+    }
+    
+    public WebApiProperties saveProperties(WebApiProperties props) {
+        return this.repo.save(props);
+    }
+    
+    public AppProperties saveAppProperties(AppProperties props) {
+        return this.appPropertiesRepo.save(props);
+    }
+    
     private void removeHandler() {
         log.info("Removing handler");
         this.contextHandlerCollection.removeHandler(this.context);
@@ -253,7 +273,7 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
      */
     public List<WebApiRemote> getWebApis() {
         List<WebApiRemote> webApis = new ArrayList<WebApiRemote>();
-        if(isRunning()){
+        if (isRunning()) {
             webApis.add(new WebApiRemote("Local", WebApiProperties.LOCAL_WEBAPI));
         }
         webApis.addAll(Lists.newArrayList(this.remotesRepo.findAll()));
@@ -267,4 +287,10 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
         return Lists.newArrayList(this.remotesRepo.findAll());
     }
     
+    /**
+     */
+    public AppProperties getAppProperties() {
+        AppProperties props = this.appPropertiesRepo.findOne(AppProperties.ID);
+        return props == null ? new AppProperties() : props;
+    }
 }

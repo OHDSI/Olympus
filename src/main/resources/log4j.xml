@@ -12,7 +12,7 @@
 		<level value="debug" />
 	</logger>
 	<logger name="org.springframework.security.web.access.ExceptionTranslationFilter">
-		<level value="debug" />
+		<level value="info" />
 	</logger>
 	<root>
 		<level value="info" />

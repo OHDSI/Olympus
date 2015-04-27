@@ -12,6 +12,7 @@ import org.eclipse.jetty.runner.Runner;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.ohdsi.olympus.controller.validator.WebApiPropertiesValidator;
+import org.ohdsi.olympus.model.AppPropertiesRepository;
 import org.ohdsi.olympus.model.WebApiPropertiesRepository;
 import org.ohdsi.olympus.model.WebApiRemoteRepository;
 import org.ohdsi.olympus.model.WebApiService;
@@ -44,7 +45,7 @@ public class WebApiConfig {
     private ContextHandlerCollection contextHandlerCollection;
     
     @Bean
-    public Validator webApiPropertiesValidator(Validator validator){
+    public Validator webApiPropertiesValidator(Validator validator) {
         WebApiPropertiesValidator v = new WebApiPropertiesValidator(validator);
         return v;
     }
@@ -66,11 +67,11 @@ public class WebApiConfig {
         Assert.notNull(is, "InputStream for WebAPI.war resource must not be null");
         log.debug("InputStream for WebAPI.war: " + is.available());
         FileUtils.copyInputStreamToFile(is, destFile);
-
+        
         final WebAppContext ctx = new WebAppContext();
         //The following is to work-around a problem with WebAPI inheriting the Olympus classloader.
         //Cannot load configuration class: org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
-        ctx.setServerClasses(new String[]{"org.springframework.security."});
+        ctx.setServerClasses(new String[] { "org.springframework.security." });
         ctx.setServer(jetty.getServer());
         ctx.setContextPath(contextPath);
         ctx.setWar(destFile.getAbsolutePath());
@@ -85,8 +86,10 @@ public class WebApiConfig {
     
     @Bean
     public WebApiService webApi(@Value("${olympus.webapi.launch.enabled}") final boolean isWebApiLaunchEnabled,
-                                final WebAppContext ctx, final WebApiPropertiesRepository repo, final WebApiRemoteRepository remotesRepo) {
-        return new WebApiService(isWebApiLaunchEnabled, ctx, repo, remotesRepo);
+                                final WebAppContext ctx, final WebApiPropertiesRepository repo,
+                                final WebApiRemoteRepository remotesRepo,
+                                final AppPropertiesRepository appPropertiesRepository) {
+        return new WebApiService(isWebApiLaunchEnabled, ctx, repo, remotesRepo, appPropertiesRepository);
     }
     
     /*if (container instanceof TomcatEmbeddedServletContainer) {

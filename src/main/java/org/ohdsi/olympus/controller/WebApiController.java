@@ -8,10 +8,9 @@ import javax.validation.Valid;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.ohdsi.olympus.model.AppProperties;
 import org.ohdsi.olympus.model.WebApiProperties;
-import org.ohdsi.olympus.model.WebApiPropertiesRepository;
 import org.ohdsi.olympus.model.WebApiRemote;
-import org.ohdsi.olympus.model.WebApiRemoteRepository;
 import org.ohdsi.olympus.model.WebApiService;
 import org.ohdsi.olympus.view.factory.CommonTemplateFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +41,8 @@ public class WebApiController {
     
     private static final String CONFIG_MODEL_ATTR = "config";
     
+    private static final String APPPROPERTIES_MODEL_ATTR = "appproperties";
+    
     private static final String REMOTE_MODEL_ATTR = "remote";
     
     private static final String CONFIGURATION_TEMPLATE_NAME = "home/config";
@@ -59,12 +60,6 @@ public class WebApiController {
     private WebApiService webApi;
     
     @Autowired
-    private WebApiPropertiesRepository repo;
-    
-    @Autowired
-    private WebApiRemoteRepository remoteRepo;
-    
-    @Autowired
     private CommonTemplateFactory templateFactory;
     
     @Autowired
@@ -76,6 +71,11 @@ public class WebApiController {
     @ModelAttribute(value = "remotes")
     public List<WebApiRemote> getRemotes() {
         return this.webApi.getRemotes();
+    }
+    
+    @ModelAttribute(value = APPPROPERTIES_MODEL_ATTR)
+    public AppProperties getAppProperties() {
+        return this.webApi.getAppProperties();
     }
     
     @ModelAttribute(value = CONFIG_MODEL_ATTR)
@@ -99,6 +99,7 @@ public class WebApiController {
         log.debug("Get config");
         ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
         modelAndView.addObject(REMOTE_MODEL_ATTR, new WebApiRemote());
+        modelAndView.addObject(APPPROPERTIES_MODEL_ATTR, getAppProperties());
         if (errorMsg != null) {
             modelAndView.addObject("errorMsg", errorMsg);
         }
@@ -111,6 +112,7 @@ public class WebApiController {
         if (result.hasErrors() || isDuplicate(remote, getRemotes()) || remote.getName().equalsIgnoreCase("local")) {
             ModelAndView view = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
             view.addObject(CONFIG_MODEL_ATTR, getWebApiProperties());
+            view.addObject(APPPROPERTIES_MODEL_ATTR, getAppProperties());
             view.addObject(REMOTE_MODEL_ATTR, remote);
             if (!result.hasErrors()) {
                 //duplicate or "local" reserved name
@@ -124,17 +126,47 @@ public class WebApiController {
             view.addObject("errors", result);
             return view;
         }
-        if(!remote.getUrl().endsWith("/")){
+        if (!remote.getUrl().endsWith("/")) {
             remote.setUrl(remote.getUrl().concat("/"));
         }
         
         log.debug("Saving WebApi Remote");
-        remote = this.remoteRepo.save(remote);
+        remote = this.webApi.saveRemote(remote);
         String msg = "Saved WebApi Remote";
         log.info(msg);
         
         ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
         modelAndView.addObject(CONFIG_MODEL_ATTR, getWebApiProperties());
+        modelAndView.addObject(REMOTE_MODEL_ATTR, new WebApiRemote());
+        modelAndView.addObject(APPPROPERTIES_MODEL_ATTR, getAppProperties());
+        modelAndView.addObject("remotes", getRemotes());
+        modelAndView.addObject("msg", msg);
+        return modelAndView;
+    }
+    
+    @RequestMapping(value = "/" + APPPROPERTIES_MODEL_ATTR, method = RequestMethod.POST)
+    public ModelAndView handleConfigurationSubmission(@Valid @ModelAttribute(APPPROPERTIES_MODEL_ATTR) AppProperties appProperties,
+                                                      BindingResult result) throws Exception {
+        if (result.hasErrors()) {
+            ModelAndView view = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
+            view.addObject(CONFIG_MODEL_ATTR, getWebApiProperties());
+            view.addObject(APPPROPERTIES_MODEL_ATTR, appProperties);
+            view.addObject(REMOTE_MODEL_ATTR, new WebApiRemote());
+            log.info("Has Errors: " + result);
+            view.addObject("errors", result);
+            return view;
+        }
+        
+        log.debug("Saving application-specific properties");
+        appProperties = this.webApi.saveAppProperties(appProperties);
+        String msg = "Saved application properties";
+        log.info(msg);
+        
+        WebApiService.setSystemProperties(appProperties);
+        
+        ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
+        modelAndView.addObject(CONFIG_MODEL_ATTR, getWebApiProperties());
+        modelAndView.addObject(APPPROPERTIES_MODEL_ATTR, getAppProperties());
         modelAndView.addObject(REMOTE_MODEL_ATTR, new WebApiRemote());
         modelAndView.addObject("remotes", getRemotes());
         modelAndView.addObject("msg", msg);
@@ -149,12 +181,13 @@ public class WebApiController {
             ModelAndView view = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
             view.addObject(CONFIG_MODEL_ATTR, props);
             view.addObject(REMOTE_MODEL_ATTR, new WebApiRemote());
+            view.addObject(APPPROPERTIES_MODEL_ATTR, new AppProperties());
             view.addObject("errors", result);
             return view;
         }
         
         log.debug("Saving properties");
-        props = this.repo.save(props);
+        props = this.webApi.saveProperties(props);
         String msg = "Saved properties";
         log.debug(msg);
         
@@ -164,6 +197,7 @@ public class WebApiController {
         ModelAndView modelAndView = templateFactory.createMasterView(CONFIGURATION_TEMPLATE_NAME, null);
         modelAndView.addObject(CONFIG_MODEL_ATTR, props);
         modelAndView.addObject(REMOTE_MODEL_ATTR, new WebApiRemote());
+        modelAndView.addObject(APPPROPERTIES_MODEL_ATTR, new AppProperties());
         modelAndView.addObject("msg", msg);
         return modelAndView;
     }

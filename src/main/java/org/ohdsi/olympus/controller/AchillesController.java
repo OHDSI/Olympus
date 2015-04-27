@@ -7,7 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.ohdsi.olympus.model.WebApiProperties;
+import org.ohdsi.olympus.model.AppProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
@@ -31,7 +31,7 @@ public class AchillesController {
     @RequestMapping(value = "datasources", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public HttpEntity<JSONObject> datasource() {
-        final String fileLocation = this.env.getProperty(WebApiProperties.PROP_ACHILLES_DATA_DIR) + File.separator
+        final String fileLocation = this.env.getProperty(AppProperties.PROP_ACHILLES_DATA_DIR) + File.separator
                 + "datasources.json";
         return new ResponseEntity<JSONObject>(toJson(fileLocation), HttpStatus.OK);
     }
@@ -43,7 +43,7 @@ public class AchillesController {
         final JSONParser parser = new JSONParser();
         JSONObject jsonObject = null;
         try {
-            final String fileLocation = this.env.getProperty(WebApiProperties.PROP_ACHILLES_DATA_DIR) + File.separator
+            final String fileLocation = this.env.getProperty(AppProperties.PROP_ACHILLES_DATA_DIR) + File.separator
                     + dataSourceFolder + File.separator + file;
             log.debug("Attempting to parse datasources.json from : " + fileLocation);
             final FileReader fr = new FileReader(fileLocation);

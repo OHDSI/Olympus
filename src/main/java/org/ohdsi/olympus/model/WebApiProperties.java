@@ -21,8 +21,6 @@ public class WebApiProperties {
     
     public static final String LOCAL_WEBAPI = "http://localhost:20000/WebAPI/";
     
-    public static final String PROP_ACHILLES_DATA_DIR = "achilles.data.dir";
-    
     public static final String PROP_DATASOURCE_DRIVERCLASSNAME = "datasource.driverClassName";
     
     public static final String PROP_DATASOURCE_URL = "datasource.url";
@@ -133,8 +131,7 @@ public class WebApiProperties {
     @Size(max = 250, min = 0)
     private String flywaySchemas;
     
-    @Size(max = 250, min = 0)
-    private String achillesDataDir;
+
     
     /**
      * @return the id
@@ -344,20 +341,6 @@ public class WebApiProperties {
      */
     public void setFlywaySchemas(String flywaySchemas) {
         this.flywaySchemas = flywaySchemas;
-    }
-    
-    /**
-     * @return the achillesDataDir
-     */
-    public String getAchillesDataDir() {
-        return achillesDataDir;
-    }
-    
-    /**
-     * @param achillesDataDir the achillesDataDir to set
-     */
-    public void setAchillesDataDir(String achillesDataDir) {
-        this.achillesDataDir = achillesDataDir;
     }
     
 }
