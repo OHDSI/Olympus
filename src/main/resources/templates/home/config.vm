@@ -2,6 +2,23 @@
    	#set ( $current = "config" )
 	#parse( "common/navbar.vm" )
 	#renderNavBar ($current )
+<!-- Modal -->
+<div class="modal fade" id="ajax_loader" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h4 class="text-center">WebAPI is starting...</h4>
+      </div>
+      <div class="modal-body">
+		<div id='ajax_loader'>
+			<img src="/img/ajax-loader.gif" class="center-block"></img>
+		</div>
+      </div>
+      #*<div class="modal-footer">
+      </div>*#
+    </div>
+  </div>
+</div>
     <div class="container" id="main-launcher">
         <div class="row row-top">
         #if(${errorMsg})

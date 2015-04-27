@@ -20,6 +20,11 @@ $(document).ready(function() {
 	$('#frmLaunchWebApi').submit(function() {
 	    // handle form processing here
 	  	$('button').prop('disabled', true);
+        $('#ajax_loader').modal({
+        	  keyboard: false,
+        	  backdrop: 'static',
+        	  show: true
+        	});
 	  	//form submit
 	  	return true;
 	});
