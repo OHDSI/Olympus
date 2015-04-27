@@ -148,8 +148,12 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
     }
     
     private static void setProperty(String key, String value) {
-        log.debug(String.format("Property [%s,%s]", key, key.toLowerCase().contains("pass") ? "***" : value));
-        System.setProperty(key, value);
+        if (StringUtils.isEmpty(key) || StringUtils.isEmpty(value)) {
+            log.info(String.format("Not setting key[%s] due to null key or value", key));
+        } else {
+            log.debug(String.format("Property [%s,%s]", key, key.toLowerCase().contains("pass") ? "***" : value));
+            System.setProperty(key, value);
+        }
     }
     
     /**
