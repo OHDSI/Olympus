@@ -3,9 +3,9 @@
 
 ##### Introduction
 
-OLYMPUS (OHDSI Loaded on Your Computers to Perform Ultimate Science) is a package designed to simplify the configuration of CDM-based research environments and the usage of OHDSI tools.
+OLYMPUS (OHDSI Loaded on Your Computers to Perform Ultimate Science) is a package designed to simplify the configuration of CDM-based research environments and the usage of OHDSI tools.  
 
-OLYMPUS is a project as part of the Observational Health Data Sciences and Informatics (OHDSI, http://ohdsi.org) collaboration.
+**Non-developers should download builds directly at http://www.ohdsi.org/analytic-tools/olympus-a-unified-platform-for-ohdsi-web-applications**
 
 ##### Features
 * Unified installation of the WebAPI server and a set of OHDSI applications
