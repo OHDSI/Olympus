@@ -25,7 +25,7 @@ body {
 						<div class="col-md-10 col-md-offset-1">
 							<div class="jumbotron">
 								<h2 style="font-family: 'Julius Sans One', sans-serif;font-size:60px">$appName <p class="sub-text">$appMessage</p></h2>
-								#if (!$webapi.isRunning())
+								#if (!$webapi.isRunning() && $req.isUserInRole("ADMIN"))
 									The Local WebAPI server isn't running. Visit the <a href="/webapi/config.html">Configuration</a> page to configure and/or start it.
 								#end
 								#if($webapi.hasRemotes())
