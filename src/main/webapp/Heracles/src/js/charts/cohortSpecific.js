@@ -4,9 +4,6 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
     CohortSpecificRenderer.prototype = {};
     CohortSpecificRenderer.prototype.constructor = CohortSpecificRenderer;
 
-    var genderDonut;
-
-
     CohortSpecificRenderer.render = function(cohort) {
         var id = cohort.id;
         this.baseUrl = getWebApiUrl() + 'cohortresults/' + id;
@@ -234,9 +231,9 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
 
             $('#spinner-modal').modal('hide');
         })
-        .fail(function() {
-            $('#spinner-modal').modal('hide');
-        });
+            .fail(function() {
+                $('#spinner-modal').modal('hide');
+            });
 
     };
 

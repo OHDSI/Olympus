@@ -309,8 +309,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         data: table_data,
                         columns: [
                             {
-                                data: 'concept_id',
-                                visible: false
+                                data: 'concept_id'
                             },
                             {
                                 data: 'soc'

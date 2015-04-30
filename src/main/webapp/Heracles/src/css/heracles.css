@@ -337,7 +337,7 @@ hr.path {
 #condition_table tr {
     cursor: pointer;
 }
-#treemap_container rect {
+#treemap_container rect, #drug_treemap_container rect, #proc_treemap_container rect {
     cursor: pointer;
 }
 th {

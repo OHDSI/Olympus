@@ -524,8 +524,7 @@ console.log(colors);
                             data: table_data,
                             columns: [
                                 {
-                                    data: 'concept_id',
-                                    visible: false
+                                    data: 'concept_id'
                                 },
                                 {
                                     data: 'level_4'

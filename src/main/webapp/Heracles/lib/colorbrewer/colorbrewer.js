@@ -300,6 +300,9 @@ define([], function () {
         10: ["#8dd3c7","#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5","#d9d9d9","#bc80bd"],
         11: ["#8dd3c7","#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5","#d9d9d9","#bc80bd","#ccebc5"],
         12: ["#8dd3c7","#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5","#d9d9d9","#bc80bd","#ccebc5","#ffed6f"]
-    }};
+    },RR: {
+            3: ["#e41a1c","#f6f6f6","#4daf4a"],
+            7: ["#D01B27", "#F99A9C", "#D01B27", "#FFFFFF", "#9AC42E", "#58B229", "#58B229"]
+        }};
     return colorbrewer;
 });

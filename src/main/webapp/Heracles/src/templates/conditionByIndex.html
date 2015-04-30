@@ -1,0 +1,65 @@
+<div class="chart-template">
+    <h3 class="cohort-name-header">{{cohort.name}}</h3>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default ">
+                <div class="panel-heading">
+                    Condition Prevalence
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="active" id="treemap-tab"><a href="#condition-treemap-panel" role="tab" data-toggle="tab">Treemap</a>
+                            </li>
+                            <li><a href="#condition-table-panel" role="tab" data-toggle="tab">Table</a>
+                            </li>
+                        </ul>
+                        <div id='content' class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="condition-treemap-panel">
+                                <div id="treemap_container">
+                                    <div class="treemap_zoomtarget"></div>
+                                </div>
+                                <div class="treemap_legend">Box Size: Prevalence, Color: Log of Relative Risk (Red to Green = Negative to Positive), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom</div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="condition-table-panel">
+                                <table id="condition_table" class="display treemap_table" type="condition">
+                                    <thead>
+                                    <tr>
+                                        <th>Concept Id</th>
+                                        <th>SOC</th>
+                                        <th>HLGT</th>
+                                        <th>HLT</th>
+                                        <th>PT</th>
+                                        <th>SNOMED</th>
+                                        <th>Person Count</th>
+                                        <th>Prevalence</th>
+                                        <th>Relative Risk per Person</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="conditionOccurrencesDrilldown" class="hidden row">
+        <div id="conditionDrilldownTitle" class="reportTitle col-sm-12"></div>
+        <div class="col-sm-12">
+            <div id="conditionDrilldownPrevalencePanel" class="panel panel-default">
+                <div class="panel-heading">
+                    First Condition Occurrence Relative to Index
+                </div>
+                <div class="panel-body">
+                    <div class="drilldown" id="conditionDrilldownScatterplot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

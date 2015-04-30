@@ -1,0 +1,63 @@
+<div class="chart-template">
+    <h3 class="cohort-name-header">{{cohort.name}}</h3>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Procedure Prevalence
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs"role="tablist">
+                            <li class="active"><a href="#procedure-treemap-panel" role="tab" data-toggle="tab">Treemap</a>
+                            </li>
+                            <li><a href="#procedure-table-panel" role="tab" data-toggle="tab">Table</a>
+                            </li>
+                        </ul>
+                        <div id='proc_content' class="tab-content">
+                            <div class="tab-pane active" role="tabpanel" id="procedure-treemap-panel">
+                                <div id="proc_treemap_container">
+                                    <div class="treemap_zoomtarget"></div>
+                                </div>
+                                <div class="treemap_legend">Box Size: Prevalence, Color: Log of Relative Risk (Red to Green = Negative to Positive), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom</div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel"  id="procedure-table-panel">
+                                <table id="procedure_table" class="display treemap_table" type="procedure">
+                                    <thead>
+                                    <tr>
+                                        <th>Concept Id</th>
+                                        <th>Level 4</th>
+                                        <th>Level 3</th>
+                                        <th>Level 2</th>
+                                        <th>Procedure</th>
+                                        <th>Person Count</th>
+                                        <th>Prevalence</th>
+                                        <th>Relative Risk per Person</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="procedureOccurrencesDrilldown" class="hidden row">
+        <div id="procedureDrilldownTitle" class="reportTitle col-sm-12"></div>
+        <div class="col-sm-12">
+            <div id="procedureDrilldownPrevalencePanel" class="panel panel-default">
+                <div class="panel-heading">
+                    First Procedure Occurrence Relative to Index
+                </div>
+                <div class="panel-body">
+                    <div class="drilldown" id="procedureDrilldownScatterplot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
