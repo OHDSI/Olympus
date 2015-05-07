@@ -50,6 +50,23 @@ Summary of changes:
 `java -XX:MaxPermSize=128m -jar Olympus-XXX-exec.war`
 -XX:MaxPermSize only needed prior to jre 8
 
+##### Olympus Working Directory
+Olympus will create an 'olympus' directory within the ${java.io.tmpdir} environment variable location.
+Look for a log statement like this (Windows example) ...  
+
+```
+2015-05-07 15:48:54.443 INFO main org.ohdsi.olympus.DataSourceConfig -  - Using jdbcurl: jdbc:h2:file:C:\Users\afranken\AppData\Local\Temp\olympus\dbfile
+```
+Mac Example:
+Mac java.io.tmdir = /var/folders/56/dfxv12_d6wb8dd4blw46j43h0000gn/T
+Olympus dir = /var/folders/56/dfxv12_d6wb8dd4blw46j43h0000gn/T/olympus
+
+
+##### Olympus Database
+Olympus uses an h2 file database.  You can access the h2 console after starting Olympus and authenticating with a user that has the 'ADMIN' authority.
+  
+`http://localhost:20000/console`
+
 ##### TODO
 Consider maven war plugin web resources to contain modified application files (e.g. Hermes config.js, etc. and src/main/webapp/Hermes would contain unmodified source.  Likely easier to do upgrades/diffs.
 	

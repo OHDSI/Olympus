@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/static/**", "/webjars/**", "/js/**", "/css/**", "/img/**","/console/**");
+        web.ignoring().antMatchers("/static/**", "/webjars/**", "/js/**", "/css/**", "/img/**");
     }
     
     @Override
@@ -44,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       http
               .headers().frameOptions().disable()
               .authorizeRequests()
+              .antMatchers("/console/**").hasAuthority("ADMIN")
               .antMatchers("/user/**").hasAuthority("ADMIN")
               .antMatchers("/webapi/**").hasAuthority("ADMIN")
               .antMatchers("/Circe/**").hasAuthority("CIRCE")
