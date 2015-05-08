@@ -1,6 +1,5 @@
 package org.ohdsi.olympus;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +17,15 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+    
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
     
     /**
      * #10 This needed to only disable h2 console from csrf.
@@ -31,10 +34,11 @@ public class SecurityConfig {
     @Order(1)
     public static class H2ConfigurationAdapter extends WebSecurityConfigurerAdapter {
         
-        protected void configure(HttpSecurity http) throws Exception {
-            http
-                .antMatcher("/console/**").csrf().disable()
-                .headers().frameOptions().disable().authorizeRequests()
+        @Override
+        protected void configure(final HttpSecurity http) throws Exception {
+            http.antMatcher("/console/**").csrf().disable()
+                .headers().frameOptions().disable()
+                .authorizeRequests()
                 .antMatchers("/console/**").hasAuthority("ADMIN");
             http.formLogin().failureUrl("/login?error").defaultSuccessUrl("/").loginPage("/login").permitAll().and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
@@ -42,39 +46,44 @@ public class SecurityConfig {
         }
         
     }
-
+    
     @Configuration
     public static class OlympusConfigurationAdapter extends WebSecurityConfigurerAdapter {
         
         @Autowired
         private DataSource dataSource;
         
+        @Autowired
+        private PasswordEncoder encoder;
+        
         @Override
-        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager();
-            userDetailsService.setDataSource(dataSource);
-            PasswordEncoder encoder = new BCryptPasswordEncoder();
-            
-            auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
-            auth.jdbcAuthentication().dataSource(dataSource);
+        protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+            final JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager();
+            userDetailsService.setDataSource(this.dataSource);
+            auth.userDetailsService(userDetailsService).passwordEncoder(this.encoder);
+            auth.jdbcAuthentication().dataSource(this.dataSource);
         }
         
         @Override
-        public void configure(WebSecurity web) throws Exception {
+        public void configure(final WebSecurity web) throws Exception {
             web.ignoring().antMatchers("/static/**", "/webjars/**", "/js/**", "/css/**", "/img/**");
         }
         
         @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http.headers().frameOptions().disable().authorizeRequests()
-//                    .antMatchers("/console/**").hasAuthority("ADMIN")
+        protected void configure(final HttpSecurity http) throws Exception {
+            http.headers()
+                    .frameOptions()
+                    .disable()
+                    .authorizeRequests()
+                    //                    .antMatchers("/console/**").hasAuthority("ADMIN")
                     .antMatchers("/user/**").hasAuthority("ADMIN")
                     .antMatchers("/webapi/**").hasAuthority("ADMIN")
-                    .antMatchers("/Circe/**")
-                    .hasAuthority("CIRCE").antMatchers("/Hermes/**").hasAuthority("HERMES")
-                    .antMatchers("/Heracles/**").hasAuthority("HERACLES").antMatchers("/JobViewer/**")
-                    .hasAuthority("JOB_VIEWER").antMatchers("/Calypso/**").hasAuthority("CALYPSO").antMatchers("/Athena/**")
-                    .hasAuthority("ATHENA")
+                    .antMatchers("/Circe/**").hasAuthority("CIRCE")
+                    .antMatchers("/Hermes/**").hasAuthority("HERMES")
+                    .antMatchers("/Heracles/**").hasAuthority("HERACLES")
+                    .antMatchers("/JobViewer/**").hasAuthority("JOB_VIEWER")
+                    .antMatchers("/Calypso/**").hasAuthority("CALYPSO")
+                    .antMatchers("/Athena/**").hasAuthority("ATHENA")
                     //.antMatchers("/WebAPI/**").hasAuthority("WEBAPI") //TODO Review options of securing WebAPI itself
                     .anyRequest().authenticated();
             http.formLogin().failureUrl("/login?error").defaultSuccessUrl("/").loginPage("/login").permitAll().and()
@@ -85,9 +94,18 @@ public class SecurityConfig {
         
         @Bean
         public PersistentTokenRepository persistentTokenRepository() {
-            JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
-            db.setDataSource(dataSource);
+            final JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+            db.setDataSource(this.dataSource);
             return db;
+        }
+    }
+    
+    @Configuration
+    public static class SecurityUtilsConfiguration {
+        
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+            return new BCryptPasswordEncoder();
         }
     }
 }
