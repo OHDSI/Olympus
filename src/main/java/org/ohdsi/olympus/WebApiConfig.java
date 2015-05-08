@@ -86,10 +86,11 @@ public class WebApiConfig {
     
     @Bean
     public WebApiService webApi(@Value("${olympus.webapi.launch.enabled}") final boolean isWebApiLaunchEnabled,
+                                @Value("${olympus.local.address:http://localhost:20000}") final String localAddress,
                                 final WebAppContext ctx, final WebApiPropertiesRepository repo,
                                 final WebApiRemoteRepository remotesRepo,
                                 final AppPropertiesRepository appPropertiesRepository) {
-        return new WebApiService(isWebApiLaunchEnabled, ctx, repo, remotesRepo, appPropertiesRepository);
+        return new WebApiService(isWebApiLaunchEnabled, localAddress, ctx, repo, remotesRepo, appPropertiesRepository);
     }
     
     /*if (container instanceof TomcatEmbeddedServletContainer) {

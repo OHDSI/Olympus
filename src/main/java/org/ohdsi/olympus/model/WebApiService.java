@@ -15,6 +15,7 @@ import org.ohdsi.olympus.model.WebApiProperties.DIALECT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerInitializedEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.core.env.Environment;
 import org.springframework.util.Assert;
 
 import com.google.common.collect.Lists;
@@ -25,6 +26,8 @@ import com.google.common.collect.Lists;
 public class WebApiService implements ApplicationListener<EmbeddedServletContainerInitializedEvent> {
     
     private static final Log log = LogFactory.getLog(WebApiService.class);
+    
+    private String localAddress;
     
     private final WebAppContext context;
     
@@ -39,14 +42,21 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
     @Autowired
     private ContextHandlerCollection contextHandlerCollection;
     
+    @Autowired
+    private Environment env;
+    
     /**
-     * TODO add default constructor and skip constructor injection
-     * 
+     * @param isWebApiLaunchEnabled
+     * @param localAddress e.g. http://localhost:20000 (no ending slash)
      * @param ctx
+     * @param repo
+     * @param remotesRepo
+     * @param appPropertiesRepository
      */
-    public WebApiService(final boolean isWebApiLaunchEnabled, final WebAppContext ctx,
+    public WebApiService(final boolean isWebApiLaunchEnabled, final String localAddress, final WebAppContext ctx,
         final WebApiPropertiesRepository repo, final WebApiRemoteRepository remotesRepo,
         final AppPropertiesRepository appPropertiesRepository) {
+        this.localAddress = localAddress;
         this.context = ctx;
         this.repo = repo;
         this.isWebApiLaunchEnabled = isWebApiLaunchEnabled;
@@ -278,7 +288,7 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
     public List<WebApiRemote> getWebApis() {
         List<WebApiRemote> webApis = new ArrayList<WebApiRemote>();
         if (isRunning()) {
-            webApis.add(new WebApiRemote("Local", WebApiProperties.LOCAL_WEBAPI));
+            webApis.add(new WebApiRemote("Local", this.localAddress + "/WebAPI/"));
         }
         webApis.addAll(Lists.newArrayList(this.remotesRepo.findAll()));
         return webApis;
@@ -296,5 +306,12 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
     public AppProperties getAppProperties() {
         AppProperties props = this.appPropertiesRepo.findOne(AppProperties.ID);
         return props == null ? new AppProperties() : props;
+    }
+    
+    /**
+     * @return the localAddress
+     */
+    public String getLocalAddress() {
+        return localAddress;
     }
 }
