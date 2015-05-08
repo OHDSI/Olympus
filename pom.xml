@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -10,7 +11,7 @@
 	<name>Olympus</name>
 	<description>The OHDSI Application Launcher</description>
 	<url>http://www.ohdsi.org/</url>
-	
+
 	<scm>
 		<connection>scm:git:https://github.com/OHDSI/Olympus</connection>
 		<developerConnection>scm:git:https://github.com/OHDSI/Olympus</developerConnection>
@@ -33,6 +34,9 @@
 		<application.name>Olympus</application.name>
 		<application.message>The OHDSI Application Launcher</application.message>
 		<html.lang>en-US</html.lang>
+		
+		<!-- Issue #9 Important to prevent XSS (Cross-site scripting issues) -->
+		<olympus.apps.endpoint>http://localhost:20000/webapi</olympus.apps.endpoint>
 	</properties>
 	<build>
 		<finalName>Olympus</finalName>
@@ -88,6 +92,20 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<webResources>
+						<!-- Issue #9 (hosted environment / xss blocker).  Follow this model.  To develop locally, the origin needs to be localhost -->
+						<!-- Follow this model for the rest of the applications -->
+						<resource>
+							<directory>src/main/resources/applications/Heracles/build/js</directory>
+							<!-- override the destination directory for this resource -->
+							<targetPath>Heracles/build/js</targetPath>
+							<!-- enable filtering -->
+							<filtering>true</filtering>
+							<includes>
+								<include>Heracles.config.js</include>
+							</includes>
+						</resource>
+					</webResources>
 				</configuration>
 			</plugin>
 			<plugin>
