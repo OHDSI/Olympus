@@ -43,7 +43,7 @@ public class DataSourceConfig {
     @Bean
     public ServletRegistrationBean h2servletRegistration() {
         ServletRegistrationBean registration = new ServletRegistrationBean(new WebServlet());
-        //registration.addInitParameter(", value);
+        registration.addInitParameter("webAllowOthers", "true");
         registration.addUrlMappings("/console/*");
         return registration;
     }
