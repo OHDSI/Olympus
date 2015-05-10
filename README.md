@@ -39,7 +39,8 @@ WebAPI (package using defaults `mvn clean package`)
 Hermes, Circe, Heracles, Calypso, JobViewer
 - clone github repos
 - copy each application to Olympus/src/main/webapp/ (e.g. webapp/Hermes, webapp/Heracles, etc.)
-- edit js config files that specify WebAPI location. (GET 'http://localhost:20000/webapi' endpoint to return array of available WebApis)
+- edit js config files that specify WebAPI location. (GET 'http://localhost:20000/webapi' (default) endpoint to return array of available WebApis)
+-- js files that are modified should also go in src/main/resources/applications/ , with the same path (e.g. src/main/resources/applications/Heracles/build/js/Heracles.config.js).  Both the original and the ones in src/main/applications are needed so that one can develop locally with localhost and also package and deploy to a hosted server (`mvn clean package -Dolympus.local.address=http://example.com:20000`).  maven-war-plugin webResources and filtering is used to support the latter.  This mechanism is not triggered in time for use within eclipse (when run as a java application or using spring-boot maven plugin.  TODO it may be worthwhile to spend some additional effort here and see if eclipse can "run on server".  Currently, one receives a "The selection cannot be run on any server".
 - See the history/log of changes made to an application after cloning/copying `git log --stat -- src/main/webapp/Achilles` .  Check out changes in a commit `git show 360b14`.
 
 Summary of changes:
