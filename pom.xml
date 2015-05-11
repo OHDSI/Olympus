@@ -57,6 +57,7 @@
 				</includes>
 				<excludes>
 					<exclude>**/*.properties</exclude>
+					<exclude>applications/**</exclude>
 				</excludes>
 			</resource>
 			<resource>
@@ -74,6 +75,7 @@
 				</includes>
 				<excludes>
 					<exclude>**/*.properties</exclude>
+					<exclude>applications/**</exclude>
 				</excludes>
 			</resource>
 		</resources>
