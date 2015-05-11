@@ -120,10 +120,18 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
             
             driverClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
             flywayLocations = "classpath:db/migration/sqlserver";
-            jdbcUrl = String.format("jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), jdbcPort,
-                props.getCdmSchema());
-            flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayDataSourceSid()) ? jdbcUrl : String.format(
-                "jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), jdbcPort, props.getCdmSchema());
+            if (isIntegratedSecurityOption) {
+                jdbcUrl = String.format("jdbc:sqlserver://%s:%s;databaseName=%s;integratedSecurity=true;",
+                    props.getJdbcIpAddress(), jdbcPort, props.getCdmSchema());
+                flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayDataSourceSid()) ? jdbcUrl : String.format(
+                    "jdbc:sqlserver://%s:%s;databaseName=%s;integratedSecurity=true;", props.getJdbcIpAddress(), jdbcPort,
+                    props.getCdmSchema());
+            } else {
+                jdbcUrl = String.format("jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), jdbcPort,
+                    props.getCdmSchema());
+                flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayDataSourceSid()) ? jdbcUrl : String.format(
+                    "jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), jdbcPort, props.getCdmSchema());
+            }
             /* Based on meeting Tuesday, I believe databaseName is used even with integrated security
                         if (isIntegratedSecurityOption) {
                             jdbcUrl = String.format("jdbc:sqlserver://%s", props.getJdbcIpAddress());
