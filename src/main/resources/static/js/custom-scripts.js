@@ -35,6 +35,7 @@ $(document).ready(function() {
 	});
 	
 	$('#apps, .launch-apps-link').click('show', function(e) {
+		console.log("app clicked");
 		//alert('hello'+e.target);
 	    paneID = $(e.target).attr('href');
 	    src = $(paneID).attr('data-src');
@@ -48,7 +49,11 @@ $(document).ready(function() {
 	    	}
 	    	//$("#apps-label").html(lbl+ ' <span class="caret"></span>');
 	        $(paneID+" iframe").attr("src",src);
+	        //below is an attempt to bypass browser caching of iframe content
+	        $(paneID+" iframe").attr("src",$(paneID+" iframe").attr("src"));
 	    }
+	    
+	    //$(this).attr('src', $(this).attr('src'));
 	    
 	    $("body").css("background", "white");
 	});
