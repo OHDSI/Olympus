@@ -153,7 +153,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                         }, 300);
                     }
 
-                    var param = $.urlParam('cohortId');
+                    var param = urlParam('cohortId');
                     if (param && param !== '') {
                         var lastWebApi = monster.get('last-webapi');
                         if (lastWebApi) {

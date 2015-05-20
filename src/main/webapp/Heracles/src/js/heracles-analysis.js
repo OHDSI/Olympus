@@ -485,7 +485,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                 };
 
                 $(document).ready(function() {
-                    var param = $.urlParam('cohortId');
+                    var param = urlParam('cohortId');
                     if (param && param !== '') {
                         var datum = { id : param };
                         $(".page-one").hide();
