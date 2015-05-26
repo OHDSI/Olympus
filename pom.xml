@@ -101,8 +101,7 @@
 						<!-- Follow this model for the rest of the applications -->
 						<resource>
 							<directory>src/main/resources/applications</directory>
-							<!-- override the destination directory for this resource -->
-<!-- 							<targetPath>Heracles/build/js</targetPath> -->
+							<!-- targetPath is root of webapp -->
 							<!-- enable filtering -->
 							<filtering>true</filtering>
 							<includes>
