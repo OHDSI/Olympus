@@ -57,7 +57,7 @@ public class WebApiProperties {
         
         static {
             ORACLE.value = "oracle";
-            POSTGRESQL.value = "postgres";
+            POSTGRESQL.value = "postgresql";
             SQLSERVER.value = "sql server";
             SQLSERVERINTSECURITY.value = "sql server";
         }
