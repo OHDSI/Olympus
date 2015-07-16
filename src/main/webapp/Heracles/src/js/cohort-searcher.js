@@ -4,6 +4,13 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster',
 
     $(domReady).ready(function () {
 
+        function customTokenizer(datum) {
+            var nameTokens = Bloodhound.tokenizers.nonword(datum.name);
+            var descTokens = Bloodhound.tokenizers.nonword(datum.description);
+
+            return nameTokens.concat(descTokens);
+        }
+
         function getBloodhound() {
 
             var cohortDefUrl = getWebApiUrl() + 'cohortdefinition';
@@ -11,10 +18,12 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster',
 
             // initialize the cohort type ahead, constructs the suggestion engine
             var bloodhoundCohorts = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                datumTokenizer: customTokenizer, //Bloodhound.tokenizers.obj.nonword('name'),
+                queryTokenizer: Bloodhound.tokenizers.nonword,
                 // if we get to have a lot of cohorts, prefetch may not work, and we'll have to use remote
-                prefetch: cohortDefUrl
+                prefetch: cohortDefUrl,
+                pending: "Loading results from " + getWebApiName(),
+                limit: 50
             });
 
             return bloodhoundCohorts;
@@ -25,20 +34,21 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster',
                 $('.heracles-typeahead .typeahead').typeahead('destroy');
             }
             $('.heracles-typeahead .typeahead').typeahead({
-                hint: true,
+                hint: false,
                 highlight: true,
-                minLength: 1
+                minLength: 0
             }, {
                 name: 'cohorts',
-                displayKey: 'value',
+                displayKey: 'name',
                 source: bloodhoundCohorts.ttAdapter(),
+                pending: "Loading results from " + getWebApiName(),
                 templates: {
-                    empty: [
-                        '<div class="empty-message">',
-                        'Unable to find any cohorts that match the current query',
-                        '</div>'
-                    ].join('\n'),
-                    suggestion: Handlebars.compile('<p><strong>{{name}}</strong> – {{description}}</p>')
+                    //empty: [
+                    //    '<div class="empty-message">',
+                    //    'Unable to find any cohorts that match the current query',
+                    //    '</div>'
+                    //].join('\n'),
+                    suggestion: Handlebars.compile('<p><span style="font-weight: bold">{{name}}</span> – {{description}}</p>')
                 }
             });
         }
@@ -91,6 +101,7 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster',
 
         });
 
+
         // setup webapi selector
         setTimeout(function() {
             $(".webpai-dropdown").empty();
@@ -118,7 +129,11 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster',
                         initTypeahead(bloodhoundCohorts, true);
                         monster.set('last-webapi', +$(this).attr('webApiIdx'));
                         monster.set('last-refreshed', _.now());
-                        $("#cohorts").focus();
+                        //setTimeout(function() {
+                        //    // give time for prefetch to load
+                        //    $("#cohorts").focus();
+                        //}, 500);
+
                     })
                     .appendTo($(".webpai-dropdown"));
 

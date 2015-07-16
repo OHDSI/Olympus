@@ -237,7 +237,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             deferRender: true,
                             destroy: true
                         });
-                        datatables['procedure_table'] = datatable;
+                        datatables.procedure_table = datatable;
 
                         $('#reportProcedureOccurrences').show();
 

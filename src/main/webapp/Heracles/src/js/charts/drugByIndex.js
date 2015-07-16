@@ -238,7 +238,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             deferRender: true,
                             destroy: true
                         });
-                        datatables['drugera_table'] = datatable;
+                        datatables.drugera_table = datatable;
 
                         $('#reportDrugEras').show();
 

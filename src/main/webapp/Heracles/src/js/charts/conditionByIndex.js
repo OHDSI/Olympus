@@ -243,7 +243,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             deferRender: true,
                             destroy: true
                         });
-                        datatables['condition_table'] = datatable;
+                        datatables.condition_table = datatable;
 
                         $('#reportConditionOccurrences').show();
 

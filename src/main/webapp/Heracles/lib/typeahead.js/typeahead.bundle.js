@@ -447,6 +447,7 @@
                         return false;
                     }
                 });
+                if (!tokens || tokens.length == 0 || tokens == '') return that.datums;
                 return matches ? _.map(unique(matches), function(id) {
                     return that.datums[id];
                 }) : [];
@@ -622,6 +623,7 @@
                 }
                 return deferred;
                 function handlePrefetchResponse(resp) {
+                    console.log(resp);
                     that.clear();
                     that.add(o.filter ? o.filter(resp) : resp);
                     that._saveToStorage(that.index.serialize(), o.thumbprint, o.ttl);
@@ -1518,6 +1520,17 @@
             _onFocused: function onFocused() {
                 this.isActivated = true;
                 this.dropdown.open();
+
+                //// show all on focus
+                this.isActivated = true;
+                var val = this.input.getInputValue();
+                if (!val) {
+                    val = "";
+                    var query = Input.normalizeQuery(val);
+                    this.dropdown.update(query);
+                }
+                this.dropdown.open();
+
             },
             _onBlurred: function onBlurred() {
                 this.isActivated = false;

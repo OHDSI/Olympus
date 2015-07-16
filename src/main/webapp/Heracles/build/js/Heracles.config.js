@@ -1,6 +1,6 @@
 // modify these variables for your installation
 // set this to true if you're running Olympus; otherwise set the default services you wish to use
-var olympus_enabled = true;
+var olympus_enabled = false;
 var default_services = [
     {
         name: 'Local',
