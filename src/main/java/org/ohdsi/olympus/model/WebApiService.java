@@ -95,7 +95,10 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
         String flywayJdbcUrl;
         String jdbcPort;
         String flywayJdbcPort;
-        
+        String cdmNameAndSchema;
+
+        cdmNameAndSchema = props.getCdmSchema();
+
         if (DIALECT.ORACLE.equals(dialect)) {
             driverClassName = "oracle.jdbc.OracleDriver";
             flywayLocations = "classpath:db/migration/oracle";
@@ -113,6 +116,10 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
         } else {
             //sql server
             boolean isIntegratedSecurityOption = false;
+            String[] parts = cdmNameAndSchema.split("\\.");
+            String cdmDatabaseName = parts[0];
+            String cdmSchema = parts.length > 1 ? parts[1] : "dbo";
+
             if (DIALECT.SQLSERVERINTSECURITY.equals(dialect)) {
                 isIntegratedSecurityOption = true;
             }
@@ -122,15 +129,15 @@ public class WebApiService implements ApplicationListener<EmbeddedServletContain
             flywayLocations = "classpath:db/migration/sqlserver";
             if (isIntegratedSecurityOption) {
                 jdbcUrl = String.format("jdbc:sqlserver://%s:%s;databaseName=%s;integratedSecurity=true;",
-                    props.getJdbcIpAddress(), jdbcPort, props.getCdmSchema());
+                    props.getJdbcIpAddress(), jdbcPort, cdmDatabaseName);
                 flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayDataSourceSid()) ? jdbcUrl : String.format(
                     "jdbc:sqlserver://%s:%s;databaseName=%s;integratedSecurity=true;", props.getJdbcIpAddress(), jdbcPort,
-                    props.getCdmSchema());
+                        cdmDatabaseName);
             } else {
                 jdbcUrl = String.format("jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), jdbcPort,
-                    props.getCdmSchema());
+                    cdmDatabaseName);
                 flywayJdbcUrl = StringUtils.isEmpty(props.getFlywayDataSourceSid()) ? jdbcUrl : String.format(
-                    "jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), jdbcPort, props.getCdmSchema());
+                    "jdbc:sqlserver://%s:%s;databaseName=%s", props.getJdbcIpAddress(), jdbcPort, cdmDatabaseName);
             }
             /* Based on meeting Tuesday, I believe databaseName is used even with integrated security
                         if (isIntegratedSecurityOption) {
