@@ -37,6 +37,7 @@
 		<!-- Issue #9 Important to prevent XSS (Cross-site scripting issues) -->
 		<olympus.local.address>http://localhost:20000</olympus.local.address>
 		<olympus.apps.endpoint>${olympus.local.address}/webapi</olympus.apps.endpoint>
+		<olympus.circe.webapi.address>${olympus.local.address}/WebAPI/</olympus.circe.webapi.address>
 	</properties>
 	<build>
 		<finalName>Olympus</finalName>

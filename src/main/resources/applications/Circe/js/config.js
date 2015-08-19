@@ -1,7 +1,7 @@
 define([], function () {
 	var config = {};
 	
-	config.webAPIRoot = "${olympus.local.address}/WebAPI/";
+	config.webAPIRoot = "${olympus.circe.webapi.address}";
 	
 	return config;
 	

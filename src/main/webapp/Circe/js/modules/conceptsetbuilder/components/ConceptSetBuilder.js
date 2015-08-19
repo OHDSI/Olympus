@@ -20,6 +20,9 @@ define([
 			self.conceptSets = params.conceptSets;
 			self.selectedConceptSet = ko.observable();
 			self.nameHasFocus = ko.observable();
+			self.isImportEnabled = ko.observable(false);
+			self.isExportEnabled = ko.observable(false);
+			self.importValues = ko.observable();
 			self.dtApi = ko.observable(); // store reference to datatable
 			params.ref(this); // assign refrence to self to ref's param
 
@@ -34,6 +37,27 @@ define([
 				self.nameHasFocus(true);
 				return newConceptSet;
 			}
+			
+			self.doImport = function() {
+				var parsedItems, importedConceptSetItems;
+				parsedItems = JSON.parse(self.importValues());
+				
+				importedConceptSetItems = parsedItems.items.map(function (item) {
+					return new ConceptSetItem(item);
+				});
+				
+				// only add new concepts.
+				ixConcepts = {};
+				self.selectedConceptSet().expression.items().forEach(function(item) {
+					ixConcepts[item.concept.CONCEPT_ID] = true;
+				});
+				
+				self.selectedConceptSet().expression.items(self.selectedConceptSet().expression.items().concat(importedConceptSetItems.filter(function (item){
+					return !ixConcepts[item.concept.CONCEPT_ID];
+				})));
+				
+				self.isImportEnabled(false);
+			};
 
 			self.deleteConceptSet = function () {
 				self.conceptSets.remove(self.selectedConceptSet());
@@ -41,12 +65,25 @@ define([
 
 			// concept picker handlers
 			self.addConcepts = function (conceptList) {
-				var newConceptSetItems = conceptList.map(function (c) {
+				// only add new concepts.
+				var selectedConceptSetItems = self.selectedConceptSet().expression.items;
+				var ixConcepts = {};
+				selectedConceptSetItems().forEach(function(item) {
+					ixConcepts[item.concept.CONCEPT_ID] = true;
+				});
+
+				var importedConcepts = [];
+				conceptList.forEach(function(item) {
+					if (!ixConcepts[item.CONCEPT_ID])
+						importedConcepts.push(item);
+				});
+
+				var newConceptSetItems = importedConcepts.map(function (c) {
 					return new ConceptSetItem({
-						concept: c
+						concept: c,
+						includeDescendants: true
 					});
 				});
-				var selectedConceptSetItems = self.selectedConceptSet().expression.items;
 				selectedConceptSetItems(selectedConceptSetItems().concat(newConceptSetItems));
 			}
 
@@ -58,6 +95,14 @@ define([
 			
 			self.renderCheckbox = function (field) {
 				return '<span data-bind="click: function(d) { d.' + field + '(!d.' + field + '()); } ,css: { selected: ' + field + '} " class="glyphicon glyphicon-ok"></span>';
+			}
+			
+			self.getConceptSetJson = function()
+			{
+				if (self.selectedConceptSet())
+					return ko.toJSON(self.selectedConceptSet().expression, null, 2);
+				else
+					return "";
 			}
 			
 		}

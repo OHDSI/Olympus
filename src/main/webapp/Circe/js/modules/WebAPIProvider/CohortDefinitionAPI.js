@@ -31,6 +31,29 @@ define(function (require, exports) {
 		return savePromise;
 	}
 	
+	function copyCohortDefinition(id) {
+		var copyPromise = $.ajax({
+			url: config.webAPIRoot + 'cohortdefinition/' + (id || "") +"/copy",
+			method: 'GET',
+			contentType: 'application/json',
+			error: function (error) {
+				console.log("Error: " + error);
+			}
+		});
+		return copyPromise;
+	}	
+	
+	function deleteCohortDefinition(id) {
+		var deletePromise = $.ajax({
+			url: config.webAPIRoot + 'cohortdefinition/' + (id || ""),
+			method: 'DELETE',
+			error: function (error) {
+				console.log("Error: " + error);
+			}
+		});
+		return deletePromise;
+	}	
+	
 	function getCohortDefinition(id) {
 		var loadPromise = $.ajax({
 			url: config.webAPIRoot + 'cohortdefinition/' + id,
@@ -57,9 +80,9 @@ define(function (require, exports) {
 		return getSqlPromise;
 	}
 	
-	function generate(cohortDefinitionId) {
+	function generate(cohortDefinitionId, sourceKey) {
 		var generatePromise = $.ajax({
-			url: config.webAPIRoot + 'cohortdefinition/' + (cohortDefinitionId || '-1') + '/generate',
+			url: config.webAPIRoot + 'cohortdefinition/' + (cohortDefinitionId || '-1') + '/generate/' + sourceKey,
 			error: function (error) {
 				console.log("Error: " + error);
 			}
@@ -81,6 +104,8 @@ define(function (require, exports) {
 	var api = {
 		getCohortDefinitionList: getCohortDefinitionList,
 		saveCohortDefinition: saveCohortDefinition,
+		copyCohortDefinition: copyCohortDefinition,
+		deleteCohortDefinition: deleteCohortDefinition,
 		getCohortDefinition: getCohortDefinition,
 		getSql: getSql,
 		generate: generate,
