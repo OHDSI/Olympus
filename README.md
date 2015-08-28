@@ -51,6 +51,8 @@ Summary of changes:
 `java -XX:MaxPermSize=128m -jar Olympus-XXX-exec.war`
 -XX:MaxPermSize only needed prior to jre 8
 
+To launch a local WebAPI (if configured), on startup, add `-Dolympus.webapi.launch.enabled=true`
+
 ##### Olympus Working Directory
 Olympus will create an 'olympus' directory within the ${java.io.tmpdir} environment variable location.
 Look for a log statement like this (Windows example) ...  
