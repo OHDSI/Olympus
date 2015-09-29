@@ -56,6 +56,7 @@ public class CommonTemplateFactory {
         if (csrfToken != null) {
             modelAndView.addObject("_csrf", csrfToken);
         }
+		modelAndView.addObject("baseURL", request.getContextPath());
 		return modelAndView;
 	}
 }

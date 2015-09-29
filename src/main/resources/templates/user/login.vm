@@ -15,7 +15,7 @@ body {
   padding-top: 40px;
   padding-bottom: 40px;
   background-color: black; 
-  background: url(/img/greekColumns.jpg) no-repeat center center fixed; 
+  background: url($baseURL/img/greekColumns.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -24,7 +24,7 @@ body {
 </style>
       
       
-<form class="form-signin" role="form" action="/login" method="post">
+<form class="form-signin" role="form" action="$baseURL/login" method="post">
 <h2 class="form-signin-heading" style="font-family: 'Julius Sans One', sans-serif;font-size:60px; black 5px 3px 3px">Olympus</h2>
     <input type="hidden" name="$_csrf.parameterName" value="$_csrf.token"/>
 
@@ -41,7 +41,7 @@ body {
 </form>
 <a href="http://www.ohdsi.org" target="_blank" class="image-link">
 	<label class="sr-only">OHDSI Homepage</label>
-	<img src="/img/ohdsi.png" alt="$appName" style="height:50px"/>
+	<img src="$baseURL/img/ohdsi.png" alt="$appName" style="height:50px"/>
 </a>
         </div>
     </div>

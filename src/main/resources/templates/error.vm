@@ -12,7 +12,7 @@
 
 
 body {
-  background: url(/img/zeus.jpg) no-repeat center center fixed; 
+  background: url($baseURL/img/zeus.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -21,7 +21,7 @@ body {
 </style>
 		<div class="container">
 			<h1>Oops!</h1>
-			<div class="well">Something bad happened. Go <a href="/index.html">home.</a></div>
+			<div class="well">Something bad happened. Go <a href="$baseUrl/index.html">home.</a></div>
 		</div>
 
 		#parse( "common/scripts.vm" )
