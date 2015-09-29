@@ -8,13 +8,13 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="$baseURL/index.html" style="text-decoration:none">
-				<img src="$baseURL/img/ohdsi.png" alt="$appName" style="height:40px"/>
+			<a class="navbar-brand" href="$contextPath/index.html" style="text-decoration:none">
+				<img src="$contextPath/img/ohdsi.png" alt="$appName" style="height:40px"/>
 			</a>
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li #if ($activeLink == "index") class="active" #end><a href="$baseURL/index.html">Home</a></li>
+				<li #if ($activeLink == "index") class="active" #end><a href="$contextPath/index.html">Home</a></li>
 
 			#if ($req.userPrincipal && $activeLink == "index" && ($webapi.isRunning() || $webapi.hasRemotes()))
 			    <li class="dropdown">
@@ -40,14 +40,14 @@
 				<li class="dropdown">
 			      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Settings<span class="caret"></span></a>
 			      <ul class="dropdown-menu" role="menu" id="admin">
-			      	<li><a href="$baseURL/webapi/config">Configuration</a></li>
-			      	<li><a href="$baseURL/user/create">Create User</a></li>
-			      	<li><a href="$baseURL/user">Users</a></li>
+			      	<li><a href="$contextPath/webapi/config">Configuration</a></li>
+			      	<li><a href="$contextPath/user/create">Create User</a></li>
+			      	<li><a href="$contextPath/user">Users</a></li>
 			      </ul>
 			    </li>
 			#end
 
-			#if($req.userPrincipal)<li><a href="$baseURL/logout">Logout</a></li>#end
+			#if($req.userPrincipal)<li><a href="$contextPath/logout">Logout</a></li>#end
 			</ul>
 
 		</div><!--/.nav-collapse -->
