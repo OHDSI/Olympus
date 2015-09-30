@@ -11,7 +11,7 @@
       </div>
       <div class="modal-body">
 		<div id='ajax_loader'>
-			<img src="/img/ajax-loader.gif" class="center-block"></img>
+			<img src="$contextPath/img/ajax-loader.gif" class="center-block"></img>
 		</div>
       </div>
       #*<div class="modal-footer">
@@ -32,7 +32,7 @@
         #end
         <div class="container">
               <h2>Remote WebAPIs</h2>
-              <form class="form-horizontal" target="_self" enctype="application/x-www-form-urlencoded" action="/webapi/remote" method="post">
+              <form class="form-horizontal" target="_self" enctype="application/x-www-form-urlencoded" action="$contextPath/webapi/remote" method="post">
                #springBind("remote")
                
                #springBind("remote.name")
@@ -80,7 +80,7 @@
             #end      
             <div class="container">
             <h2>Local WebAPI</h2>
-            <form class="form-horizontal" target="_self" enctype="application/x-www-form-urlencoded" action="/webapi/config" method="post">
+            <form class="form-horizontal" target="_self" enctype="application/x-www-form-urlencoded" action="$contextPath/webapi/config" method="post">
                #springBind("config")
                
                #springBind("config.cdmDialect")
@@ -219,7 +219,7 @@
             </form>
         #if(${webapi.isConfigured()})
         <div class="container">
-			<form method="POST" action="/webapi/request-start" id="frmLaunchWebApi">
+			<form method="POST" action="$contextPath/webapi/request-start" id="frmLaunchWebApi">
 				<div class="form-group text-right">
 					<input type="hidden" name="$_csrf.parameterName" value="$_csrf.token"/>
 			    </div>
@@ -227,7 +227,7 @@
 		</div>
         #end
 <div class="container"><h2>Application-specific Configuration</h2>#*<label class="col-sm-3 control-label"></label>*#
-<form method="POST" action="/webapi/appproperties" id="frmAppProperties">
+<form method="POST" action="$contextPath/webapi/appproperties" id="frmAppProperties">
 #springBind("appproperties")
 				#springBind("appproperties.achillesDataDir")
                 <div class="form-group #if(${status.error})has-error#end">
