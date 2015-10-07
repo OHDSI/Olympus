@@ -22,7 +22,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
         ConditionsByIndexRenderer.render = function(cohort) {
             var id = cohort.id;
-            this.baseUrl = getWebApiUrl() + 'cohortresults/' + id;
+            this.baseUrl = getSourceSpecificWebApiUrl() + 'cohortresults/' + id;
             d3.selectAll("svg").remove();
 
             $('#loading-text').text("Querying Database...");
@@ -194,8 +194,8 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 num_persons: format_comma(this.numPersons[i]),
                                 percent_persons: format_pct(this.percentPersons[i]),
                                 relative_risk: format_fixed(this.logRRAfterBefore[i]),
-                                percent_persons_before: format_pct(this.percentPersons[i]),
-                                percent_persons_after: format_pct(this.percentPersons[i]),
+                                percent_persons_before: format_pct(this.percentPersonsBefore[i]),
+                                percent_persons_after: format_pct(this.percentPersonsAfter[i]),
                                 risk_difference: format_fixed(this.riskDiffAfterBefore[i])
                             };
                         }, conditionOccurrencePrevalence);
@@ -231,6 +231,14 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 },
                                 {
                                     data: 'percent_persons',
+                                    className: 'numeric'
+                                },
+                                {
+                                    data: 'percent_persons_before',
+                                    className: 'numeric'
+                                },
+                                {
+                                    data: 'percent_persons_after',
                                     className: 'numeric'
                                 },
                                 {

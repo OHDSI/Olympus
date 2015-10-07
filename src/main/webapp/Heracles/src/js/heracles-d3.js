@@ -240,6 +240,13 @@ define(['jquery', 'd3', 'jnj_chart', 'ohdsi_common'], function (jquery, d3, jnj_
 
     };
 
+    HeraclesD3.clearSummaryData = function() {
+
+        // reset
+        d3.selectAll("#gender_dist svg").remove();
+        d3.selectAll("#age_dist svg").remove();
+    };
+
     HeraclesD3.renderOHDSIDefaults = function(data) {
 
         // reset

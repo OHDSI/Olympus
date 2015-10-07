@@ -1,5 +1,6 @@
 
-require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster', 'lodash'], function (domReady, $, t, Handlebars, angular, monster, _) {
+require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster', 'lodash', 'bootstrap-select'],
+    function (domReady, $, t, Handlebars, angular, monster, _, SelectPicker) {
 
 
     $(domReady).ready(function () {
@@ -92,7 +93,10 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster',
 
             $(".page-one").slideUp("fast", function () {
                 // set page data
-                angular.element($('#cohort-explorer-main')).scope().showCohort(datum);
+                getSources(true, function(sources) {
+                    angular.element($('#cohort-explorer-main')).scope().showCohort(datum, sources);
+                });
+
 
 
                 // show div

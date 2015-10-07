@@ -623,7 +623,7 @@
                 }
                 return deferred;
                 function handlePrefetchResponse(resp) {
-                    console.log(resp);
+                    // console.log(resp);
                     that.clear();
                     that.add(o.filter ? o.filter(resp) : resp);
                     that._saveToStorage(that.index.serialize(), o.thumbprint, o.ttl);

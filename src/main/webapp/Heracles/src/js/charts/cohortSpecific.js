@@ -6,7 +6,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
 
     CohortSpecificRenderer.render = function(cohort) {
         var id = cohort.id;
-        this.baseUrl = getWebApiUrl() + 'cohortresults/' + id;
+        this.baseUrl = getSourceSpecificWebApiUrl() + 'cohortresults/' + id;
         d3.selectAll("svg").remove();
 
         $('#loading-text').text("Querying Database...");

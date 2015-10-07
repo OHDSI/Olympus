@@ -8,7 +8,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             d3.selectAll("svg").remove();
 
             var id = cohort.id;
-            this.baseUrl = getWebApiUrl() + 'cohortresults/' + id;
+            this.baseUrl = getSourceSpecificWebApiUrl() + 'cohortresults/' + id;
 
             var threshold;
             var datatable;

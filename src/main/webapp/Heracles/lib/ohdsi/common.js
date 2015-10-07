@@ -246,6 +246,25 @@ define(["d3", "jquery", "lodash"], function (d3, $, _) {
 
         }
     }
+
+    function generateSourceString(selected) {
+        if (!selected) {
+            return "";
+        }
+
+        if (selected instanceof Array) {
+            var len = selected.length;
+            if (len === 0) {
+                return "";
+            } else if (len === 1) {
+                return " on " + selected[0].sourceName;
+            } else {
+                return " on " + len + " sources";
+            }
+        } else {
+            return " on " + selected.sourceName;
+        }
+    }
 	
 	var module = {
 		mapHistogram: mapHistogram,
@@ -256,7 +275,8 @@ define(["d3", "jquery", "lodash"], function (d3, $, _) {
 		dataframeToArray: dataframeToArray,
 		normalizeDataframe: normalizeDataframe,
         normalizeArray: normalizeArray,
-        generateCSVDownload: generateCSVDownload
+        generateCSVDownload: generateCSVDownload,
+        generateSourceString: generateSourceString
 	};
 
 	return module;

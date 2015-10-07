@@ -11,13 +11,15 @@ require.config({
         "heracles-d3" : { "deps" : ['jquery', 'd3']},
         "jasny" : {"deps" : ['jquery', 'bootstrap']},
         "ohdsi_common" : {"deps" : ['d3', 'lodash']},
-        "heracles-common" : {"deps" : ['jquery']}
+        "heracles_common" : {"deps" : ['jquery']},
+        "bootstrap-select" : {"deps" : ['jquery', 'bootstrap']}
 
     },
     paths: {
         jquery: '../../lib/jquery/jquery',
         angular: '../../lib/angular/angular',
         bootstrap: '../../lib/bootstrap/bootstrap',
+        "bootstrap-select": '../../lib/bootstrap-select/js/bootstrap-select.min',
         jasny : '../../lib/jasny-bootstrap/js/jasny-bootstrap.min',
         d3: '../../lib/d3/d3',
         handlebars: '../../lib/handlebars/handlebars',

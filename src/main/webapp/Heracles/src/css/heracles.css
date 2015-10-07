@@ -2,6 +2,7 @@
 @import url("../../lib/bootstrap/bootstrap.css");
 @import url("../../lib/jasny-bootstrap/css/jasny-bootstrap.min.css");
 @import url("../../lib/colorbrewer/colorbrewer.css");
+@import url("../../lib/bootstrap-select/css/bootstrap-select.min.css");
 
 .sub-text {
 	color: #BEEDF6;
@@ -649,3 +650,21 @@ table.data td {
         width: 1970px;
     }
 }
+
+.bootstrap-select.btn-group .dropdown-menu li {
+    padding: 0;
+    padding-left: 3px;
+}
+
+.dropdown-menu>li>a {
+    padding: 5px 4px;
+}
+
+span.viz-complete {
+    padding: 3px;
+    margin-left: 8px;
+    font-size: 9px;
+    background-color: lightgray;
+
+}
+
