@@ -47,9 +47,27 @@ Summary of changes:
 * Heracles: 1) Heracles.config.js - set ohdsi_services to array returned by Olympus. 2.) Add jquery.js import into index.html
 * Achilles (Web) - `git show 360b14` - 1.) Change ajax calls from referencing local 'data/X.json' to call Olympus endpoint that returns the json, read from a file location defined in Olympus (default /var/achilles/data).
 
+Changes are maintained in Olympus/src/main/resources/applications and are filtered and copied over the top of the respective files found in Olympus/src/main/webapp
+See 'Copying webapp webResources' in below log snippet.
+
+```
+[INFO] --- maven-war-plugin:2.1.1:war (default-war) @ Olympus ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [Olympus] in [/Users/alfranke/Documents/IDE/workspace/Olympus/target/Olympus]
+[INFO] Processing war project
+[INFO] Copying webapp webResources [/Users/alfranke/Documents/IDE/workspace/Olympus/src/main/resources/applications] to [/Users/alfranke/Documents/IDE/workspace/Olympus/target/Olympus]
+[INFO] Copying webapp resources [/Users/alfranke/Documents/IDE/workspace/Olympus/src/main/webapp]
+[INFO] Webapp assembled in [805 msecs]
+[INFO] Building war: /Users/alfranke/Documents/IDE/workspace/Olympus/target/Olympus.war
+```
+
+To run, with the above changes considered, you must package the war and then run according to below.
+
 ##### Running Olympus
 `java -XX:MaxPermSize=128m -jar Olympus-XXX-exec.war`
 -XX:MaxPermSize only needed prior to jre 8
+
+Note: if you only need to develop against local Olympus code (not dependent upon the OHDSI applications), it is most efficient to run the Olympus.class as 'Java Application' (which will use an embedded jetty).  Or you can use `mvn spring-boot:run`.
 
 To launch a local WebAPI (if configured), on startup, add `-Dolympus.webapi.launch.enabled=true`
 
