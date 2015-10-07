@@ -12,7 +12,7 @@
         #end
 <h1>Create a new user</h1>
 
-<form class="form-horizontal" role="form" name="form" action="/user/create" method="post">
+<form class="form-horizontal" role="form" name="form" action="$contextPath/user/create" method="post">
 #springBind("form")
     <input type="hidden" name="$_csrf.parameterName" value="$_csrf.token"/>
  	#springBind("form.username")
